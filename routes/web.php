@@ -3,9 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-// Route::get('/', function () {
-//     return view('home');
-// });
 
 Route::get('/', function () {
     return view('home');
@@ -95,9 +92,7 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::get('/register', function () {
-    return view('auth.register');
-})->name('register');
+Route::post('/register/user', [App\Http\Controllers\Auth\RegisterController::class, 'store'])->name('register-user');
 
 Route::get('/super-admin/questions/report', function () {
     return view('super-admin.questions.report');
@@ -119,5 +114,4 @@ Route::get('/super-admin/answers/report', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 

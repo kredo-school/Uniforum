@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -68,5 +69,32 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+
+
+    // register new user
+    public function store(Request $request){
+
+        $request->validate([
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'uni_id' => ['required'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ],
+        [
+            'uni_id.required' => 'university is required.',
+        ]
+        );
+
+
+        User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'uni_id'=>$request->uni_id,
+            'password' => Hash::make($request->password),
+        ]);
+
+        return view('auth.login');
     }
 }

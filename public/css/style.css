@@ -383,3 +383,13 @@ td{
       transform: translateX(0);
     }
 } */
+.password-feedback{
+    width: 80% !important;
+}
+.uni-invalid-feedback{
+    /* display: none; */
+    width: 80%;
+    margin-top: .25rem;
+    font-size: .875em;
+    color: #DC3545;
+}
