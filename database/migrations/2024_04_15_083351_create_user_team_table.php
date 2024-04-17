@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('user_team', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('team_id');
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('team_id')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 

@@ -25,7 +25,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            // $table->foreign('uni_id')->references('id')->on('universities')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

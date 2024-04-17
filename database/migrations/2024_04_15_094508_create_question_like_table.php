@@ -14,9 +14,6 @@ return new class extends Migration
         Schema::create('question_like', function (Blueprint $table) {
             $table->unsignedBigInteger('q_id');
             $table->unsignedBigInteger('user_id');
-
-            // $table->foreign('q_id')->references('id')->on('questions')->onDelete('cascade');
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
