@@ -19,9 +19,6 @@ return new class extends Migration
             $table->longText('image');
             $table->timestamps();
             $table->softDeletes();
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foregin('q_id')->references('id')->on('questions')->onDelete('cascade');
         });
     }
 

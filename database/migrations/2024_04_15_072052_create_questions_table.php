@@ -22,11 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('team')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            // $table->foreign('uni_id')->references('id')->on('universities')->onDelete('cascade');
-            // $table->foreign('category_id')->references('id')->on('categories');
-            // $table->foregin('team')->references('id')->on('teams')->onDelete('cascade');
         });
     }
 

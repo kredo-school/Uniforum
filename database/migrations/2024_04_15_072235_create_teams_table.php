@@ -20,8 +20,6 @@ return new class extends Migration
             $table->unsignedBigInteger('uni_id');
             $table->timestamps();
             $table->softDeletes();
-
-            // $table->foreign('uni_id')->references('id')->on('universities')->onDelete('cascade');
         });
     }
 
