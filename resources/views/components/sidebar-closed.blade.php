@@ -1,9 +1,6 @@
 <div class='h-100 bg-light-purple'>
     <nav>
         <ul class='list-unstyled text-center py-3'>
-            {{-- <button class='btn btn-none text-white mb-4' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasExample' aria-controls='offcanvasExample'>
-                <i class='fa-solid fa-bars fs-2'></i>
-            </button> --}}
             <button type='button' class='mb-4 btn btn-none' id='menu-btn'>
                 <i class='fa-solid fa-bars fs-2 text-white'></i>
             </button>
@@ -29,5 +26,3 @@
         </ul>
     </nav>
 </div>
-
-{{-- logout modal --}}

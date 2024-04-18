@@ -53,7 +53,7 @@ body{
     width: 80%;
 }
 .w-70{
-    width: 70%;
+    width: 70% !important;
 }
 .w-65{
     width: 65%;

@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\HomeController;
 
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
 
 Route::get('/view', function () {
     return view('user.view-question');
@@ -92,7 +93,7 @@ Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
 
-Route::post('/register/user', [App\Http\Controllers\Auth\RegisterController::class, 'store'])->name('register-user');
+Route::post('/register/user', [RegisterController::class, 'store'])->name('register-user');
 
 Route::get('/super-admin/questions/report', function () {
     return view('super-admin.questions.report');
@@ -111,7 +112,13 @@ Route::get('/super-admin/answers/report', function () {
 })->name('super-admin.answers.report');
 
 
+Route::post('/logout/user', [LogoutController::class, 'logout'])->name('logout-user');
+
+Route::post('/login/user', [LoginController::class, 'login'])->name('login-user');
+
+
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
