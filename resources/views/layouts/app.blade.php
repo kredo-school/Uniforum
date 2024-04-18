@@ -272,7 +272,7 @@
                     <div class="modal-header w-100 mx-auto ">
                         <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Logout</h3>
                     </div>
-                    <form action="">
+                    <form action="{{route('logout-user')}}" method="POST">
                         @csrf
                         <div class="modal-body text-start">
                             <p class="dark-purple">Are you sure you want to logout?</p>
