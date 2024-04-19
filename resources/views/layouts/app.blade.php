@@ -193,51 +193,106 @@
                 </div>
 
                 {{-- Ask Question Popup --}}
-                <div class="modal fade" id="ask-question-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
-                            <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Ask Question</h3>
-                        </div>
-                        <div class="modal-body">
-                            <form action="" method="POST">
-                                @csrf
+                <form action="{{ route('question.store')}}" method="POST" enctype="multipart/form-data" id="post-question-form">
+                    @csrf
+                    <div class="modal fade" id="ask-question-modal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
+                                <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Ask Question</h3>
+                            </div>
+                            <div class="modal-body">
                                 <div class="text-center">
-                                    <select class="create-q-select px-1 mb-2">
-                                        <option selected>To where</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <input id="title" type="text" class="create-q-input px-2 mb-2 py-1" required placeholder="Title">
-                                    <select class="create-q-select px-1 mb-2">
-                                        <option selected>Category</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <textarea name="" id="" rows="5" class="w-80 big-textarea px-2 py-2 mb-2" placeholder=" Write your question in here!"></textarea>
+                                    <div class="mb-2">
+                                        <select class="create-q-select px-1" name="team">
+                                            <option disabled selected>To where</option>
+                                            <option value="0">general</option>
+
+                                            @foreach ($teams as $team)
+                                            @if ($team->user_team->user_id == Auth::user()->id)
+                                            <option value="{{$team->id}}">{{$team->name}}</option>
+                                            @endif
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('team')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <input id="title" type="text" class="create-q-input px-2 py-1" placeholder="Title" name="title" value="{{ old('title') }}">
+
+                                        @error('title')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <select class="create-q-select px-1" name="category">
+                                            <option selected disabled>Category</option>
+                                            @foreach ($categories as $category)
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('category')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <textarea name="content" id="" rows="5" class="w-80 big-textarea px-2 py-2" placeholder=" Write your question in here!"></textarea>
+
+                                        @error('content')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start m-0" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                        @enderror
+                                    </div>
+
                                     <div class="w-80 mx-auto">
-                                        <input type="file" class="form-control">
+                                        <input type="file" class="form-control" name="image">
                                         <div class="text-end">
                                             <label for="" class="form-text purple-gray x-small">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
                                         </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer border-0 pb-3">
-                            <div class="w-80 mx-auto row">
-                                <div class="col text-end">
-                                    <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
-                                </div>
-                                <div class="col">
-                                    <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+
+                                    @error('image')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                    @enderror
                                 </div>
                             </div>
+                            <div class="modal-footer border-0 pb-3">
+                                <div class="w-80 mx-auto row">
+                                    <div class="col text-end">
+                                        <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" class="create-q-post-btn w-100 py-1" id="post-btn">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                </div>
+                </form>
+                @if (count($errors) > 0)
+                <script type="text/javascript">
+                    $( document ).ready(function() {
+                         $('#ask-question-modal').modal('show');
+                    });
+                </script>
+              @endif
             </div>
         </nav>
         @endguest
@@ -325,4 +380,10 @@
         }
     }
 </script>
+{{-- @if (count($errors) > 0)
+<script>
+    $('#ask-question-modal').modal('show');
+
+</script>
+@endif --}}
 </html>
