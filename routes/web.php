@@ -6,8 +6,7 @@ use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
-
-
+use App\Http\Controllers\QuestionController;
 
 Route::get('/view', function () {
     return view('user.view-question');
@@ -121,4 +120,6 @@ Route::post('/login/user', [LoginController::class, 'login'])->name('login-user'
 Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
 
