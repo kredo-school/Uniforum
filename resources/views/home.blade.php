@@ -19,54 +19,33 @@
                 </div>
                 <div class="col-3 my-auto">
                     <select class="form-select category-select">
-                        <option selected>Category</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option disabled selected>Category</option>
+                        @foreach ($categories as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
         </form>
     </div>
     <div class="mt-5 w-85 mx-auto text-center">
+        @foreach ($home_questions as $question)
         <a href="{{route('view')}}" class="text-decoration-none">
             <div class="q-content pt-2 pb-1 px-4 mb-3">
                 <div class="category-label w-20 ms-auto text-center mt-1">
-                    <p>Club</p>
+                    <p class="m-0">{{$question->category->name}}</p>
                 </div>
-                <div class="text-start">
-                    <h4 class="dark-purple text-start">How can I join the Kredo Soccer Club?</h4>
+                <div class="text-start my-1">
+                    <h4 class="dark-purple text-start">{{$question->title}}</h4>
                 </div>
                 <div class="text-end">
-                    <form action="">
-                        <button type="submit" class="btn btn-none px-0">
-                            <i class="fa-regular fa-heart purple-gray"></i>
-                        </button>
-                        <span class="purple-gray">1</span>
-                        <span class="ms-3 purple-gray">2024/3/26 15:05</span>
-                    </form>
+                    <i class="fa-regular fa-heart purple-gray"></i>
+                    <span class="purple-gray">{{$question->likes->count()}}</span>
+                    <span class="ms-3 purple-gray">{{$question->created_at->format('m/d/Y')}}</span>
                 </div>
             </div>
         </a>
-        <a href="{{route('view')}}" class="text-decoration-none">
-            <div class="q-content pt-2 pb-1 px-4 mb-3">
-                <div class="category-label w-20 ms-auto text-center mt-1">
-                    <p>Club</p>
-                </div>
-                <div class="text-start">
-                    <h4 class="dark-purple text-start">How can I join the Kredo Soccer Club?</h4>
-                </div>
-                <div class="text-end">
-                    <form action="">
-                        <button type="submit" class="btn btn-none px-0">
-                            <i class="fa-regular fa-heart purple-gray"></i>
-                        </button>
-                        <span class="purple-gray">1</span>
-                        <span class="ms-3 purple-gray">2024/3/26 15:05</span>
-                    </form>
-                </div>
-            </div>
-        </a>
+        @endforeach
     </div>
 </div>
 @endsection
