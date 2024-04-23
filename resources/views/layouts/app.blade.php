@@ -220,6 +220,11 @@
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#ask-question-modal').modal('show');
+                                                });
+                                            </script>
                                         @enderror
                                     </div>
 
@@ -230,6 +235,11 @@
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#ask-question-modal').modal('show');
+                                                });
+                                            </script>
                                         @enderror
                                     </div>
 
@@ -245,6 +255,11 @@
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#ask-question-modal').modal('show');
+                                                });
+                                            </script>
                                         @enderror
                                     </div>
 
@@ -255,6 +270,11 @@
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start m-0" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#ask-question-modal').modal('show');
+                                                });
+                                            </script>
                                         @enderror
                                     </div>
 
@@ -269,6 +289,11 @@
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
                                                 <strong>{{ $message }}</strong>
                                             </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#ask-question-modal').modal('show');
+                                                });
+                                            </script>
                                     @enderror
                                 </div>
                             </div>
@@ -286,13 +311,6 @@
                         </div>
                     </div>
                 </form>
-                @if (count($errors) > 0)
-                <script type="text/javascript">
-                    $( document ).ready(function() {
-                         $('#ask-question-modal').modal('show');
-                    });
-                </script>
-              @endif
             </div>
         </nav>
         @endguest

@@ -4,21 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Answer;
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
     private $question;
+    private $answer;
 
-    public function __construct(Question $question){
+    public function __construct(Question $question, Answer $answer){
         $this->question = $question;
+        $this->answer = $answer;
     }
 
     public function show($q_id){
         $detail = $this->question->findOrFail($q_id);
-        
-        return view('user.question.show')->with('detail', $detail);
+        $posted_answers = $this->answer->where('q_id', $q_id)->latest()->paginate(5);
+
+        return view('user.question.show')->with('detail', $detail)->with('posted_answers', $posted_answers);
     }
 
     public function store(Request $request)

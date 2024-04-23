@@ -46,6 +46,10 @@
             </div>
         </a>
         @endforeach
+        <div class="w-100 mt-4">
+            {{ $home_questions->links() }}
+        </div>
     </div>
 </div>
+
 @endsection

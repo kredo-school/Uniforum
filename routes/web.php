@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LogoutController;
@@ -121,4 +122,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
 
 Route::get('/question/show/{q_id}', [QuestionController::class, 'show'])->name('question.show');
+
+Route::post('/answer/store/{q_id}', [AnswerController::class, 'store'])->name('answer.store');
 
