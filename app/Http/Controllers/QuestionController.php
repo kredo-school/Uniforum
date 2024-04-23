@@ -17,6 +17,7 @@ class QuestionController extends Controller
 
     public function show($q_id){
         $detail = $this->question->findOrFail($q_id);
+        
         return view('user.question.show')->with('detail', $detail);
     }
 

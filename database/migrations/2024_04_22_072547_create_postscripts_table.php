@@ -12,13 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('postscripts', function (Blueprint $table) {
-
             $table->id();
             $table->unsignedBigInteger('q_id');
             $table->string('content');
             $table->timestamps();
             $table->foreign('q_id')->references('id')->on('questions')->onDelete('cascade');
-
         });
     }
 
