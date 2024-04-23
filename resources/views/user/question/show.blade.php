@@ -44,7 +44,7 @@
 
         {{-- p.s. posted --}}
         @if ($detail->postscript)
-        <div class="container w-75 mt-2">
+        <div class="container w-75 mt-4">
             <h2 class="second-title">P.S.</h2>
             <div class="my-4 px-2">
                 <p class="fs-5">
@@ -73,36 +73,38 @@
 
         @if (!$detail->postscript && $detail->user_id == Auth::user()->id)
         {{-- write p.s. --}}
-        <form action="">
+        <form action="{{route('ps.store', $detail->id)}}" method="POST">
             @csrf
             <div class="container w-75 mt-5">
                 <h2 class="second-title mb-2">Write Postscript</h2>
-                <textarea name="" id="" rows="10" class="w-100 big-textarea px-2 py-2" placeholder=" Write your postscript in here!"></textarea>
-                <button type="button" class="post-btn w-100 py-1 mt-2" data-bs-toggle="modal" data-bs-target="#post-ps-">Post</button>
+                <textarea name="ps_content" rows="10" class="w-100 big-textarea px-2 py-2" placeholder=" Write your postscript in here!"></textarea>
+                @error('ps_content')
+                    <div class="uni-invalid-feedback text-start" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
+                <button type="button" class="post-btn w-100 py-1 mt-2" data-bs-toggle="modal" data-bs-target="#post-ps">Post</button>
             </div>
 
-            <div class="modal fade" id="post-ps-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="post-ps" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header w-100 mx-auto ">
                             <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Post P.S.</h3>
                         </div>
-                        <form action="">
-                            @csrf
-                            <div class="modal-body text-start">
-                                <p class="dark-purple">Are you sure you want to post this p.s.?</p>
-                            </div>
-                            <div class="modal-footer pb-3 border-0 pt-3">
-                                <div class="w-100 mx-auto row">
-                                    <div class="col text-start">
-                                        <button type="button" class="cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                    </div>
-                                    <div class="col text-end">
-                                        <button type="submit" class="execute w-50 py-1">Post</button>
-                                    </div>
+                        <div class="modal-body text-start">
+                            <p class="dark-purple">Are you sure you want to post this p.s.?</p>
+                        </div>
+                        <div class="modal-footer pb-3 border-0 pt-3">
+                            <div class="w-100 mx-auto row">
+                                <div class="col text-start">
+                                    <button type="button" class="cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col text-end">
+                                    <button type="submit" class="execute w-50 py-1">Post</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
