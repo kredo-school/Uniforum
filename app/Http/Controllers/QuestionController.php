@@ -10,9 +10,14 @@ use Illuminate\Support\Facades\Auth;
 class QuestionController extends Controller
 {
     private $question;
-    
-    public function __construct(Question $question, Category $category){
+
+    public function __construct(Question $question){
         $this->question = $question;
+    }
+
+    public function show($q_id){
+        $detail = $this->question->findOrFail($q_id);
+        return view('user.question.show')->with('detail', $detail);
     }
 
     public function store(Request $request)

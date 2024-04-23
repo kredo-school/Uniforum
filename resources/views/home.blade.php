@@ -30,7 +30,7 @@
     </div>
     <div class="mt-5 w-85 mx-auto text-center">
         @foreach ($home_questions as $question)
-        <a href="{{route('view')}}" class="text-decoration-none">
+        <a href="{{route('question.show', $question->id)}}" class="text-decoration-none">
             <div class="q-content pt-2 pb-1 px-4 mb-3">
                 <div class="category-label w-20 ms-auto text-center mt-1">
                     <p class="m-0">{{$question->category->name}}</p>
