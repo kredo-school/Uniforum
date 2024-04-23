@@ -8,6 +8,8 @@ use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Team;
 use App\Models\UserTeam;
+use Illuminate\Pagination\Paginator;
+use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,6 @@ class AppServiceProvider extends ServiceProvider
         $categories = Category::get();
         View::share('categories', $categories);
         View::share('teams', $teams);
+        Paginator::useBootstrap();
     }
 }

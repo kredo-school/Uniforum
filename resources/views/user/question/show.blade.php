@@ -112,11 +112,11 @@
     </div>
 
     {{-- answer area --}}
-    @if ($detail->answers->count() > 0)
+    @if ($posted_answers->count() > 0)
     <hr class="mt-4 w-85 mx-auto">
-    <div class="mt-4" id="">
+    <div class="mt-5" id="">
         <h2 class="second-title w-75 mx-auto">Answers</h2>
-        @foreach ($detail->answers as $answer)
+        @foreach ($posted_answers as $answer)
         <div class="w-75 mx-auto" id="">
             <div class="row mt-5">
                 <div class="col-1 text-center">
@@ -235,23 +235,41 @@
         </div>
         @endforeach
     </div>
+    <div class="w-100 mt-5">
+        {{ $posted_answers->links() }}
+    </div>
     @endif
 
     @if ($detail->user_id != Auth::user()->id)
     {{-- write an answer --}}
     <hr class="mt-4 w-85 mx-auto">
-    <form action="">
-        <div class="container w-75 mt-4">
+    <form action="{{route('answer.store', $detail->id)}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="container w-85 mt-4">
             <h2 class="second-title">Write your answer</h2>
             <div class="mt-4">
-                <textarea name="" id="" rows="10" class="w-100 big-textarea px-2 py-2" placeholder=" Write your answer in here!"></textarea>
-                <input type="file" class="form-control mt-3">
+                <textarea name="post_answer_content" id="" rows="10" class="w-100 big-textarea px-2 py-2" placeholder=" Write your answer in here!">{{ old('post_answer_content') }}</textarea>
+
+                @error('post_answer_content')
+                    <div class="uni-invalid-feedback text-start" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
+
+                <input type="file" class="form-control mt-3" name="post_answer_image">
                 <label for="" class="form-text purple-gray">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
-                <button type="button" class="post-btn w-100 py-1 mt-3" data-bs-toggle="modal" data-bs-target="#post-answer-">Post</button>
+
+                @error('post_answer_image')
+                    <div class="uni-invalid-feedback text-start" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </div>
+                @enderror
+
+                <button type="button" class="post-btn w-100 py-1 mt-3" data-bs-toggle="modal" data-bs-target="#post-answer">Post</button>
             </div>
         </div>
 
-        <div class="modal fade" id="post-answer-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="post-answer" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header w-100 mx-auto">
