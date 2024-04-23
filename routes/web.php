@@ -7,6 +7,7 @@ use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostscriptController;
 use App\Http\Controllers\QuestionController;
 
 
@@ -125,3 +126,4 @@ Route::get('/question/show/{q_id}', [QuestionController::class, 'show'])->name('
 
 Route::post('/answer/store/{q_id}', [AnswerController::class, 'store'])->name('answer.store');
 
+Route::post('/ps/store/{q_id}', [PostscriptController::class, 'store'])->name('ps.store');
