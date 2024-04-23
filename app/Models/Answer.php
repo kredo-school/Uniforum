@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
-class Question extends Model
+class Answer extends Model
 {
     use HasFactory;
 
@@ -14,23 +14,16 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category(){
-        return $this->belongsTo(Category::class);
+    public function question(){
+        return $this->belongsTo(Question::class);
     }
 
     public function likes(){
-        return $this->hasMany(QuestionLike::class, 'q_id');
+        return $this->hasMany(AnswerLike::class, 'a_id');
     }
 
     public function isLiked(){
         return $this->likes()->where('user_id', Auth::user()->id)->exists();
     }
 
-    public function postscript(){
-        return $this->hasOne(Postscript::class, 'q_id');
-    }
-
-    public function answers(){
-        return $this->hasMany(Answer::class, 'q_id');
-    }
 }

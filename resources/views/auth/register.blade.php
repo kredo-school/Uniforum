@@ -65,7 +65,7 @@ $all_uni = University::get();
                             </div>
 
                             <div class="row mb-3">
-                                <div class="text-center w-80 mx-auto">
+                                <div class="text-center">
                                     <input id="password" type="password" class="register-input @error('password') is-invalid @enderror py-1 px-2" name="password" required autocomplete="current-password" placeholder="password">
 
                                     @error('password')

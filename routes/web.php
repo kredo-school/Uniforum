@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\QuestionController;
 
-Route::get('/view', function () {
-    return view('user.view-question');
-})->name('view');
 
 Route::get('/profile', function () {
     return view('user.profile.index');
@@ -122,4 +119,6 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
+
+Route::get('/question/show/{q_id}', [QuestionController::class, 'show'])->name('question.show');
 
