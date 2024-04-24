@@ -26,7 +26,7 @@
             </div>
             @if ($detail->user_id != Auth::user()->id)
             <div class="col text-end my-auto">
-                <button class="btn btn-none purple-gray" type="button" data-bs-toggle="modal" data-bs-target="#report-question-{{$detail->id}}"><i class="fa-regular fa-flag"></i> Report this post</button>
+                <button class="btn btn-none purple-gray" type="button" data-bs-toggle="modal" data-bs-target="#report-question-modal"><i class="fa-regular fa-flag"></i> Report this post</button>
             </div>
             @endif
         </div>
@@ -44,7 +44,7 @@
 
         {{-- p.s. posted --}}
         @if ($detail->postscript)
-        <div class="container w-75 mt-4">
+        <div class="container w-85 mt-4">
             <h2 class="second-title">P.S.</h2>
             <div class="my-4 px-2">
                 <p class="fs-5">
@@ -75,7 +75,7 @@
         {{-- write p.s. --}}
         <form action="{{route('ps.store', $detail->id)}}" method="POST">
             @csrf
-            <div class="container w-75 mt-5">
+            <div class="container w-85 mt-5">
                 <h2 class="second-title mb-2">Write Postscript</h2>
                 <textarea name="ps_content" rows="10" class="w-100 big-textarea px-2 py-2" placeholder=" Write your postscript in here!"></textarea>
                 @error('ps_content')
@@ -191,7 +191,7 @@
                                     <option value="2">Two</option>
                                     <option value="3">Three</option>
                                 </select>
-                                <textarea name="" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this team as detailed as possible."></textarea>
+                                <textarea name="" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this question as detailed as possible."></textarea>
                             </div>
                         </form>
                     </div>
@@ -296,44 +296,68 @@
                 </div>
             </div>
         </div>
-
     </form>
     @endif
 
     {{-- report question popup --}}
-    <div class="modal fade" id="report-question-{{$detail->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
-                    <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Report Question</h3>
-                </div>
-                <div class="modal-body">
-                    <form action="" method="POST">
-                        @csrf
+    <form action="{{route('question.report.store', $detail->id)}}" method="POST">
+        @csrf
+        <div class="modal fade" id="report-question-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
+                        <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Report Question</h3>
+                    </div>
+                    <div class="modal-body">
                         <div class="text-center">
-                            <select class="create-q-select px-1 mb-3">
-                                <option selected>Category of Problem</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
-                            <textarea name="" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this team as detailed as possible."></textarea>
+                            <div class="mb-3">
+                                <select class="create-q-select px-1" name="q_report_category">
+                                    <option disabled selected>Category of Problem</option>
+                                    @foreach ($report_categories as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                                @error('q_report_category')
+                                <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                                <script type="text/javascript">
+                                    $( document ).ready(function() {
+                                         $('#report-question-modal').modal('show');
+                                    });
+                                </script>
+                                @enderror
+                            </div>
+
+                            <div class="">
+                                <textarea name="q_report_content" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this team as detailed as possible.">{{ old('report_question_content') }}</textarea>
+                                @error('q_report_content')
+                                <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                                <script type="text/javascript">
+                                    $( document ).ready(function() {
+                                         $('#report-question-modal').modal('show');
+                                    });
+                                </script>
+                                @enderror
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer border-0 pb-3">
-                    <div class="w-80 mx-auto row">
-                        <div class="col text-end">
-                            <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
-                        </div>
-                        <div class="col">
-                            <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                    </div>
+                    <div class="modal-footer border-0 pb-3">
+                        <div class="w-80 mx-auto row">
+                            <div class="col text-end">
+                                <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="col">
+                                <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 
 
     {{-- delete question modal --}}
