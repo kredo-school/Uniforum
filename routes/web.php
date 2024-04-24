@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostscriptController;
 use App\Http\Controllers\QuestionController;
-
+use App\Http\Controllers\QuestionReportController;
+use App\Models\QuestionReport;
 
 Route::get('/profile', function () {
     return view('user.profile.index');
@@ -127,3 +128,5 @@ Route::get('/question/show/{q_id}', [QuestionController::class, 'show'])->name('
 Route::post('/answer/store/{q_id}', [AnswerController::class, 'store'])->name('answer.store');
 
 Route::post('/ps/store/{q_id}', [PostscriptController::class, 'store'])->name('ps.store');
+
+Route::post('/question/report/store/{q_id}', [QuestionReportController::class, 'store'])->name('question.report.store');
