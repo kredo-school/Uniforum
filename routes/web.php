@@ -135,3 +135,5 @@ Route::post('/question/report/store/{q_id}', [QuestionReportController::class, '
 Route::post('/answer/report/store/{a_id}', [AnswerReportController::class, 'store'])->name('answer.report.store');
 
 Route::delete('/question/delete/{q_id}', [QuestionController::class, 'destroy'])->name('question.delete');
+
+Route::delete('/answer/delete/{a_id}', [AnswerController::class, 'destroy'])->name('answer.delete');

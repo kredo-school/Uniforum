@@ -31,4 +31,10 @@ class AnswerController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroy($a_id){
+        $this->answer->destroy($a_id);
+
+        return redirect()->back();
+    }
 }
