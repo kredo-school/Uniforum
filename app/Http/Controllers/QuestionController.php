@@ -54,4 +54,10 @@ class QuestionController extends Controller
 
         return redirect()->route('home');
     }
+
+    public function destroy($q_id){
+        $this->question->destroy($q_id);
+        
+        return redirect()->route('home');
+    }
 }
