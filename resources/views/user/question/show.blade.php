@@ -397,8 +397,9 @@
                 <div class="modal-header w-100 mx-auto ">
                     <h3 class="modal-title red" id="exampleModalLongTitle">Delete Question</h3>
                 </div>
-                <form action="">
+                <form action="{{route('question.delete', $detail->id)}}" method="POST">
                     @csrf
+                    @method('DELETE')
                     <div class="modal-body text-start">
                         <p class="red">Are you sure you want to delete this question?</p>
                     </div>
