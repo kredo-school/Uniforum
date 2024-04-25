@@ -244,10 +244,11 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header w-100 mx-auto ">
-                        <h3 class="modal-title red" id="exampleModalLongTitle">Delete Answer</h3>
+                        <h3 class="modal-title red" id="exampleModalLongTitle">Delete Answer ID: {{$answer->id}}</h3>
                     </div>
-                    <form action="">
+                    <form action="{{route('answer.delete', $answer->id)}}" method="POST">
                         @csrf
+                        @method('DELETE')
                         <div class="modal-body text-start">
                             <p class="red">Are you sure you want to delete this answer?</p>
                         </div>
