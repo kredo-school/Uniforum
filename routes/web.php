@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\AnswerLikeController;
 use App\Http\Controllers\AnswerReportController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -142,3 +143,7 @@ Route::delete('/answer/delete/{a_id}', [AnswerController::class, 'destroy'])->na
 Route::post('/question/like/{q_id}', [QuestionLikeController::class, 'store'])->name('question.like.store');
 
 Route::delete('/question/like/delete/{q_id}', [QuestionLikeController::class, 'destroy'])->name('question.like.delete');
+
+Route::post('/answer/like/{a_id}', [AnswerLikeController::class, 'store'])->name('answer.like.store');
+
+Route::delete('/answer/like/delete/{a_id}', [AnswerLikeController::class, 'destroy'])->name('answer.like.delete');
