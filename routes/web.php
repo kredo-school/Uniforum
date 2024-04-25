@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\AnswerReportController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LogoutController;
@@ -130,3 +131,5 @@ Route::post('/answer/store/{q_id}', [AnswerController::class, 'store'])->name('a
 Route::post('/ps/store/{q_id}', [PostscriptController::class, 'store'])->name('ps.store');
 
 Route::post('/question/report/store/{q_id}', [QuestionReportController::class, 'store'])->name('question.report.store');
+
+Route::post('/answer/report/store/{a_id}', [AnswerReportController::class, 'store'])->name('answer.report.store');
