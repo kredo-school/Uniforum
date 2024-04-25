@@ -13,7 +13,9 @@ use App\Http\Controllers\PostscriptController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionLikeController;
 use App\Http\Controllers\QuestionReportController;
+use App\Http\Controllers\TeamController;
 use App\Models\QuestionReport;
+use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
 
 Route::get('/profile', function () {
     return view('user.profile.index');
@@ -147,3 +149,5 @@ Route::delete('/question/like/delete/{q_id}', [QuestionLikeController::class, 'd
 Route::post('/answer/like/{a_id}', [AnswerLikeController::class, 'store'])->name('answer.like.store');
 
 Route::delete('/answer/like/delete/{a_id}', [AnswerLikeController::class, 'destroy'])->name('answer.like.delete');
+
+Route::post('/team/store', [TeamController::class, 'store'])->name('team.store');
