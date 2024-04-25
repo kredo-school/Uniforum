@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostscriptController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuestionLikeController;
 use App\Http\Controllers\QuestionReportController;
 use App\Models\QuestionReport;
 
@@ -137,3 +138,7 @@ Route::post('/answer/report/store/{a_id}', [AnswerReportController::class, 'stor
 Route::delete('/question/delete/{q_id}', [QuestionController::class, 'destroy'])->name('question.delete');
 
 Route::delete('/answer/delete/{a_id}', [AnswerController::class, 'destroy'])->name('answer.delete');
+
+Route::post('/question/like/{q_id}', [QuestionLikeController::class, 'store'])->name('question.like.store');
+
+Route::delete('/question/like/delete/{q_id}', [QuestionLikeController::class, 'destroy'])->name('question.like.delete');

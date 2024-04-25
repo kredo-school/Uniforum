@@ -56,14 +56,32 @@
 
         {{-- heart and time --}}
         <div class="mt-3 text-end ">
-            <form action="" class="d-inline">
+            {{-- if the user already like this question --}}
+            @if ($detail->isLiked())
+            <form action="{{route('question.like.delete', $detail->id)}}" class="d-inline" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-none px-0">
+                    <i class="fa-solid fa-heart purple-gray"></i>
+                </button>
+            </form>
+            <span class="purple-gray">{{$detail->likes->count()}}</span>
+            <span class="ms-3 purple-gray">{{$detail->created_at->format('m/d/Y H:i:s')}}</span>
+
+            {{-- if the user has not like this question --}}
+            @else
+            <form action="{{route('question.like.store', $detail->id)}}" class="d-inline" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-none px-0">
                     <i class="fa-regular fa-heart purple-gray"></i>
                 </button>
-                <span class="purple-gray">1</span>
-                <span class="ms-3 purple-gray">{{$detail->created_at->format('m/d/Y H:i:s')}}</span>
             </form>
+            <span class="purple-gray">{{$detail->likes->count()}}</span>
+            <span class="ms-3 purple-gray">{{$detail->created_at->format('m/d/Y H:i:s')}}</span>
+
+            @endif
+
+
             @if ($detail->user_id == Auth::user()->id)
             <button type="button" class="trash-btn ms-2" data-bs-toggle="modal" data-bs-target="#delete-question-{{$detail->id}}">
                 <i class="fa-solid fa-trash red"></i>
@@ -159,9 +177,10 @@
                     <button type="submit" class="btn btn-none px-0">
                         <i class="fa-regular fa-heart purple-gray"></i>
                     </button>
-                    <span class="purple-gray">{{$answer->likes->count()}}</span>
-                    <span class="ms-3 purple-gray">{{$answer->created_at->format('m/d/Y H:i:s')}}</span>
                 </form>
+                <span class="purple-gray">{{$answer->likes->count()}}</span>
+                <span class="ms-3 purple-gray">{{$answer->created_at->format('m/d/Y H:i:s')}}</span>
+
                 @if ($answer->user_id == Auth::user()->id)
                 <button type="button" class="trash-btn ms-2" data-bs-toggle="modal" data-bs-target="#delete-answer-{{$answer->id}}">
                     <i class="fa-solid fa-trash red"></i>
