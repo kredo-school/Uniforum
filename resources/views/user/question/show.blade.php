@@ -137,7 +137,7 @@
                 </div>
                 @if ($answer->user_id != Auth::user()->id)
                 <div class="col text-end my-auto">
-                    <button class="btn btn-none purple-gray" type="button" data-bs-toggle="modal" data-bs-target="#report-answer-{{$answer->id}}"><i class="fa-regular fa-flag"></i> Report this post</button>
+                    <button class="btn btn-none purple-gray reportAnswerBtn" type="button" data-bs-toggle="modal" data-bs-target="#report-answer-{{$answer->id}}"><i class="fa-regular fa-flag"></i> Report this post</button>
                 </div>
                 @endif
             </div>
@@ -175,39 +175,69 @@
         @endif
 
         {{-- report answer popup --}}
-        <div class="modal fade" id="report-answer-{{$answer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
-            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
-                        <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Report Answer</h3>
-                    </div>
-                    <div class="modal-body">
-                        <form action="" method="POST">
-                            @csrf
+        <form action="{{route('answer.report.store', $answer->id)}}" method="POST">
+            @csrf
+            <div class="modal fade" id="report-answer-{{$answer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
+                            <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Report Answer ID: {{$answer->id}}</h3>
+                        </div>
+                        <div class="modal-body">
                             <div class="text-center">
-                                <select class="create-q-select px-1 mb-3">
-                                    <option selected>Category of Problem</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                                <textarea name="" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this question as detailed as possible."></textarea>
+                                <div class="mb-3">
+                                    <input type="hidden" value="{{$answer->id}}" name="target_id">
+                                    <select class="create-q-select px-1" name="a_report_category">
+                                        <option disabled selected>Category of Problem</option>
+                                        @foreach ($report_categories as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('a_report_category')
+                                    @if ($answer->id == old('target_id'))
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                    $( document ).ready(function() {
+                                         $("#report-answer-{{$answer->id}}").modal('show');
+                                    });
+                                    </script>
+                                    @endif
+                                    @enderror
+                                </div>
+
+                                <div class="">
+                                    <textarea name="a_report_content" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this question as detailed as possible."></textarea>
+                                    @error('a_report_content')
+                                    @if ($answer->id == old('target_id'))
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $("#report-answer-{{$answer->id}}").modal('show');
+                                        });
+                                    </script>
+                                    @endif
+                                    @enderror
+                                </div>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer border-0 pb-3">
-                        <div class="w-80 mx-auto row">
-                            <div class="col text-end">
-                                <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
-                            </div>
-                            <div class="col">
-                                <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                        </div>
+                        <div class="modal-footer border-0 pb-3">
+                            <div class="w-80 mx-auto row">
+                                <div class="col text-end">
+                                    <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
+                                </div>
+                                <div class="col">
+                                    <button type="submit" class="create-q-post-btn w-100 py-1" id="submit_btn" value="{{$answer->id}}">Post</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         {{-- delete answer popup --}}
         <div class="modal fade" id="delete-answer-{{$answer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -386,6 +416,5 @@
             </div>
         </div>
     </div>
-
 </div>
 @endsection
