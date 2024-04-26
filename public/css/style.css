@@ -412,3 +412,20 @@ td{
     background-color: #8E85C6;
     border-color: #8E85C6;
 }
+
+.avatar-lg{
+    width: 9rem;
+    height: 9rem !important;
+    object-fit: cover;
+}
+
+.avatar-sm{
+    width: 3rem;
+    height: 3rem;
+    object-fit: cover;
+}
+.avatar-md{
+    width: 3.5rem;
+    height: 3.5rem;
+    object-fit: cover;
+}
