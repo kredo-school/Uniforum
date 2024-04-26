@@ -3,11 +3,11 @@
         <nav>
             <ul class='list-unstyled py-4'>
                 <div class="row mb-4 mt-4">
-                    <div class="row w-85 mx-auto">
+                    <div class="row w-90 mx-auto">
                         <div class="col d-flex align-items-center">
                             <h3 class="m-0 text-white">MENU</h3>
                         </div>
-                        <div class="col text-end">
+                        <div class="col text-end my-auto">
                             <button type='button' class='btn btn-none' id='close-btn'>
                                 <i class='fa-solid fa-bars fs-2 text-white'></i>
                             </button>

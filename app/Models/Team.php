@@ -17,4 +17,13 @@ class Team extends Model
     public function membered(){
         return $this->user_team()->where('user_id', Auth::user()->id)->exists();
     }
+
+    public function invite(){
+        return $this->hasMany(Invite::class, 'team_id');
+    }
+
+    public function inviting(){
+        return $this->invite()->where('user_id', Auth::user()->id)->exists();
+    }
+
 }
