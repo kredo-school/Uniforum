@@ -106,7 +106,7 @@
                     </div>
                 </div>
             </form>
-            
+
             {{-- showing team area --}}
             <div class="mt-5 p-0">
 
@@ -147,37 +147,30 @@
                 {{-- my team --}}
                 <div class="mt-4">
                     <h2 class="second-title text-start mb-3">My Team</h2>
+                    @foreach ($teams as $team)
+                    @if($team->membered())
                     <a href="{{route('team.view')}}" class="text-decoration-none">
                         <div class="team-content px-4 mb-3">
                             <div class="row py-3">
                                 <div class="col-auto d-flex align-items-center">
+                                    @if ($team->icon)
+                                    <img src="{{$team->icon}}" alt="" class="avatar-sm rounded">
+                                    @else
                                     <i class="fa-solid fa-square icon-sm text-white"></i>
+                                    @endif
                                 </div>
                                 <div class="col d-flex align-items-center">
-                                    <h5 class="text-white text-start m-0">Kredo Soccer Team</h5>
+                                    <h5 class="text-white text-start m-0">{{$team->name}}</h5>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> 100</span>
+                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$team->user_team->count()}}</span>
                                 </div>
                             </div>
                         </div>
                     </a>
+                    @endif
+                    @endforeach
 
-                    <a href="{{route('team.view')}}" class="text-decoration-none mb-2">
-                        <div class="team-content px-4 mb-3">
-                            <div class="row py-3">
-                                <div class="col-auto d-flex align-items-center">
-                                    <i class="fa-solid fa-square icon-sm text-white"></i>
-                                </div>
-                                <div class="col d-flex align-items-center">
-                                    <h5 class="text-white text-start m-0">Kredo Soccer Team</h5>
-                                </div>
-                                <div class="col d-flex justify-content-end">
-                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> 100</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
                 </div>
 
                 {{-- Recommended --}}
