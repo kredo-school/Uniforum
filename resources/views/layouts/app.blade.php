@@ -209,7 +209,7 @@
                                             <option value="0">general</option>
 
                                             @foreach ($teams as $team)
-                                            @if ($team->user_team->user_id == Auth::user()->id)
+                                            @if ($team->membered())
                                             <option value="{{$team->id}}">{{$team->name}}</option>
                                             @endif
                                             @endforeach
