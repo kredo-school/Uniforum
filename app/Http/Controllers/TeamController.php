@@ -6,15 +6,25 @@ use Illuminate\Http\Request;
 use App\Models\Team;
 use App\Models\UserTeam;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Invite;
 
 class TeamController extends Controller
 {
     private $team;
     private $user_team;
+    private $invite;
 
-    public function __construct(Team $team, UserTeam $user_team){
+    public function __construct(Team $team, UserTeam $user_team, Invite $invite){
         $this->team = $team;
         $this->user_team = $user_team;
+        $this->invite = $invite;
+    }
+
+    public function index(){
+        $my_teams = $this->user_team->where('user_id', Auth::user()->id)->get();
+        $inviting_teams = $this->invite->where('user_id', Auth::user()->id)->get();
+        // $not_my_teams = $this->user_team->where('user_id', '!=', Auth::user()->id)->get();
+        return view('user.team.index')->with('my_teams', $my_teams)->with('inviting_teams', $inviting_teams);
     }
 
     public function store(Request $request){

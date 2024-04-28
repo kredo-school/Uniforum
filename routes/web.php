@@ -33,10 +33,6 @@ Route::get('/profile/edit', function () {
     return view('user.profile.edit');
 })->name('profile.edit');
 
-Route::get('/team', function () {
-    return view('user.team.index');
-})->name('team');
-
 Route::get('/team/view', function () {
     return view('user.team.view');
 })->name('team.view');
@@ -149,5 +145,7 @@ Route::delete('/question/like/delete/{q_id}', [QuestionLikeController::class, 'd
 Route::post('/answer/like/{a_id}', [AnswerLikeController::class, 'store'])->name('answer.like.store');
 
 Route::delete('/answer/like/delete/{a_id}', [AnswerLikeController::class, 'destroy'])->name('answer.like.delete');
+
+Route::get('/team', [TeamController::class, 'index'])->name('team');
 
 Route::post('/team/store', [TeamController::class, 'store'])->name('team.store');

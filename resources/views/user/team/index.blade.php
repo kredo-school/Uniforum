@@ -113,7 +113,8 @@
                 {{-- invited --}}
                 <div>
                     <h2 class="second-title text-start mb-3">Invited</h2>
-                    @forelse (Auth::user()->invite as $inviting_team)
+                    {{-- @forelse (Auth::user()->inviting as $inviting_team) --}}
+                    @forelse ($inviting_teams as $inviting_team)
                     <div class="row mb-2">
                         <div class="col-10">
                             <a href="{{route('team.view')}}" class="text-decoration-none">
@@ -163,7 +164,8 @@
                 {{-- my team --}}
                 <div class="mt-4">
                     <h2 class="second-title text-start mb-3">My Team</h2>
-                    @forelse (Auth::user()->user_team as $my_team)
+                    {{-- @forelse (Auth::user()->user_team as $my_team) --}}
+                    @forelse ($my_teams as $my_team)
                     <a href="{{route('team.view')}}" class="text-decoration-none">
                         <div class="team-content px-4 mb-3">
                             <div class="row py-3">
@@ -185,7 +187,7 @@
                     </a>
                     @empty
                     <div class="mb-2 text-center">
-                        <h3 class="mid-gray">No invitation yet</h3>
+                        <h3 class="mid-gray">No Team yet</h3>
                     </div>
                     @endforelse
                 </div>
