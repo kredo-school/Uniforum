@@ -126,7 +126,7 @@
                             <p class="nav-link d-flex align-items-center dark-purple m-0 fs-5">Kredo University</p>
                         </li>
                         <li class="nav-item d-flex align-items-center me-2">
-                            <a class="nav-link d-flex align-items-center" href="{{route('profile')}}">
+                            <a class="nav-link d-flex align-items-center" href="{{route('profile.view', Auth::user()->id)}}">
                                 <i class="fa-solid fa-circle-user icon-x-sm text-secondary"></i>
                                 <p class="fs-5 m-0 thick-gray ms-2">{{Auth::user()->username}}</p>
                                 {{-- <div class="row">

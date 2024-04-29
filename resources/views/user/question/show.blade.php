@@ -11,7 +11,7 @@
         {{-- user icon and name --}}
         <div class="row">
             <div class="col-1 text-center">
-                <a href="{{route('profile')}}">
+                <a href="{{route('profile.view', $detail->user_id)}}">
                     @if ($detail->avatar)
                     <img src="{{$detail->avatar}}" alt="" class="rounded-circle icon-sm">
                     @else
@@ -20,7 +20,7 @@
                 </a>
             </div>
             <div class="col ms-auto d-flex align-items-center">
-                <a href="{{route('profile')}}" class="text-decoration-none">
+                <a href="{{route('profile.view', $detail->user_id)}}" class="text-decoration-none">
                     <p class="fs-4 m-0 thick-gray">{{$detail->user->username}}</p>
                 </a>
             </div>
@@ -137,7 +137,7 @@
         <div class="w-75 mx-auto" id="">
             <div class="row mt-5">
                 <div class="col-1 text-center">
-                    <a href="{{route('profile')}}">
+                    <a href="{{route('profile.view', $answer->user->id)}}">
                         @if($answer->user->avatar)
                         <img src="{{$answer->user->avatar}}" alt="" class="rounded-circle icon-sm">
                         @else
@@ -146,7 +146,7 @@
                     </a>
                 </div>
                 <div class="col ms-auto d-flex align-items-center">
-                    <a href="{{route('profile')}}" class="text-decoration-none">
+                    <a href="{{route('profile.view', $answer->user->id)}}" class="text-decoration-none">
                         <p class="fs-4 m-0 thick-gray">{{$answer->user->username}}</p>
                     </a>
                 </div>

@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="mt-3">
-            <a href="{{route('view')}}" class="text-decoration-none">
+            <a href="" class="text-decoration-none">
                 <div class="q-content pt-2 px-4 mb-2">
                     <div class="category-label w-20 ms-auto text-center">
                         <p class="fs-6">Club</p>
@@ -46,7 +46,7 @@
                 </div>
             </a>
 
-            <a href="{{route('view')}}" class="text-decoration-none">
+            <a href="" class="text-decoration-none">
                 <div class="q-content pt-2 px-4 mb-2">
                     <div class="category-label w-20 ms-auto text-center">
                         <p class="fs-6">Club</p>
