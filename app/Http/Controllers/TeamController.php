@@ -23,8 +23,16 @@ class TeamController extends Controller
     public function index(){
         $my_teams = $this->user_team->where('user_id', Auth::user()->id)->get();
         $inviting_teams = $this->invite->where('user_id', Auth::user()->id)->get();
-        // $not_my_teams = $this->user_team->where('user_id', '!=', Auth::user()->id)->get();
-        return view('user.team.index')->with('my_teams', $my_teams)->with('inviting_teams', $inviting_teams);
+        $recommends = $this->team->withCount('user_team')->orderBy('user_team_count', 'desc')->limit(5)->get();
+        foreach($recommends as $key => $reco){
+            foreach($my_teams as $my_team){
+                if($reco->id == $my_team->team_id){
+                    unset($recommends[$key]);
+                }
+            }
+        }
+        
+        return view('user.team.index')->with('my_teams', $my_teams)->with('inviting_teams', $inviting_teams)->with('recommends', $recommends);
     }
 
     public function store(Request $request){
