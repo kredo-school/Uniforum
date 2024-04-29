@@ -128,7 +128,7 @@
                         <li class="nav-item d-flex align-items-center me-2">
                             <a class="nav-link d-flex align-items-center" href="{{route('profile')}}">
                                 <i class="fa-solid fa-circle-user icon-x-sm text-secondary"></i>
-                                <p class="fs-5 m-0 thick-gray ms-2">Yukari</p>
+                                <p class="fs-5 m-0 thick-gray ms-2">{{Auth::user()->username}}</p>
                                 {{-- <div class="row">
                                     <div class="col text-center">
                                         <i class="fa-solid fa-circle-user fs-4 text-secondary"></i>

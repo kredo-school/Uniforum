@@ -31,8 +31,15 @@ class TeamController extends Controller
                 }
             }
         }
-        
+
         return view('user.team.index')->with('my_teams', $my_teams)->with('inviting_teams', $inviting_teams)->with('recommends', $recommends);
+    }
+
+    public function view($t_id){
+        $detail = $this->team->findOrFail($t_id);
+        
+        return view('user.team.view')->with('detail', $detail);
+
     }
 
     public function store(Request $request){

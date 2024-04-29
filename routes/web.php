@@ -146,6 +146,8 @@ Route::post('/answer/like/{a_id}', [AnswerLikeController::class, 'store'])->name
 
 Route::delete('/answer/like/delete/{a_id}', [AnswerLikeController::class, 'destroy'])->name('answer.like.delete');
 
-Route::get('/team', [TeamController::class, 'index'])->name('team');
-
-Route::post('/team/store', [TeamController::class, 'store'])->name('team.store');
+Route::controller(TeamController::class)->group(function () {
+    Route::get('/team', 'index')->name('team');
+    Route::post('/team/store', 'store')->name('team.store');
+    Route::get('/team/view/{t_id}', 'view')->name('team.view');
+});
