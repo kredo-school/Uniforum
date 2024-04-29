@@ -208,10 +208,8 @@
                                             <option disabled selected>To where</option>
                                             <option value="0">general</option>
 
-                                            @foreach ($teams as $team)
-                                            @if ($team->membered())
-                                            <option value="{{$team->id}}">{{$team->name}}</option>
-                                            @endif
+                                            @foreach (Auth::user()->user_team as $team)
+                                            <option value="{{$team->team->id}}">{{$team->team->name}}</option>
                                             @endforeach
 
                                         </select>

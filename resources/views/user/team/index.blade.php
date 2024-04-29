@@ -113,19 +113,25 @@
                 {{-- invited --}}
                 <div>
                     <h2 class="second-title text-start mb-3">Invited</h2>
+                    {{-- @forelse (Auth::user()->inviting as $inviting_team) --}}
+                    @forelse ($inviting_teams as $inviting_team)
                     <div class="row mb-2">
                         <div class="col-10">
                             <a href="{{route('team.view')}}" class="text-decoration-none">
                                 <div class="team-content px-4">
                                     <div class="row py-3">
                                         <div class="col-auto d-flex align-items-center">
+                                            @if ($inviting_team->team->icon)
+                                            <img src="{{$inviting_team->team->icon}}" alt="" class="avatar-sm rounded">
+                                            @else
                                             <i class="fa-solid fa-square icon-sm text-white"></i>
+                                            @endif
                                         </div>
                                         <div class="col d-flex align-items-center">
-                                            <h5 class="text-white text-start m-0">Kredo Soccer Team</h5>
+                                            <h5 class="text-white text-start m-0">{{$inviting_team->team->name}}</h5>
                                         </div>
                                         <div class="col d-flex justify-content-end">
-                                            <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> 100</span>
+                                            <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$inviting_team->team->user_team->count()}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -133,44 +139,57 @@
                         </div>
                         <div class="col my-auto">
                             <div class="w-80 mx-auto">
-                                <div class="row mb-1">
-                                    <button type="button" class="d-block cancel py-1"><i class="fa-solid fa-xmark"></i> decline</button>
-                                </div>
-                                <div class="row">
-                                    <button type="button" class="d-block execute py-1"><i class="fa-solid fa-check"></i> accept</button>
-                                </div>
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="row mb-1">
+                                        <button type="button" class="d-block cancel py-1"><i class="fa-solid fa-xmark"></i> decline</button>
+                                    </div>
+                                </form>
+                                <form action="" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <button type="button" class="d-block execute py-1"><i class="fa-solid fa-check"></i> accept</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    @empty
+                    <div class="mb-2 text-center">
+                        <h3 class="mid-gray">No invitation yet</h3>
+                    </div>
+                    @endforelse
                 </div>
 
                 {{-- my team --}}
                 <div class="mt-4">
                     <h2 class="second-title text-start mb-3">My Team</h2>
-                    @foreach ($teams as $team)
-                    @if($team->membered())
+                    {{-- @forelse (Auth::user()->user_team as $my_team) --}}
+                    @forelse ($my_teams as $my_team)
                     <a href="{{route('team.view')}}" class="text-decoration-none">
                         <div class="team-content px-4 mb-3">
                             <div class="row py-3">
                                 <div class="col-auto d-flex align-items-center">
-                                    @if ($team->icon)
-                                    <img src="{{$team->icon}}" alt="" class="avatar-sm rounded">
+                                    @if ($my_team->team->icon)
+                                    <img src="{{$my_team->team->icon}}" alt="" class="avatar-sm rounded">
                                     @else
                                     <i class="fa-solid fa-square icon-sm text-white"></i>
                                     @endif
                                 </div>
                                 <div class="col d-flex align-items-center">
-                                    <h5 class="text-white text-start m-0">{{$team->name}}</h5>
+                                    <h5 class="text-white text-start m-0">{{$my_team->team->name}}</h5>
                                 </div>
                                 <div class="col d-flex justify-content-end">
-                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$team->user_team->count()}}</span>
+                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$my_team->team->user_team->count()}}</span>
                                 </div>
                             </div>
                         </div>
                     </a>
-                    @endif
-                    @endforeach
-
+                    @empty
+                    <div class="mb-2 text-center">
+                        <h3 class="mid-gray">No Team yet</h3>
+                    </div>
+                    @endforelse
                 </div>
 
                 {{-- Recommended --}}
