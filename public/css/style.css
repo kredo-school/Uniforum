@@ -429,3 +429,9 @@ td{
     height: 3.5rem;
     object-fit: cover;
 }
+
+.avatar-semi-lg{
+    width: 9rem;
+    height: 9rem;
+    object-fit: cover;
+}

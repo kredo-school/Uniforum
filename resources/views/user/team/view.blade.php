@@ -4,10 +4,11 @@
 <div class="container py-5 px-5">
     @include('user.team.component.view.head')
     {{-- after joined --}}
+    @if ($detail->membered())
     <div class="mt-5 w-85 mx-auto">
         <div class="row">
             <div class="col text-center">
-                <a href="{{route('team.view')}}" class="text-decoration-none dark-purple fs-5">
+                <a href="{{route('team.view', $detail->id)}}" class="text-decoration-none dark-purple fs-5">
                     questions
                 </a>
                 <hr class="menu-hr mt-2">
@@ -64,27 +65,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{{route('view')}}" class="text-decoration-none">
-                <div class="q-content pt-2 px-4 mb-2">
-                    <div class="category-label w-20 ms-auto text-center">
-                        <p class="fs-6">Club</p>
-                    </div>
-                    <div class="text-start">
-                        <h5 class="dark-purple text-start">How can I join the Kredo Soccer Club?</h5>
-                    </div>
-                    <div class="text-end">
-                        <form action="">
-                            <button type="submit" class="btn btn-none px-0">
-                                <i class="fa-regular fa-heart purple-gray"></i>
-                            </button>
-                            <span class="purple-gray">1</span>
-                            <span class="ms-3 purple-gray">3/26/2024 15:05</span>
-                        </form>
-                    </div>
-                </div>
-            </a>
-
-            <a href="{{route('view')}}" class="text-decoration-none">
+            <a href="" class="text-decoration-none">
                 <div class="q-content pt-2 px-4 mb-2">
                     <div class="category-label w-20 ms-auto text-center">
                         <p class="fs-6">Club</p>
@@ -105,5 +86,7 @@
             </a>
         </div>
     </div>
+    @endif
+
 </div>
 @endsection

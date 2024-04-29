@@ -5,29 +5,47 @@
             </div>
             <div class="col-8 text-center">
                 <div>
+                    @if ($detail->icon)
+                    <img src="{{$detail->icon}}" alt="" class="avatar-semi-lg rounded mb-2">
+                    @else
                     <i class="fa-solid fa-square icon-semi-lg mid-gray"></i>
+                    @endif
                 </div>
                 <div class="mt-3">
-                    <h1 class="thick-gray">Kredo Baseball Team</h1>
+                    <h1 class="thick-gray">{{$detail->name}}</h1>
                 </div>
                 <div class="row mt- dark-purple">
                     <div class="col text-end">
+                        @if ($detail->type == '2')
+                        <p class="">private team</p>
+                        @else
                         <p class="">public team</p>
-                        {{-- <p class="">private team</p> --}}
+                        @endif
                     </div>
                     <div class="col text-start">
-                        <i class="fa-solid fa-user"></i> 50 members
+                        <i class="fa-solid fa-user"></i> {{$detail->user_team->count()}} members
                     </div>
                 </div>
                 <div class="mt-3 mid-gray">
-                    <p>Kredo university baseball team. You can join this team whether you are a member of KBT or not.</p>
+                    <p>{{$detail->description}}</p>
                 </div>
             </div>
             <div class="col">
-                {{-- after join --}}
+                @if ($detail->membered())
                 <div class="dropstart text-end">
                     <button type="button" class="btn btn-none" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical fs-4"></i></button>
                     <div class="dropdown-menu text-center">
+                        {{-- if owner --}}
+                        @if ($detail->isTeamOwner())
+                        <a href="{{route('team.setting')}}" class="dropdown-item thick-gray">
+                            <i class="fa-solid fa-users-gear"></i> setting
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a href="" class="dropdown-item thick-gray" data-bs-toggle="modal" data-bs-target="#report-team-">
+                            <i class="fa-regular fa-flag"></i> report
+                        </a>
+                        {{-- if admin --}}
+                        @elseif($detail->isTeamAdmin())
                         <a href="" class="dropdown-item red" data-bs-toggle="modal" data-bs-target="#leave-team-">
                             <i class="fa-solid fa-person-walking-arrow-right"></i> leave
                         </a>
@@ -39,32 +57,61 @@
                         <a href="" class="dropdown-item thick-gray" data-bs-toggle="modal" data-bs-target="#report-team-">
                             <i class="fa-regular fa-flag"></i> report
                         </a>
+                        @else
+                        {{-- if member --}}
+                        <a href="" class="dropdown-item red" data-bs-toggle="modal" data-bs-target="#leave-team-">
+                            <i class="fa-solid fa-person-walking-arrow-right"></i> leave
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a href="" class="dropdown-item thick-gray" data-bs-toggle="modal" data-bs-target="#report-team-">
+                            <i class="fa-regular fa-flag"></i> report
+                        </a>
+                        @endif
                     </div>
-
                 </div>
-
+                @endif
             </div>
         </div>
 
         {{-- before join --}}
+        {{-- if you are invited by this team --}}
+        @if ($detail->invited())
         <div class="mt-4">
             <div class="row">
-                {{-- public team --}}
                 <form action="" class="text-center">
-                    <button type="submit" class="execute py-1 w-25 mx-auto">join</button>
+                    <button type="submit" class="execute py-1 w-25 mx-auto">Accept</button>
                 </form>
-                {{-- private team --}}
-                {{-- <form action="" class="text-center">
-                    <button type="submit" class="apply-btn py-1 w-25 mx-auto">Apply to Join</button>
-                </form> --}}
             </div>
             <div class="row mt-2">
                 <button type="button" class="btn btn-none purple-gray" data-bs-toggle="modal" data-bs-target="#report-team-"><i class="fa-regular fa-flag"></i> Report this team</button>
             </div>
         </div>
 
+        {{-- if you are not invited, neighther a member or applied for this team --}}
+        @elseif (!$detail->membered() && !$detail->applied())
+        <div class="mt-4">
+            <div class="row">
+                @if ($detail->type == 2)
+                {{-- private team --}}
+                <form action="" class="text-center">
+                    <button type="submit" class="apply-btn py-1 w-25 mx-auto">Apply to Join</button>
+                </form>
+                @else
+                {{-- public team --}}
+                <form action="" class="text-center">
+                    <button type="submit" class="execute py-1 w-25 mx-auto">join</button>
+                </form>
+                @endif
+            </div>
+            <div class="row mt-2">
+                <button type="button" class="btn btn-none purple-gray" data-bs-toggle="modal" data-bs-target="#report-team-"><i class="fa-regular fa-flag"></i> Report this team</button>
+            </div>
+        </div>
+
+        {{-- if you are not invited, not member, but applied for this team --}}
+        @elseif(!$detail->membered() && $detail->applied())
         {{-- after apply to private team--}}
-        {{-- <div class="mt-4">
+        <div class="mt-4">
             <div class="row">
                 <form action="" class="text-center">
                     <button type="submit" class="cancel py-1 w-25 mx-auto">Applied</button>
@@ -73,7 +120,9 @@
             <div class="row mt-2">
                 <button type="button" class="btn btn-none purple-gray" data-bs-toggle="modal" data-bs-target="#report-team-"><i class="fa-regular fa-flag"></i> Report this team</button>
             </div>
-        </div> --}}
+        </div>
+        @endif
+
 
         <div class="modal fade" id="report-team-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

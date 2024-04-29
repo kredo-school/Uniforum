@@ -113,11 +113,10 @@
                 {{-- invited --}}
                 <div>
                     <h2 class="second-title text-start mb-3">Invited</h2>
-                    {{-- @forelse (Auth::user()->inviting as $inviting_team) --}}
                     @forelse ($inviting_teams as $inviting_team)
                     <div class="row mb-2">
                         <div class="col-10">
-                            <a href="{{route('team.view')}}" class="text-decoration-none">
+                            <a href="{{route('team.view', $inviting_team->team->id)}}" class="text-decoration-none">
                                 <div class="team-content px-4">
                                     <div class="row py-3">
                                         <div class="col-auto d-flex align-items-center">
@@ -164,9 +163,8 @@
                 {{-- my team --}}
                 <div class="mt-4">
                     <h2 class="second-title text-start mb-3">My Team</h2>
-                    {{-- @forelse (Auth::user()->user_team as $my_team) --}}
                     @forelse ($my_teams as $my_team)
-                    <a href="{{route('team.view')}}" class="text-decoration-none">
+                    <a href="{{route('team.view', $my_team->team->id)}}" class="text-decoration-none">
                         <div class="team-content px-4 mb-3">
                             <div class="row py-3">
                                 <div class="col-auto d-flex align-items-center">
@@ -196,7 +194,7 @@
                 <div class="mt-4">
                     <h2 class="second-title text-start mb-3">Recommended</h2>
                     @forelse ($recommends as $recommend)
-                    <a href="{{route('team.view'), $recommend->id}}" class="text-decoration-none">
+                    <a href="{{route('team.view', $recommend->id)}}" class="text-decoration-none">
                         <div class="team-content px-4 mb-3">
                             <div class="row py-3">
                                 <div class="col-auto d-flex align-items-center">
