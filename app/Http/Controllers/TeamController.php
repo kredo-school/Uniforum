@@ -7,23 +7,27 @@ use App\Models\Team;
 use App\Models\UserTeam;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Invite;
+use App\Models\ReportCategory;
 
 class TeamController extends Controller
 {
     private $team;
     private $user_team;
     private $invite;
+    private $report_category;
 
-    public function __construct(Team $team, UserTeam $user_team, Invite $invite){
+    public function __construct(Team $team, UserTeam $user_team, Invite $invite, ReportCategory $report_category){
         $this->team = $team;
         $this->user_team = $user_team;
         $this->invite = $invite;
+        $this->report_category = $report_category;
     }
 
     public function index(){
         $my_teams = $this->user_team->where('user_id', Auth::user()->id)->get();
         $inviting_teams = $this->invite->where('user_id', Auth::user()->id)->get();
         $recommends = $this->team->withCount('user_team')->orderBy('user_team_count', 'desc')->limit(5)->get();
+
         foreach($recommends as $key => $reco){
             foreach($my_teams as $my_team){
                 if($reco->id == $my_team->team_id){
@@ -37,8 +41,9 @@ class TeamController extends Controller
 
     public function view($t_id){
         $detail = $this->team->findOrFail($t_id);
-        
-        return view('user.team.view')->with('detail', $detail);
+        $report_categories = $this->report_category->get();
+
+        return view('user.team.view')->with('detail', $detail)->with('report_categories', $report_categories);
 
     }
 

@@ -14,6 +14,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuestionLikeController;
 use App\Http\Controllers\QuestionReportController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TeamReportController;
 use App\Models\QuestionReport;
 use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
 
@@ -151,3 +152,6 @@ Route::controller(TeamController::class)->group(function () {
     Route::post('/team/store', 'store')->name('team.store');
     Route::get('/team/view/{t_id}', 'view')->name('team.view');
 });
+
+Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
+
