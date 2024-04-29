@@ -15,6 +15,8 @@ use App\Http\Controllers\QuestionLikeController;
 use App\Http\Controllers\QuestionReportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamReportController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserReportController;
 use App\Models\QuestionReport;
 use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
 
@@ -155,3 +157,6 @@ Route::controller(TeamController::class)->group(function () {
 
 Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
 
+Route::get('/profile/view/{user_id}', [UserController::class, 'view'])->name('profile.view');
+
+Route::post('/user/report/store/{user_id}', [UserReportController::class, 'store'])->name('user.report.store');
