@@ -162,3 +162,5 @@ Route::get('/profile/view/{user_id}', [UserController::class, 'view'])->name('pr
 Route::post('/user/report/store/{user_id}', [UserReportController::class, 'store'])->name('user.report.store');
 
 Route::get('/profile/myanswer/{user_id}', [UserController::class, 'myAnswer'])->name('profile.myanswer');
+
+Route::get('/profile/myteam/{user_id}', [UserController::class, 'myTeam'])->name('profile.myteam');
