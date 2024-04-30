@@ -168,3 +168,6 @@ Route::patch('/profile/update', [UserController::class, 'update'])->name('profil
 Route::post('/team/join', [UserTeamController::class, 'join'])->name('team.join');
 
 Route::post('/team/apply', [ApplyController::class, 'apply'])->name('team.apply');
+
+Route::delete('/team/leave', [UserTeamController::class, 'leave'])->name('team.leave');
+

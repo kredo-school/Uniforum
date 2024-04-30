@@ -23,4 +23,10 @@ class UserTeamController extends Controller
 
         return redirect()->back();
     }
+
+    public function leave(Request $request){
+        $this->user_team->where('team_id', $request->team_id)->where('user_id', Auth::user()->id)->delete();
+
+        return redirect()->route('team');
+    }
 }
