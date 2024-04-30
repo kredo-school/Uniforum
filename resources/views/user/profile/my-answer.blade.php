@@ -23,7 +23,7 @@
                 @endif
             </div>
             <div class="col text-center">
-                <a href="{{route('profile.myteam')}}" class="text-decoration-none dark-purple fs-5">
+                <a href="{{route('profile.myteam', $detail->id)}}" class="text-decoration-none dark-purple fs-5">
                     my teams
                 </a>
                 @if (request()->is('profile/myteam/*'))
