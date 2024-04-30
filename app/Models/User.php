@@ -54,4 +54,7 @@ class User extends Authenticatable
         return $this->hasMany(Invite::class, 'user_id');
     }
 
+    public function question(){
+        return $this->hasMany(Question::class, 'user_id');
+    }
 }

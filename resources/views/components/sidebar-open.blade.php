@@ -17,7 +17,7 @@
                 <div class="">
                     <li class='mb-2'>
                         <a href='{{route('home')}}' class='dark-purple text-decoration-none'>
-                            <div class="{{ request()->is('home') ? 'open-active' : '' }} py-2">
+                            <div class="{{ request()->is('/') ? 'open-active' : '' }} py-2">
                                 <div class="w-85 mx-auto row">
                                     <div class="col-4 text-end">
                                         <i class='fa-solid fa-house fs-2'></i>
@@ -30,7 +30,7 @@
                         </a>
                     </li>
                     <li class='mb-2'>
-                        <a href='{{route('profile')}}' class='dark-purple text-decoration-none'>
+                        <a href='{{route('profile.view', Auth::user()->id)}}' class='dark-purple text-decoration-none'>
                             <div class="{{ request()->is('profile*') ? 'open-active' : '' }} py-2">
                                 <div class="row w-85 mx-auto">
                                     <div class="col-4 text-end">
