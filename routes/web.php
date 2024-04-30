@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnswerLikeController;
 use App\Http\Controllers\AnswerReportController;
+use App\Http\Controllers\ApplyController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LogoutController;
@@ -165,3 +166,5 @@ Route::get('/profile/edit/{detail}', [UserController::class, 'edit'])->name('pro
 Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
 
 Route::post('/team/join', [UserTeamController::class, 'join'])->name('team.join');
+
+Route::post('/team/apply', [ApplyController::class, 'apply'])->name('team.apply');

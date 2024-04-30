@@ -93,7 +93,9 @@
             <div class="row">
                 @if ($detail->type == 2)
                 {{-- private team --}}
-                <form action="" class="text-center">
+                <form action="{{route('team.apply')}}" class="text-center" method="POST">
+                    @csrf
+                    <input type="hidden" name="team_id" value="{{$detail->id}}">
                     <button type="submit" class="apply-btn py-1 w-25 mx-auto">Apply to Join</button>
                 </form>
                 @else
