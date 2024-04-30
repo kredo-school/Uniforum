@@ -160,3 +160,5 @@ Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])
 Route::get('/profile/view/{user_id}', [UserController::class, 'view'])->name('profile.view');
 
 Route::post('/user/report/store/{user_id}', [UserReportController::class, 'store'])->name('user.report.store');
+
+Route::get('/profile/myanswer/{user_id}', [UserController::class, 'myAnswer'])->name('profile.myanswer');

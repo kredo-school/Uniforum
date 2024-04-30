@@ -16,7 +16,7 @@ class Answer extends Model
     }
 
     public function question(){
-        return $this->belongsTo(Question::class);
+        return $this->belongsTo(Question::class, 'q_id');
     }
 
     public function likes(){
@@ -26,5 +26,4 @@ class Answer extends Model
     public function isLiked(){
         return $this->likes()->where('user_id', Auth::user()->id)->exists();
     }
-
 }

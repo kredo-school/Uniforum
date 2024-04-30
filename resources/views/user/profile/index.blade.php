@@ -15,7 +15,7 @@
                 @endif
             </div>
             <div class="col text-center">
-                <a href="{{route('profile.myanswer')}}" class="text-decoration-none dark-purple fs-5">
+                <a href="{{route('profile.myanswer', $detail)}}" class="text-decoration-none dark-purple fs-5">
                     my answers
                 </a>
                 @if (request()->is('profile/myanswer/*'))
