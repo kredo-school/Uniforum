@@ -46,7 +46,7 @@
                         </a>
                         {{-- if admin --}}
                         @elseif($detail->isTeamAdmin())
-                        <a href="" class="dropdown-item red" data-bs-toggle="modal" data-bs-target="#leave-team-">
+                        <a href="" class="dropdown-item red" data-bs-toggle="modal" data-bs-target="#leave-team-model">
                             <i class="fa-solid fa-person-walking-arrow-right"></i> leave
                         </a>
                         <hr class="dropdown-divider">
@@ -59,7 +59,7 @@
                         </a>
                         @else
                         {{-- if member --}}
-                        <a href="" class="dropdown-item red" data-bs-toggle="modal" data-bs-target="#leave-team-">
+                        <a href="" class="dropdown-item red" data-bs-toggle="modal" data-bs-target="#leave-team-model">
                             <i class="fa-solid fa-person-walking-arrow-right"></i> leave
                         </a>
                         <hr class="dropdown-divider">
@@ -185,14 +185,16 @@
         </form>
 
         {{-- leave team popup --}}
-        <div class="modal fade" id="leave-team-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal fade" id="leave-team-model" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header w-100 mx-auto ">
                   <h3 class="modal-title red" id="exampleModalLongTitle">Leave Team</h3>
                 </div>
-                <form action="" method="POST">
+                <form action="{{route('team.leave')}}" method="POST">
                     @csrf
+                    @method('DELETE')
+                    <input type="hidden" value="{{$detail->id}}" name="team_id">
                     <div class="modal-body text-start">
                         <p class="red">Are you sure you want to leave from this team?</p>
                       </div>
