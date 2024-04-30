@@ -21,7 +21,7 @@
         <div class="col-auto text-end  my-auto">
             {{-- if owner --}}
             @if (Auth::user()->id == $detail->id)
-            <a href="{{route('profile.edit')}}" class="btn light-purple-btn">Edit Profile</a>
+            <a href="{{route('profile.edit', $detail)}}" class="btn light-purple-btn">Edit Profile</a>
             @else
             {{-- if others --}}
             <button type="button" class="btn btn-none purple-gray" data-bs-toggle="modal" data-bs-target="#report-user-modal"><i class="fa-regular fa-flag"></i> Report this user</button>

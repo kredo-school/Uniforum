@@ -414,8 +414,8 @@ td{
 }
 
 .avatar-lg{
-    width: 9rem;
-    height: 9rem !important;
+    width: 10rem;
+    height: 10rem !important;
     object-fit: cover;
 }
 
@@ -425,8 +425,8 @@ td{
     object-fit: cover;
 }
 .avatar-md{
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 6rem;
+    height: 6rem;
     object-fit: cover;
 }
 

@@ -8,6 +8,7 @@ use App\Models\ReportCategory;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\UserTeam;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -33,6 +34,10 @@ class UserController extends Controller
         return view('user.profile.index')->with('detail', $detail)->with('report_categories', $report_categories)->with('my_questions', $my_questions);
     }
 
+    public function edit(User $detail){
+        return view('user.profile.edit')->with('detail', $detail);
+    }
+
     public function myAnswer($user_id){
         $detail = $this->user->findOrFail($user_id);
         $report_categories = $this->report_category->get();
@@ -47,5 +52,26 @@ class UserController extends Controller
         $my_teams = $this->user_team->where('user_id', $user_id)->paginate(5);
 
         return view('user.profile.my-team')->with('detail', $detail)->with('report_categories', $report_categories)->with('my_teams', $my_teams);
+    }
+
+    public function update(Request $request){
+        if($request->owner_id == Auth::user()->id){
+            $request->validate([
+                'update_username' => 'required|string|min:1|max:50',
+                'update_avatar' => 'image|mimes:jpeg,png,jpg,gif|max:1048',
+                'update_introduction' => 'max:100'
+            ]);
+
+            $update = $this->user->findOrFail(Auth::user()->id);
+            $update->username = $request->update_username;
+            $update->introduction = $request->update_introduction;
+            if($request->update_avatar){
+                $update->avatar = 'data:image/' . $request->update_avatar->extension() . ';base64,' . base64_encode(file_get_contents($request->update_avatar));
+            }
+
+            $update->save();
+        }
+
+        return redirect()->route('profile.view', $request->owner_id);
     }
 }

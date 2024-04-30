@@ -32,10 +32,6 @@ Route::get('/profile/myteam', function () {
     return view('user.profile.my-team');
 })->name('profile.myteam');
 
-Route::get('/profile/edit', function () {
-    return view('user.profile.edit');
-})->name('profile.edit');
-
 Route::get('/team/view', function () {
     return view('user.team.view');
 })->name('team.view');
@@ -164,3 +160,7 @@ Route::post('/user/report/store/{user_id}', [UserReportController::class, 'store
 Route::get('/profile/myanswer/{user_id}', [UserController::class, 'myAnswer'])->name('profile.myanswer');
 
 Route::get('/profile/myteam/{user_id}', [UserController::class, 'myTeam'])->name('profile.myteam');
+
+Route::get('/profile/edit/{detail}', [UserController::class, 'edit'])->name('profile.edit');
+
+Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
