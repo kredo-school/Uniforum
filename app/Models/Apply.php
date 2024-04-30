@@ -9,7 +9,7 @@ class Apply extends Model
 {
     use HasFactory;
 
-    protected $table = 'invite';
+    protected $table = 'apply';
     protected $fillable = ['user_id', 'team_id'];
     public $timestamps = false;
 
