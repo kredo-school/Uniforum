@@ -4,35 +4,62 @@
 <div class="container py-5 px-5">
     <h1 class="dark-purple">Edit Profile</h1>
     <div class="text-center mt-4 w-85 mx-auto">
-        <form action="" method="POST">
+        <form action="{{route('profile.update')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('')
+            @method('PATCH')
+            <input type="hidden" name="owner_id" value="{{$detail->id}}">
             <div class="row">
                 <div class="col profile-left py-5 px-1">
                     <div class="text-center pt-4 pb-2">
+                        @if ($detail->avatar)
+                        <img src="{{$detail->avatar}}" alt="" class="avatar-lg rounded-circle">
+                        @else
                         <i class="fa-solid fa-circle-user icon-lg text-secondary"></i>
+                        @endif
                     </div>
                     <div class="w-85 mx-auto mt-5">
-                        <input type="file" id="avatar" class="form-control">
+                        <input type="file"class="form-control" name="update_avatar">
                         <div class="">
                             <label for="" class="form-text purple-gray x-small">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
                         </div>
+                        @error('update_avatar')
+                        <div class="uni-invalid-feedback text-start" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </div>
+                        @enderror
                     </div>
                 </div>
                 <div class="col profile-right">
-                    <div class="py-5 px-3">
-                        <div class="form-group text-start mb-3">
-                            <label for="" class="dark-purple">Username</label>
-                            <input type="text" class="profile-input d-block w-100 py-1 px-2" value="Yukari">
+                    <div class="h-100 d-flex align-items-center justify-content-center">
+                        <div class="w-85">
+                            <div class="mb-3">
+                                <div class="form-group text-start">
+                                    <label for="" class="dark-purple">Username</label>
+                                    <input type="text" name="update_username" class="profile-input d-block w-100 py-1 px-2" value="{{$detail->username}}">
+                                </div>
+                                @error('update_username')
+                                <div class="uni-invalid-feedback text-start" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                                @enderror
+                            </div>
+                            <div class="">
+                                <div class="form-group text-start">
+                                    <label for="" class="dark-purple">Introduction</label>
+                                    <textarea name="update_introduction" id="" rows="7" class="w-100 big-textarea px-2 py-2 mb-2">{{$detail->introduction}}</textarea>
+                                </div>
+                                @error('update_introduction')
+                                <div class="uni-invalid-feedback text-start" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                                @enderror
+                            </div>
+                            {{-- <div class="form-group text-start mb-3">
+                                <label for="" class="dark-purple">Email</label>
+                                <input type="text" class="profile-input d-block w-100 py-1 px-2" value="kredo@kru.ac.jp">
+                            </div> --}}
                         </div>
-                        <div class="form-group text-start mb-3">
-                            <label for="" class="dark-purple">Email</label>
-                            <input type="text" class="profile-input d-block w-100 py-1 px-2" value="kredo@kru.ac.jp">
-                        </div>
-                        <div class="form-group text-start">
-                            <label for="" class="dark-purple">Introduction</label>
-                            <textarea name="" id="" rows="5" class="w-100 big-textarea px-2 py-2 mb-2">Kredo Uni 3rd grade. Nice to meet you.</textarea>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -52,10 +79,6 @@
                   <div class="modal-content">
                     <div class="modal-header w-100 mx-auto ">
                       <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Edit Profile</h3>
-                      {{-- <button type="button" class="close ms-auto btn btn-none" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        <i class="fa-solid fa-xmark"></i>
-                      </button> --}}
                     </div>
                     <div class="modal-body text-start">
                         <p>Are you sure you want to edit this profile?</p>
