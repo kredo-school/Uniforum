@@ -4,11 +4,11 @@
             <button type='button' class='mb-4 btn btn-none' id='menu-btn'>
                 <i class='fa-solid fa-bars fs-2 text-white'></i>
             </button>
-            <li class='mb-3 py-2 {{ request()->is('home') ? 'active' : '' }}'>
+            <li class='mb-3 py-2 {{ request()->is('/') ? 'active' : '' }}'>
                 <a href='{{route('home')}}' class='text-white' data-toggle="tooltip" data-placement="right" title="Home"><i class='fa-solid fa-house fs-2'></i></a>
             </li>
             <li class='mb-3 py-2 {{ request()->is('profile*') ? 'active' : '' }}'>
-                <a href='{{route('profile')}}' class='text-white' data-toggle="tooltip" data-placement="right" title="Profile"><i class='fa-solid fa-user fs-2'></i></a>
+                <a href='{{route('profile.view', Auth::user()->id)}}' class='text-white' data-toggle="tooltip" data-placement="right" title="Profile"><i class='fa-solid fa-user fs-2'></i></a>
             </li>
             <li class='mb-3 py-2 {{ request()->is('team*') ? 'active' : '' }}'>
                 <a href='{{route('team')}}' class='text-white' data-toggle="tooltip" data-placement="right" title="Team"><i class='fa-solid fa-people-roof fs-2'></i></a>
