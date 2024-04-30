@@ -17,8 +17,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
-use App\Models\QuestionReport;
-use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
+use App\Http\Controllers\UserTeamController;
 
 Route::get('/profile', function () {
     return view('user.profile.index');
@@ -164,3 +163,5 @@ Route::get('/profile/myteam/{user_id}', [UserController::class, 'myTeam'])->name
 Route::get('/profile/edit/{detail}', [UserController::class, 'edit'])->name('profile.edit');
 
 Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
+
+Route::post('/team/join', [UserTeamController::class, 'join'])->name('team.join');
