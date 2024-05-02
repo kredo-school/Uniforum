@@ -30,20 +30,34 @@
             <div class="col-4 my-auto">
                 @if ($member->role != 1)
                 <div class="col my-auto">
+                    @if ($team->isTeamOwner())
                     <div class="row">
+                        @if ($member->user_id != Auth::user()->id)
                         <div class="col-6 text-end">
                             <button type="button" class="cancel py-1 ms-auto w-100" data-bs-toggle="modal" data-bs-target="#confirm-kick-member-{{$member->user->id}}"><i class="fa-solid fa-user-minus"></i> kick</button>
                         </div>
+                        @endif
                         @if($member->role == 2)
                         <div class="col-6 text-start">
                             <button type="button" class="d-inline demote py-1 w-100" data-bs-toggle="modal" data-bs-target="#confirm-demote-member-{{$member->user->id}}"><i class="fa-solid fa-circle-down"></i> demote</button>
                         </div>
-                        @else
+                        @elseif($member->role == 3)
                         <div class="col-6 text-start">
                             <button type="button" class="d-inline promote py-1 w-100" data-bs-toggle="modal" data-bs-target="#confirm-promote-member-{{$member->user->id}}"><i class="fa-solid fa-circle-up"></i> promote</button>
                         </div>
                         @endif
                     </div>
+                    @elseif($team->isTeamAdmin())
+                    <div class="row">
+                        <div class="col-6">
+                        </div>
+                        @if ($member->user_id != Auth::user()->id)
+                        <div class="col-6 text-end">
+                            <button type="button" class="cancel py-1 ms-auto w-100" data-bs-toggle="modal" data-bs-target="#confirm-kick-member-{{$member->user->id}}"><i class="fa-solid fa-user-minus"></i> kick</button>
+                        </div>
+                        @endif
+                    </div>
+                    @endif
                 </div>
                 @endif
             </div>
@@ -53,7 +67,6 @@
                 @csrf
                 @method('DELETE')
                 <input type="hidden" name="user_id" value="{{$member->user->id}}">
-                <input type="hidden" name="team_id" value="{{$team->id}}">
                 <div class="modal fade" id="confirm-kick-member-{{$member->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
@@ -81,29 +94,34 @@
             </form>
 
             {{-- promote confirm popup --}}
-            <div class="modal fade" id="confirm-promote-member-{{$member->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header w-100 mx-auto ">
-                            <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Promote Member</h3>
-                        </div>
-                        <div class="modal-body text-start">
-                            <p>Are you sure you want to promote this member?</p>
-                        </div>
+            <form action="{{route('team.manage-members.promote', $team)}}" method="POST">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="user_id" value="{{$member->user->id}}">
+                <div class="modal fade" id="confirm-promote-member-{{$member->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header w-100 mx-auto ">
+                                <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Promote Member</h3>
+                            </div>
+                            <div class="modal-body text-start">
+                                <p>Are you sure you want to promote this member?</p>
+                            </div>
 
-                        <div class="modal-footer pb-3 border-0 pt-3">
-                            <div class="w-100 mx-auto row">
-                                <div class="col text-start">
-                                    <button type="button" class="create-q-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                                <div class="col text-end">
-                                    <button type="submit" class="create-q-post-btn w-50 py-1">promote</button>
+                            <div class="modal-footer pb-3 border-0 pt-3">
+                                <div class="w-100 mx-auto row">
+                                    <div class="col text-start">
+                                        <button type="button" class="create-q-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                    <div class="col text-end">
+                                        <button type="submit" class="create-q-post-btn w-50 py-1">promote</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
 
             {{-- demote confirm popup --}}
             <div class="modal fade" id="confirm-demote-member-{{$member->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -54,7 +54,7 @@ class TeamController extends Controller
     public function viewMember($t_id){
         $detail = $this->team->findOrFail($t_id);
         $report_categories = $this->report_category->get();
-        $team_members = $this->user_team->where('team_id', $t_id)->paginate(10);
+        $team_members = $this->user_team->where('team_id', $t_id)->orderBy('role', 'ASC')->paginate(10);
 
         return view('user.team.view-member')->with('detail', $detail)->with('report_categories', $report_categories)->with('team_members', $team_members);
 
@@ -103,7 +103,7 @@ class TeamController extends Controller
     }
 
     public function manageMembers(Team $team){
-        $team_members = $this->user_team->where('team_id', $team->id)->get();
+        $team_members = $this->user_team->where('team_id', $team->id)->orderBy('role', 'ASC')->get();
         return view('user.team.manage-members')->with('team', $team)->with('team_members', $team_members);
     }
 
@@ -135,7 +135,19 @@ class TeamController extends Controller
 
     public function kickMember(Request $request, Team $team){
         if($team->isTeamAdmin() || $team->isTeamOwner()){
-            $this->user_team->where('team_id', $request->team_id)->where('user_id', $request->user_id)->delete();
+            $this->user_team->where('team_id', $team->id)->where('user_id', $request->user_id)->delete();
+        }
+
+        return redirect()->back();
+    }
+
+    public function promoteMember(Request $request, Team $team){
+        if($team->isTeamAdmin() || $team->isTeamOwner()){
+            $this->user_team->where('team_id', $team->id)->where('user_id', $request->user_id)->delete();
+            $this->user_team->team_id = $team->id;
+            $this->user_team->user_id = $request->user_id;
+            $this->user_team->role = 2;
+            $this->user_team->save();
         }
 
         return redirect()->back();

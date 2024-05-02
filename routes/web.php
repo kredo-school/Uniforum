@@ -125,6 +125,7 @@ Route::group(["middleware" => "auth"], function(){
         Route::get('/team/invite-members/{team}', 'inviteMembers')->name('team.invite-members');
         Route::patch('/team/update/{team}', 'update')->name('team.update');
         Route::delete('/team/manage-members/kick/{team}', 'kickMember')->name('team.manage-members.kick');
+        Route::patch('/team/manage-members/promote/{team}', 'promoteMember')->name('team.manage-members.promote');
     });
 
     Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
