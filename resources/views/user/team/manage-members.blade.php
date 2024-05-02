@@ -124,28 +124,33 @@
             </form>
 
             {{-- demote confirm popup --}}
-            <div class="modal fade" id="confirm-demote-member-{{$member->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header w-100 mx-auto ">
-                            <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Demote Member</h3>
-                        </div>
-                        <div class="modal-body text-start">
-                            <p>Are you sure you want to demote this member?</p>
-                        </div>
-                        <div class="modal-footer pb-3 border-0 pt-3">
-                            <div class="w-100 mx-auto row">
-                                <div class="col text-start">
-                                    <button type="button" class="create-q-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                </div>
-                                <div class="col text-end">
-                                    <button type="submit" class="create-q-post-btn w-50 py-1">demote</button>
+            <form action="{{route('team.manage-members.demote', $team)}}" method="POST">
+                @csrf
+                @method('PATCH')
+                <input type="hidden" name="user_id" value="{{$member->user->id}}">
+                <div class="modal fade" id="confirm-demote-member-{{$member->user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header w-100 mx-auto ">
+                                <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Demote Member</h3>
+                            </div>
+                            <div class="modal-body text-start">
+                                <p>Are you sure you want to demote this member?</p>
+                            </div>
+                            <div class="modal-footer pb-3 border-0 pt-3">
+                                <div class="w-100 mx-auto row">
+                                    <div class="col text-start">
+                                        <button type="button" class="create-q-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                    <div class="col text-end">
+                                        <button type="submit" class="create-q-post-btn w-50 py-1">demote</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
         @endforeach
 

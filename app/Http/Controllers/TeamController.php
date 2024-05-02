@@ -152,4 +152,16 @@ class TeamController extends Controller
 
         return redirect()->back();
     }
+
+    public function demoteMember(Request $request, Team $team){
+        if($team->isTeamAdmin() || $team->isTeamOwner()){
+            $this->user_team->where('team_id', $team->id)->where('user_id', $request->user_id)->delete();
+            $this->user_team->team_id = $team->id;
+            $this->user_team->user_id = $request->user_id;
+            $this->user_team->role = 3;
+            $this->user_team->save();
+        }
+
+        return redirect()->back();
+    }
 }

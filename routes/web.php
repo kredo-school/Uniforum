@@ -126,6 +126,7 @@ Route::group(["middleware" => "auth"], function(){
         Route::patch('/team/update/{team}', 'update')->name('team.update');
         Route::delete('/team/manage-members/kick/{team}', 'kickMember')->name('team.manage-members.kick');
         Route::patch('/team/manage-members/promote/{team}', 'promoteMember')->name('team.manage-members.promote');
+        Route::patch('/team/manage-members/demote/{team}', 'demoteMember')->name('team.manage-members.demote');
     });
 
     Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
