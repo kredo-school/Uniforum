@@ -14,7 +14,6 @@
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('login-user') }}">
-                        {{-- <form method="POST" action="{{ route('login') }}"> --}}
                             @csrf
                             @method('POST')
                             <div class="row mb-3 mt-4">
