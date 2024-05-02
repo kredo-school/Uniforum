@@ -37,7 +37,7 @@
                     <div class="dropdown-menu text-center">
                         {{-- if owner --}}
                         @if ($detail->isTeamOwner())
-                        <a href="{{route('team.setting')}}" class="dropdown-item thick-gray">
+                        <a href="{{route('team.setting', $detail)}}" class="dropdown-item thick-gray">
                             <i class="fa-solid fa-users-gear"></i> setting
                         </a>
                         <hr class="dropdown-divider">
@@ -50,7 +50,7 @@
                             <i class="fa-solid fa-person-walking-arrow-right"></i> leave
                         </a>
                         <hr class="dropdown-divider">
-                        <a href="{{route('team.setting')}}" class="dropdown-item thick-gray">
+                        <a href="{{route('team.setting', $detail)}}" class="dropdown-item thick-gray">
                             <i class="fa-solid fa-users-gear"></i> setting
                         </a>
                         <hr class="dropdown-divider">

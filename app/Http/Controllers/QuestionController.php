@@ -57,7 +57,31 @@ class QuestionController extends Controller
 
     public function destroy($q_id){
         $this->question->destroy($q_id);
-        
+
         return redirect()->route('home');
+    }
+
+    public function askTeam(Request $request)
+    {
+        $request->validate([
+            'q_t_title' => 'required|string|min:1|max:100',
+            'q_t_content' => 'required|string|min:1|max:1000',
+            'q_t_category' => 'required',
+            'q_t_image' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
+        ]);
+
+
+        $this->question->team = $request->team_id;
+        $this->question->title = $request->q_t_title;
+        $this->question->content = $request->q_t_content;
+        $this->question->category_id = $request->q_t_category;
+        if($request->q_t_image){
+            $this->question->image = 'data:image/' . $request->q_t_image->extension() . ';base64,' . base64_encode(file_get_contents($request->q_t_image));
+        }
+        $this->question->user_id = Auth::user()->id;
+        $this->question->uni_id = Auth::user()->uni_id;
+        $this->question->save();
+
+        return redirect()->back();
     }
 }

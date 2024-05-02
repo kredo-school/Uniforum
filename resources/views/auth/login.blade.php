@@ -19,8 +19,6 @@
                             <div class="row mb-3 mt-4">
                                 <div class="text-center">
                                     <input id="email" type="email" class="login-input @error('email') is-invalid @enderror py-1 px-2" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="email">
-
-
                                 </div>
                             </div>
 
