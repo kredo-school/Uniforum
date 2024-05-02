@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $home_questions = $this->question->with('likes')->where('uni_id', Auth::user()->uni_id)->latest()->paginate(10);
+        $home_questions = $this->question->with('likes')->where('uni_id', Auth::user()->uni_id)->where('team', null)->latest()->paginate(10);
 
         return view('home')->with('home_questions', $home_questions);
     }

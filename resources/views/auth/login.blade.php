@@ -14,13 +14,12 @@
                     </div>
                     <div class="card-body bg-white">
                         <form method="POST" action="{{ route('login-user') }}">
+                        {{-- <form method="POST" action="{{ route('login') }}"> --}}
                             @csrf
                             @method('POST')
                             <div class="row mb-3 mt-4">
                                 <div class="text-center">
                                     <input id="email" type="email" class="login-input @error('email') is-invalid @enderror py-1 px-2" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="email">
-
-
                                 </div>
                             </div>
 

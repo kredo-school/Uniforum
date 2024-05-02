@@ -9,7 +9,7 @@
                 <h4 class="thick-gray">Edit Team Profile</h4>
             </div>
             <div class="row w-25 ms-auto mt-3">
-                <a href="" class="text-decoration-none">
+                <a href="{{route('team.edit', $team)}}" class="text-decoration-none">
                     {{-- <p class="m-0 text-center execute py-1">Edit</p> --}}
                     <div class="text-center execute py-1">Edit</div>
                 </a>
@@ -21,7 +21,7 @@
                 <h4 class="thick-gray">Manage Members</h4>
             </div>
             <div class="row w-25 ms-auto mt-3">
-                <a href="" class="text-decoration-none">
+                <a href="{{route('team.manage-members', $team)}}" class="text-decoration-none">
                     <p class="m-0 text-center execute py-1">Manage</p>
                 </a>
             </div>
@@ -32,12 +32,13 @@
                 <h4 class="thick-gray">Invite Users</h4>
             </div>
             <div class="row w-25 ms-auto mt-3">
-                <a href="" class="text-decoration-none">
+                <a href="{{route('team.invite-members', $team)}}" class="text-decoration-none">
                     <p class="m-0 text-center execute py-1">Invite</p>
                 </a>
             </div>
         </div>
         <hr>
+        @if ($team->isTeamOwner())
         {{-- if owner --}}
         <div class="row">
             <div class="row text-start">
@@ -77,6 +78,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection

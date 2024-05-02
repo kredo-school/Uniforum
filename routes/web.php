@@ -20,38 +20,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
 
-Route::get('/profile', function () {
-    return view('user.profile.index');
-})->name('profile');
-
-Route::get('/profile/myanswer', function () {
-    return view('user.profile.my-answer');
-})->name('profile.myanswer');
-
-Route::get('/profile/myteam', function () {
-    return view('user.profile.my-team');
-})->name('profile.myteam');
-
-Route::get('/team/view', function () {
-    return view('user.team.view');
-})->name('team.view');
-
-Route::get('/team/view/member', function () {
-    return view('user.team.view-member');
-})->name('team.view.member');
-
-Route::get('/team/setting', function () {
-    return view('user.team.setting');
-})->name('team.setting');
-
-Route::get('/team/edit', function () {
-    return view('user.team.edit');
-})->name('team.edit');
-
-Route::get('/team/manageMembers', function () {
-    return view('user.team.manage-members');
-})->name('team.manage');
-
 Route::get('/team/inviteMembers', function () {
     return view('user.team.invite-members');
 })->name('team.invite');
@@ -119,55 +87,75 @@ Route::post('/login/user', [LoginController::class, 'login'])->name('login-user'
 
 Auth::routes();
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::group(["middleware" => "auth"], function(){
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
+    Route::post('/question/store', [QuestionController::class, 'store'])->name('question.store');
 
-Route::get('/question/show/{q_id}', [QuestionController::class, 'show'])->name('question.show');
+    Route::get('/question/show/{q_id}', [QuestionController::class, 'show'])->name('question.show');
 
-Route::post('/answer/store/{q_id}', [AnswerController::class, 'store'])->name('answer.store');
+    Route::post('/answer/store/{q_id}', [AnswerController::class, 'store'])->name('answer.store');
 
-Route::post('/ps/store/{q_id}', [PostscriptController::class, 'store'])->name('ps.store');
+    Route::post('/ps/store/{q_id}', [PostscriptController::class, 'store'])->name('ps.store');
 
-Route::post('/question/report/store/{q_id}', [QuestionReportController::class, 'store'])->name('question.report.store');
+    Route::post('/question/report/store/{q_id}', [QuestionReportController::class, 'store'])->name('question.report.store');
 
-Route::post('/answer/report/store/{a_id}', [AnswerReportController::class, 'store'])->name('answer.report.store');
+    Route::post('/answer/report/store/{a_id}', [AnswerReportController::class, 'store'])->name('answer.report.store');
 
-Route::delete('/question/delete/{q_id}', [QuestionController::class, 'destroy'])->name('question.delete');
+    Route::delete('/question/delete/{q_id}', [QuestionController::class, 'destroy'])->name('question.delete');
 
-Route::delete('/answer/delete/{a_id}', [AnswerController::class, 'destroy'])->name('answer.delete');
+    Route::delete('/answer/delete/{a_id}', [AnswerController::class, 'destroy'])->name('answer.delete');
 
-Route::post('/question/like/{q_id}', [QuestionLikeController::class, 'store'])->name('question.like.store');
+    Route::post('/question/like/{q_id}', [QuestionLikeController::class, 'store'])->name('question.like.store');
 
-Route::delete('/question/like/delete/{q_id}', [QuestionLikeController::class, 'destroy'])->name('question.like.delete');
+    Route::delete('/question/like/delete/{q_id}', [QuestionLikeController::class, 'destroy'])->name('question.like.delete');
 
-Route::post('/answer/like/{a_id}', [AnswerLikeController::class, 'store'])->name('answer.like.store');
+    Route::post('/answer/like/{a_id}', [AnswerLikeController::class, 'store'])->name('answer.like.store');
 
-Route::delete('/answer/like/delete/{a_id}', [AnswerLikeController::class, 'destroy'])->name('answer.like.delete');
+    Route::delete('/answer/like/delete/{a_id}', [AnswerLikeController::class, 'destroy'])->name('answer.like.delete');
 
-Route::controller(TeamController::class)->group(function () {
-    Route::get('/team', 'index')->name('team');
-    Route::post('/team/store', 'store')->name('team.store');
-    Route::get('/team/view/{t_id}', 'view')->name('team.view');
+    Route::controller(TeamController::class)->group(function () {
+        Route::get('/team', 'index')->name('team');
+        Route::post('/team/store', 'store')->name('team.store');
+        Route::get('/team/view/{t_id}', 'view')->name('team.view');
+        Route::get('/team/view/member/{t_id}', 'viewMember')->name('team.view.member');
+        Route::get('/team/setting/{team}', 'setting')->name('team.setting');
+        Route::get('/team/edit/{team}', 'edit')->name('team.edit');
+        Route::get('/team/manage-members/{team}', 'manageMembers')->name('team.manage-members');
+        Route::get('/team/invite-members/{team}', 'inviteMembers')->name('team.invite-members');
+
+    });
+
+    Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
+
+    Route::get('/profile/view/{user_id}', [UserController::class, 'view'])->name('profile.view');
+
+
+    Route::post('/user/report/store/{user_id}', [UserReportController::class, 'store'])->name('user.report.store');
+
+
+    Route::get('/profile/myanswer/{user_id}', [UserController::class, 'myAnswer'])->name('profile.myanswer');
+
+
+    Route::get('/profile/myteam/{user_id}', [UserController::class, 'myTeam'])->name('profile.myteam');
+
+
+    Route::get('/profile/edit/{detail}', [UserController::class, 'edit'])->name('profile.edit');
+
+
+    Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
+
+
+    Route::post('/team/join', [UserTeamController::class, 'join'])->name('team.join');
+
+
+    Route::post('/team/apply', [ApplyController::class, 'apply'])->name('team.apply');
+
+
+    Route::delete('/team/leave', [UserTeamController::class, 'leave'])->name('team.leave');
+
+
+    Route::post('/question/ask-team', [QuestionController::class, 'askTeam'])->name('question.ask-team');
 });
 
-Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
-
-Route::get('/profile/view/{user_id}', [UserController::class, 'view'])->name('profile.view');
-
-Route::post('/user/report/store/{user_id}', [UserReportController::class, 'store'])->name('user.report.store');
-
-Route::get('/profile/myanswer/{user_id}', [UserController::class, 'myAnswer'])->name('profile.myanswer');
-
-Route::get('/profile/myteam/{user_id}', [UserController::class, 'myTeam'])->name('profile.myteam');
-
-Route::get('/profile/edit/{detail}', [UserController::class, 'edit'])->name('profile.edit');
-
-Route::patch('/profile/update', [UserController::class, 'update'])->name('profile.update');
-
-Route::post('/team/join', [UserTeamController::class, 'join'])->name('team.join');
-
-Route::post('/team/apply', [ApplyController::class, 'apply'])->name('team.apply');
-
-Route::delete('/team/leave', [UserTeamController::class, 'leave'])->name('team.leave');
 
