@@ -109,4 +109,24 @@ class TeamController extends Controller
     public function inviteMembers(Team $team){
         return view('user.team.invite-members')->with('team', $team);
     }
+
+    public function update(Request $request, Team $team){
+        $request->validate([
+            'update_team_name' => 'required|string|min:1|max:50',
+            'update_team_icon' => 'image|mimes:jpeg,png,jpg,gif|max:1048',
+            'update_team_description' => 'required|string|min:1|max:50',
+            'update_team_type' => 'required'
+        ]);
+
+        $update = $team;
+        $update->name = $request->update_team_name;
+        $update->description = $request->update_team_description;
+        if($request->update_team_icon){
+            $update->icon = 'data:image/' . $request->update_team_icon->extension() . ';base64,' . base64_encode(file_get_contents($request->update_team_icon));
+        }
+
+        $update->save();
+
+        return redirect()->route('team.setting', $team);
+    }
 }
