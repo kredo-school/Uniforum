@@ -31,11 +31,11 @@
                     <div class="col text-end">
                         <p class="fs-5 dark-purple">
                             @if ($member->role == 1)
-                            owner
+                            Owner
                             @elseif ($member->role == 2)
-                            admin
+                            Admin
                             @else
-                            member
+                            Member
                             @endif
                         </p>
                     </div>
