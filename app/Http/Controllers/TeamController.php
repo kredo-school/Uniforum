@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Invite;
 use App\Models\ReportCategory;
 use App\Models\Question;
+use App\Models\Apply;
+use App\Models\User;
 
 class TeamController extends Controller
 {
@@ -17,13 +19,17 @@ class TeamController extends Controller
     private $invite;
     private $report_category;
     private $question;
+    private $apply;
+    private $user;
 
-    public function __construct(Team $team, UserTeam $user_team, Invite $invite, ReportCategory $report_category, Question $question){
+    public function __construct(Team $team, UserTeam $user_team, Invite $invite, ReportCategory $report_category, Question $question, Apply $apply, User $user){
         $this->team = $team;
         $this->user_team = $user_team;
         $this->invite = $invite;
         $this->report_category = $report_category;
         $this->question = $question;
+        $this->apply = $apply;
+        $this->user = $user;
     }
 
     public function index(){
@@ -162,6 +168,47 @@ class TeamController extends Controller
             $this->user_team->save();
         }
 
+        return redirect()->back();
+    }
+
+    public function declineApply(Request $request, Team $team){
+        if($team->isTeamAdmin() || $team->isTeamOwner()){
+            $this->apply->where('user_id', $request->user_id)->where('team_id', $team->id)->delete();
+        }
+        return redirect()->back();
+    }
+
+    public function acceptApply(Request $request, Team $team){
+        if($team->isTeamAdmin() || $team->isTeamOwner()){
+            $this->apply->where('user_id', $request->user_id)->where('team_id', $team->id)->delete();
+            $this->user_team->user_id = $request->user_id;
+            $this->user_team->team_id = $team->id;
+            $this->user_team->role = 3;
+            $this->user_team->save();
+        }
+        return redirect()->back();
+    }
+
+    public function inviteSearch(Request $request, Team $team){
+        $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->get();
+        $team_members = $this->user_team->where('team_id', $team->id)->get();
+        foreach($suggestions as $key => $suggestion){
+            foreach($team_members as $team_member){
+                if($suggestion->id == $team_member->user->id){
+                    unset($suggestions[$key]);
+                }
+            }
+        }
+        return view('user.team.invite-search-result')->with('suggestions', $suggestions)->with('old_keyword', $request->user_keyword)->with('team', $team);
+    }
+
+    public function invite(Request $request, Team $team){
+        if($team->isTeamAdmin() || $team->isTeamOwner()){
+            $this->invite->user_id = $request->user_id;
+            $this->invite->team_id = $team->id;
+            $this->invite->inviter_id = Auth::user()->id;
+            $this->invite->save();
+        }
         return redirect()->back();
     }
 }

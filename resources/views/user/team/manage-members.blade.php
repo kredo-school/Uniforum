@@ -6,12 +6,16 @@
     <div class="text-center mt-5 w-85 mx-auto">
         @foreach ($team_members as $member)
         <div class="row mb-4">
-            <a href="" class="text-decoration-none col-auto">
+            <a href="{{route('profile.view', $member->user->id)}}" class="text-decoration-none col-auto">
                 <div class="text-start">
+                    @if ($member->user->avatar)
+                    <img src="{{$member->user->avatar}}" alt="" class="avatar-sm rounded-circle">
+                    @else
                     <i class="fa-solid fa-circle-user icon-sm text-secondary"></i>
+                    @endif
                 </div>
             </a>
-            <a href="" class="text-decoration-none col my-auto">
+            <a href="{{route('profile.view', $member->user->id)}}" class="text-decoration-none col my-auto">
                 <div class="text-start ms-auto">
                     <p class="fs-5 m-0 thick-gray">{{$member->user->username}}</p>
                 </div>
