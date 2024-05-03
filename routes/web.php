@@ -123,6 +123,8 @@ Route::group(["middleware" => "auth"], function(){
         Route::post('/team/invite-members/accept/{team}', 'acceptApply')->name('team.invite-members.accept');
         Route::get('/team/invite-members/search/{team}', 'inviteSearch')->name('team.invite-members.search');
         Route::post('/team/invite-members/invite/{team}', 'invite')->name('team.invite-members.invite');
+        Route::post('/team/accept-invite', 'acceptInvite')->name('team.acceptInvite');
+        Route::post('/team/decline-invite', 'declineInvite')->name('team.declineInvite');
     });
 
     Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');

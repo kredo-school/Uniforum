@@ -78,7 +78,9 @@
         @if ($detail->invited())
         <div class="mt-4">
             <div class="row">
-                <form action="" class="text-center">
+                <form action="{{route('team.acceptInvite')}}" class="text-center" method="POST">
+                    @csrf
+                    <input type="hidden" name="team_id" value="{{$detail->id}}">
                     <button type="submit" class="execute py-1 w-25 mx-auto">Accept</button>
                 </form>
             </div>
