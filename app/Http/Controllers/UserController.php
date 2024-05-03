@@ -8,6 +8,7 @@ use App\Models\ReportCategory;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\UserTeam;
+use App\Models\Team;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -17,8 +18,10 @@ class UserController extends Controller
     private $question;
     private $answer;
     private $user_team;
+    private $team;
 
-    public function __construct(User $user, ReportCategory $report_category, Question $question, Answer $answer, UserTeam $user_team){
+    public function __construct(User $user, ReportCategory $report_category, Question $question, Answer $answer, UserTeam $user_team, Team $team){
+        $this->team = $team;
         $this->user = $user;
         $this->report_category = $report_category;
         $this->question = $question;
@@ -49,7 +52,13 @@ class UserController extends Controller
     public function myTeam($user_id){
         $detail = $this->user->findOrFail($user_id);
         $report_categories = $this->report_category->get();
+        $deleted_teams = $this->team->onlyTrashed()->pluck('id')->toArray();
         $my_teams = $this->user_team->where('user_id', $user_id)->paginate(5);
+        foreach($my_teams as $key => $my_team){
+            if(in_array($my_team->team_id, $deleted_teams)){
+                unset($my_teams[$key]);
+            }
+        }
 
         return view('user.profile.my-team')->with('detail', $detail)->with('report_categories', $report_categories)->with('my_teams', $my_teams);
     }

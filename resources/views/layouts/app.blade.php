@@ -209,9 +209,10 @@
                                             <option value="0">general</option>
 
                                             @foreach (Auth::user()->user_team as $team)
+                                            @if (!in_array($team->team_id, $deleted_teams))
                                             <option value="{{$team->team->id}}">{{$team->team->name}}</option>
+                                            @endif
                                             @endforeach
-
                                         </select>
 
                                         @error('team')

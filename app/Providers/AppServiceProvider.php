@@ -26,10 +26,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $teams = Team::get();
+        $deleted_teams = Team::onlyTrashed()->pluck('id')->toArray();
         $categories = Category::get();
         View::share('categories', $categories);
-        View::share('teams', $teams);
+        View::share('deleted_teams', $deleted_teams);
         Paginator::useBootstrap();
     }
 }

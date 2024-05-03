@@ -125,6 +125,7 @@ Route::group(["middleware" => "auth"], function(){
         Route::post('/team/invite-members/invite/{team}', 'invite')->name('team.invite-members.invite');
         Route::post('/team/accept-invite', 'acceptInvite')->name('team.acceptInvite');
         Route::post('/team/decline-invite', 'declineInvite')->name('team.declineInvite');
+        Route::delete('/team/delete/{team}', 'delete')->name('team.delete');
     });
 
     Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
