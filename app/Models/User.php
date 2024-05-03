@@ -57,4 +57,8 @@ class User extends Authenticatable
     public function question(){
         return $this->hasMany(Question::class, 'user_id');
     }
+
+    public function isInvited($team_id){
+        return $this->invite()->where('team_id', $team_id)->exists();
+    }
 }

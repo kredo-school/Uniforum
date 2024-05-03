@@ -20,14 +20,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
 
-Route::get('/team/inviteMembers', function () {
-    return view('user.team.invite-members');
-})->name('team.invite');
-
-Route::get('/team/inviteMembers/result', function () {
-    return view('user.team.invite-search-result');
-})->name('team.invite.result');
-
 Route::get('/setting', function () {
     return view('user.setting.index');
 })->name('setting');
@@ -127,6 +119,10 @@ Route::group(["middleware" => "auth"], function(){
         Route::delete('/team/manage-members/kick/{team}', 'kickMember')->name('team.manage-members.kick');
         Route::patch('/team/manage-members/promote/{team}', 'promoteMember')->name('team.manage-members.promote');
         Route::patch('/team/manage-members/demote/{team}', 'demoteMember')->name('team.manage-members.demote');
+        Route::delete('/team/invite-members/decline/{team}', 'declineApply')->name('team.invite-members.decline');
+        Route::post('/team/invite-members/accept/{team}', 'acceptApply')->name('team.invite-members.accept');
+        Route::get('/team/invite-members/search/{team}', 'inviteSearch')->name('team.invite-members.search');
+        Route::post('/team/invite-members/invite/{team}', 'invite')->name('team.invite-members.invite');
     });
 
     Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
