@@ -211,4 +211,20 @@ class TeamController extends Controller
         }
         return redirect()->back();
     }
+
+    public function declineInvite(Request $request){
+        $this->invite->where('user_id', Auth::user()->id)->where('team_id', $request->team_id)->delete();
+
+        return redirect()->back();
+    }
+
+    public function acceptInvite(Request $request){
+        $this->invite->where('user_id', Auth::user()->id)->where('team_id', $request->team_id)->delete();
+        $this->user_team->user_id = Auth::user()->id;
+        $this->user_team->team_id = $request->team_id;
+        $this->user_team->role = 3;
+        $this->user_team->save();
+
+        return redirect()->back();
+    }
 }

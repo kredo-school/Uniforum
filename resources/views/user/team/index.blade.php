@@ -138,16 +138,18 @@
                         </div>
                         <div class="col my-auto">
                             <div class="w-80 mx-auto">
-                                <form action="" method="POST">
+                                <form action="{{route('team.declineInvite')}}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="team_id" value="{{$inviting_team->team->id}}">
                                     <div class="row mb-1">
-                                        <button type="button" class="d-block cancel py-1"><i class="fa-solid fa-xmark"></i> decline</button>
+                                        <button type="submit" class="d-block cancel py-1"><i class="fa-solid fa-xmark"></i> decline</button>
                                     </div>
                                 </form>
-                                <form action="" method="POST">
+                                <form action="{{route('team.acceptInvite')}}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="team_id" value="{{$inviting_team->team->id}}">
                                     <div class="row">
-                                        <button type="button" class="d-block execute py-1"><i class="fa-solid fa-check"></i> accept</button>
+                                        <button type="submit" class="d-block execute py-1"><i class="fa-solid fa-check"></i> accept</button>
                                     </div>
                                 </form>
                             </div>
