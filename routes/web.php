@@ -20,10 +20,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
 
-Route::get('/setting', function () {
-    return view('user.setting.index');
-})->name('setting');
-
 Route::get('/result', function () {
     return view('search-result');
 })->name('result');
@@ -158,6 +154,12 @@ Route::group(["middleware" => "auth"], function(){
 
 
     Route::post('/question/ask-team', [QuestionController::class, 'askTeam'])->name('question.ask-team');
+
+    Route::patch('/setting/change-password', [UserController::class, 'changePassword'])->name('setting.change-password');
+
+    Route::get('/setting', [UserController::class, 'setting'])->name('setting');
+
+
 });
 
 

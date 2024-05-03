@@ -9,6 +9,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\UserTeam;
 use App\Models\Team;
+use App\Models\University;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
@@ -19,14 +20,16 @@ class UserController extends Controller
     private $answer;
     private $user_team;
     private $team;
+    private $university;
 
-    public function __construct(User $user, ReportCategory $report_category, Question $question, Answer $answer, UserTeam $user_team, Team $team){
+    public function __construct(User $user, ReportCategory $report_category, Question $question, Answer $answer, UserTeam $user_team, Team $team, University $university){
         $this->team = $team;
         $this->user = $user;
         $this->report_category = $report_category;
         $this->question = $question;
         $this->answer = $answer;
         $this->user_team = $user_team;
+        $this->university = $university;
     }
 
     public function view($user_id){
@@ -82,5 +85,29 @@ class UserController extends Controller
         }
 
         return redirect()->route('profile.view', $request->owner_id);
+    }
+
+    public function changePassword(Request $request){
+        $request->validate([
+            'old_password' => 'required|string|min:1|max:50',
+            'new_password' => 'required|string|min:1|max:50',
+            'confirm_password' => 'required|string|min:1|max:50',
+        ]);
+
+        $update = $this->user->findOrFail(Auth::user()->id);
+
+        if(password_verify($request->old_password, Auth::user()->password) && $request->new_password == $request->confirm_password){
+            $update->password = password_hash($request->new_password, PASSWORD_DEFAULT);
+            $update->save();
+            Auth::logout();
+            return redirect()->route('login');
+        }else{
+            return redirect()->back()->with('warning','Any of the above is wrong. Please type correct password again.');
+        }
+    }
+
+    public function setting(){
+        $universities = $this->university->get();
+        return view('user.setting.index')->with('universities', $universities);
     }
 }
