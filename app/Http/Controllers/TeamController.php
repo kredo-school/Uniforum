@@ -33,8 +33,20 @@ class TeamController extends Controller
     }
 
     public function index(){
+        $deleted_teams = $this->team->onlyTrashed()->pluck('id')->toArray();
         $my_teams = $this->user_team->where('user_id', Auth::user()->id)->get();
+        foreach($my_teams as $key => $my_team){
+            if(in_array($my_team->team_id, $deleted_teams)){
+                unset($my_teams[$key]);
+            }
+        }
         $inviting_teams = $this->invite->where('user_id', Auth::user()->id)->get();
+        foreach($inviting_teams as $key => $inviting_team){
+            if(in_array($inviting_team->team_id, $deleted_teams)){
+                unset($inviting_teams[$key]);
+            }
+        }
+
         $recommends = $this->team->withCount('user_team')->orderBy('user_team_count', 'desc')->limit(5)->get();
 
         foreach($recommends as $key => $reco){
@@ -227,4 +239,13 @@ class TeamController extends Controller
 
         return redirect()->back();
     }
+
+    public function delete(Team $team){
+        if($team->isTeamOwner()){
+            $this->team->destroy($team->id);
+        }
+
+        return redirect()->route('team');
+    }
+
 }

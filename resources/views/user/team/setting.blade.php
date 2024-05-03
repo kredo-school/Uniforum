@@ -58,8 +58,9 @@
                     <div class="modal-header w-100 mx-auto ">
                         <h3 class="modal-title red" id="exampleModalLongTitle">Delete Team</h3>
                     </div>
-                    <form action="">
+                    <form action="{{route('team.delete', $team)}}" method="POST">
                         @csrf
+                        @method('DELETE')
                         <div class="modal-body text-start">
                             <p class="red fs-5">Are you sure you want to delete this team?</p>
                             <p class="mid-gray fs-6 px-1">You cannot undone this action.</p>
