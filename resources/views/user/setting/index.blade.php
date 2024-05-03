@@ -18,6 +18,17 @@
         <hr>
         <div class="row">
             <div class="row text-start">
+                <h4 class="thick-gray">Change Email</h4>
+            </div>
+            <div class="row w-25 ms-auto mt-3">
+                <a href="" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#changeEmailModal">
+                    <p class="m-0 text-center execute py-1">Change</p>
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="row text-start">
                 <h4 class="thick-gray">Change University/College</h4>
             </div>
             <div class="row w-25 ms-auto mt-3">
@@ -46,13 +57,127 @@
                     <div class="modal-header w-100 mx-auto ">
                         <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Change Password</h3>
                     </div>
+                    <form action="{{route('setting.change-password')}}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-body">
+                            <p class="dark-purple">*You will be redirected to login page after changing your password.</p>
+                            <div class="text-center mt-4">
+                                <div class="mb-4">
+                                    <input id="oldpass" type="password" class="create-q-input px-2 py-1" placeholder="Enter Old Password" name="old_password" value="">
+                                    @error('old_password')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changePasswordModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <input id="newpass" type="password" class="create-q-input px-2 py-1" placeholder="Enter New Password" name="new_password">
+                                    @error('new_password')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changePasswordModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <input id="confirmpass" type="password" class="create-q-input px-2 py-1" placeholder="Confirm New Password" name="confirm_password">
+                                    @error('confirm_password')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changePasswordModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
+                                    @if(session('warning'))
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start mt-2" role="alert">
+                                        <strong>{{ session('warning') }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changePasswordModal').modal('show');
+                                        });
+                                    </script>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer pb-3 border-0 pt-3">
+                            <div class="w-100 mx-auto row">
+                                <div class="col text-start">
+                                    <button type="button" class="cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col text-end">
+                                    <button type="submit" class="execute w-50 py-1">Change</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- change email modal --}}
+        <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header w-100 mx-auto ">
+                        <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Change Password</h3>
+                    </div>
                     <form action="" method="POST">
                         @csrf
-                        <div class="modal-body mt-3">
-                            <div class="text-center">
-                                <input id="oldpass" type="password" class="create-q-input px-2 mb-4 py-1" required placeholder="Enter Old Password">
-                                <input id="newpass" type="password" class="create-q-input px-2 mb-4 py-1" required placeholder="Enter New Password">
-                                <input id="confirmpass" type="password" class="create-q-input px-2 mb-4 py-1" required placeholder="Confirm New Password">
+                        @method('PATCH')
+                        <div class="modal-body">
+                            <p class="dark-purple">*You will be redirected to login page after changing your email.</p>
+                            <div class="text-center mt-4">
+                                <div class="mb-4">
+                                    <input type="email" class="create-q-input px-2 py-1" placeholder="Enter Old Email" name="old_email">
+                                    @error('old_email')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changeEmailModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
+                                </div>
+                                <div class="mb-4">
+                                    <input type="email" class="create-q-input px-2 py-1" placeholder="Enter New Email" name="new_email">
+                                    @error('new_email')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changeEmailModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
+                                    @if(session('warning'))
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start mt-2" role="alert">
+                                        <strong>{{ session('warning') }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changeEmailModal').modal('show');
+                                        });
+                                    </script>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer pb-3 border-0 pt-3">
@@ -79,14 +204,22 @@
                     </div>
                     <form action="" method="POST">
                         @csrf
-                        <div class="modal-body mt-4">
-                            <div class="text-center">
-                                <select class="create-q-select px-1 mb-2">
-                                    <option selected>Choose Your New University/College</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
+                        <div class="modal-body">
+                            <p class="dark-purple">*You will be redirected to home page after changing your university/college.</p>
+                            <div class="text-center mt-4">
+                                <div class="">
+                                    <select class="create-q-select px-1 mb-2">
+                                        <option selected disabled>Choose Your New University/College</option>
+                                        @foreach ($universities as $university)
+                                        <option value="{{$university->id}}"
+                                            @if ($university->id == Auth::user()->uni_id)
+                                            selected
+                                            @endif
+                                            >{{$university->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
                             </div>
                         </div>
                         <div class="modal-footer pb-3 border-0 pt-4">
