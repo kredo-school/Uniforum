@@ -249,7 +249,7 @@
         </div>
 
         {{-- delete account modal --}}
-        <form action="" method="POST">
+        <form action="{{route('setting.delete-account')}}" method="POST">
             @csrf
             @method('DELETE')
             <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -261,7 +261,7 @@
                         <div class="modal-body">
                             {{-- <p class="mid-gray fs-6">*To delete your account, please type your password.</p> --}}
                             <div class="mx-auto mt-3 text-center">
-                                <input type="password" class="create-q-input px-2 py-1" placeholder="Enter password to do this action" name="old_password" value="">
+                                <input type="password" class="create-q-input px-2 py-1" placeholder="Enter password to do this action" name="password" value="">
                                 @error('password')
                                 <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -290,7 +290,7 @@
                                     <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
                                 </div>
                                 <div class="col text-end">
-                                    <button type="button" class="delete-team-post-btn w-50 py-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">elete</button>
+                                    <button type="button" class="delete-team-post-btn w-50 py-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Delete</button>
                                 </div>
                             </div>
                         </div>
