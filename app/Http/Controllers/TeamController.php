@@ -276,4 +276,13 @@ class TeamController extends Controller
         return redirect()->route('team');
     }
 
+    public function searchTeam(Request $request){
+        $request->validate([
+            'team_keyword' => 'required'
+        ]);
+        $suggested_teams = $this->team->where('name', 'LIKE', '%'.$request->team_keyword.'%')->where('uni_id', Auth::user()->uni_id)->get();
+
+        return view('user.team.search-result')->with('suggested_teams', $suggested_teams)->with('keyword', $request->team_keyword);
+    }
+
 }

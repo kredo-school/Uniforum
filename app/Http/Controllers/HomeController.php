@@ -36,6 +36,10 @@ class HomeController extends Controller
     }
 
     public function searchQuestion(Request $request){
+        $request->validate([
+            'search_keyword' => 'required'
+        ]);
+
         if($request->search_keyword && $request->search_category){
             $suggestions = $this->question->where('content', 'LIKE', '%'.$request->search_keyword.'%')->where('category_id', $request->search_category)->where('uni_id', Auth::user()->uni_id)->where('team', null)->get();
             $category_name = $this->category->where('id', $request->search_category)->pluck('name');
