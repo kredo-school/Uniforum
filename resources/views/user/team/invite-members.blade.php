@@ -9,7 +9,7 @@
 
         <div class="">
             <h2 class="second-title text-start mb-4">Enroll Request</h2>
-            @forelse ($team->apply as $applier)
+            @forelse ($appliers as $applier)
             <div class="row mb-4">
                 <a href="{{route('profile.view', $applier->user->id)}}" class="text-decoration-none col-auto">
                     <div class="text-start">

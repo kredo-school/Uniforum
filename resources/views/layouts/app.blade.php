@@ -123,7 +123,7 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item d-flex align-items-center me-2">
-                            <p class="nav-link d-flex align-items-center dark-purple m-0 fs-5">Kredo University</p>
+                            <p class="nav-link d-flex align-items-center dark-purple m-0 fs-5">{{Auth::user()->university->name}}</p>
                         </li>
                         <li class="nav-item d-flex align-items-center me-2">
                             <a class="nav-link d-flex align-items-center" href="{{route('profile.view', Auth::user()->id)}}">

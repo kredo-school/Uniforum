@@ -101,9 +101,9 @@
                                         });
                                     </script>
                                     @enderror
-                                    @if(session('warning'))
+                                    @if(session('warning_password'))
                                     <div class="w-80 mx-auto uni-invalid-feedback text-start mt-2" role="alert">
-                                        <strong>{{ session('warning') }}</strong>
+                                        <strong>{{ session('warning_password') }}</strong>
                                     </div>
                                     <script type="text/javascript">
                                         $( document ).ready(function() {
@@ -136,25 +136,12 @@
                     <div class="modal-header w-100 mx-auto ">
                         <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Change Password</h3>
                     </div>
-                    <form action="" method="POST">
+                    <form action="{{route('setting.change-email')}}" method="POST">
                         @csrf
                         @method('PATCH')
                         <div class="modal-body">
                             <p class="dark-purple">*You will be redirected to login page after changing your email.</p>
                             <div class="text-center mt-4">
-                                <div class="mb-4">
-                                    <input type="email" class="create-q-input px-2 py-1" placeholder="Enter Old Email" name="old_email">
-                                    @error('old_email')
-                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </div>
-                                    <script type="text/javascript">
-                                        $( document ).ready(function() {
-                                             $('#changeEmailModal').modal('show');
-                                        });
-                                    </script>
-                                    @enderror
-                                </div>
                                 <div class="mb-4">
                                     <input type="email" class="create-q-input px-2 py-1" placeholder="Enter New Email" name="new_email">
                                     @error('new_email')
@@ -167,9 +154,22 @@
                                         });
                                     </script>
                                     @enderror
-                                    @if(session('warning'))
+                                </div>
+                                <div class="mb-4">
+                                    <input type="email" class="create-q-input px-2 py-1" placeholder="Confirm New Email" name="confirm_email">
+                                    @error('confirm_email')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changeEmailModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
+                                    @if(session('warning_email'))
                                     <div class="w-80 mx-auto uni-invalid-feedback text-start mt-2" role="alert">
-                                        <strong>{{ session('warning') }}</strong>
+                                        <strong>{{ session('warning_email') }}</strong>
                                     </div>
                                     <script type="text/javascript">
                                         $( document ).ready(function() {
@@ -202,13 +202,14 @@
                     <div class="modal-header w-100 mx-auto ">
                         <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Change University/College</h3>
                     </div>
-                    <form action="" method="POST">
+                    <form action="{{route('setting.change-university')}}" method="POST">
                         @csrf
+                        @method('PATCH')
                         <div class="modal-body">
                             <p class="dark-purple">*You will be redirected to home page after changing your university/college.</p>
                             <div class="text-center mt-4">
                                 <div class="">
-                                    <select class="create-q-select px-1 mb-2">
+                                    <select class="create-q-select px-1 mb-2" name="new_uni">
                                         <option selected disabled>Choose Your New University/College</option>
                                         @foreach ($universities as $university)
                                         <option value="{{$university->id}}"
@@ -218,6 +219,16 @@
                                             >{{$university->name}}</option>
                                         @endforeach
                                     </select>
+                                    @error('new_uni')
+                                    <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </div>
+                                    <script type="text/javascript">
+                                        $( document ).ready(function() {
+                                             $('#changeUnilModal').modal('show');
+                                        });
+                                    </script>
+                                    @enderror
                                 </div>
 
                             </div>
@@ -238,33 +249,79 @@
         </div>
 
         {{-- delete account modal --}}
-        <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header w-100 mx-auto ">
-                        <h3 class="modal-title red" id="exampleModalLongTitle">Delete Account</h3>
-                    </div>
-                    <div class="modal-body text-start">
-                        <p class="red fs-5">Are you sure you want to delete this account?</p>
-                        <p class="mid-gray fs-6 px-1">You cannot login to this account after you have done this action.</p>
-                    </div>
-                    <div class="modal-footer pb-3 border-0 pt-3">
-                        <div class="w-100 mx-auto row">
-                            <div class="col text-start">
-                                <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+        <form action="" method="POST">
+            @csrf
+            @method('DELETE')
+            <div class="modal fade" id="deleteAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header w-100 mx-auto ">
+                            <h3 class="modal-title red" id="exampleModalLongTitle">Delete Account</h3>
+                        </div>
+                        <div class="modal-body">
+                            {{-- <p class="mid-gray fs-6">*To delete your account, please type your password.</p> --}}
+                            <div class="mx-auto mt-3 text-center">
+                                <input type="password" class="create-q-input px-2 py-1" placeholder="Enter password to do this action" name="old_password" value="">
+                                @error('password')
+                                <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                                <script type="text/javascript">
+                                    $( document ).ready(function() {
+                                         $('#deleteAccountModal').modal('show');
+                                    });
+                                </script>
+                                @enderror
+                                @if(session('warning_delete'))
+                                <div class="w-80 mx-auto uni-invalid-feedback text-start mt-2" role="alert">
+                                    <strong>{{ session('warning_delete') }}</strong>
+                                </div>
+                                <script type="text/javascript">
+                                    $( document ).ready(function() {
+                                         $('#deleteAccountModal').modal('show');
+                                    });
+                                </script>
+                                @endif
                             </div>
-                            <div class="col text-end">
-                                <form action="">
-                                    @csrf
-                                    <button type="submit" class="delete-team-post-btn w-50 py-1">Delete</button>
-                                </form>
+                        </div>
+                        <div class="modal-footer pb-3 border-0 pt-3">
+                            <div class="w-100 mx-auto row">
+                                <div class="col text-start">
+                                    <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col text-end">
+                                    <button type="button" class="delete-team-post-btn w-50 py-1" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">elete</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header w-100 mx-auto ">
+                            <h3 class="modal-title red" id="exampleModalLongTitle">Delete Account</h3>
+                        </div>
+                        <div class="modal-body text-start">
+                            <p class="red fs-5">Are you sure you want to delete this account?</p>
+                            <p class="mid-gray fs-6 px-1">*You cannot login to this account after you have done this action.</p>
+                        </div>
+                        <div class="modal-footer pb-3 border-0 pt-3">
+                            <div class="w-100 mx-auto row">
+                                <div class="col text-start">
+                                    <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+                                <div class="col text-end">
+                                    <button type="submit" class="delete-team-post-btn w-50 py-1">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 @endsection

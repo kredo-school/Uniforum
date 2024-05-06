@@ -61,4 +61,8 @@ class User extends Authenticatable
     public function isInvited($team_id){
         return $this->invite()->where('team_id', $team_id)->exists();
     }
+
+    public function university(){
+        return $this->hasOne(University::class, 'id', 'uni_id');
+    }
 }
