@@ -140,6 +140,23 @@ class UserController extends Controller
         }
     }
 
+    public function deleteAccount(Request $request){
+        $request->validate([
+            'password' => 'required',
+        ]);
+
+        if(password_verify($request->password, Auth::user()->password)){
+
+            if($this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->exists()){
+                $owning_teams = $this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->pluck('team_id')->toArray();
+                $this->team->whereIn('id', $owning_teams)->delete();
+            }
+            $this->user->destroy(Auth::user()->id);
+            return redirect()->route('login');
+        }else{
+            return redirect()->back()->with('warning_delete','Wrong assword. Please type correct password again.');
+        }
+    }
 
 
 }

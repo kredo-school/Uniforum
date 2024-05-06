@@ -163,6 +163,8 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::patch('/setting/change-university', [UserController::class, 'changeUniversity'])->name('setting.change-university');
 
+    Route::delete('/setting/delete-account', [UserController::class, 'deleteAccount'])->name('setting.delete-account');
+
 });
 
 

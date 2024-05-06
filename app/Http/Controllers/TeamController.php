@@ -225,6 +225,12 @@ class TeamController extends Controller
         $team_members = $this->user_team->where('team_id', $team->id)->get();
         $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
 
+        foreach($team_members as $key => $team_member){
+            if(in_array($team_member->user_id, $deleted_members)){
+                unset($team_members[$key]);
+            }
+        }
+
         foreach($suggestions as $key => $suggestion){
             foreach($team_members as $team_member){
                 if($suggestion->id == $team_member->user->id){
@@ -232,11 +238,7 @@ class TeamController extends Controller
                 }
             }
         }
-        foreach($suggestions as $key => $suggestion){
-            if(in_array($suggestion->id, $deleted_members)){
-                unset($suggestions[$key]);
-            }
-        }
+
         return view('user.team.invite-search-result')->with('suggestions', $suggestions)->with('old_keyword', $request->user_keyword)->with('team', $team);
     }
 
