@@ -165,6 +165,8 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::delete('/setting/delete-account', [UserController::class, 'deleteAccount'])->name('setting.delete-account');
 
+    Route::get('/search', [HomeController::class, 'searchQuestion'])->name('search.question');
+
 });
 
 

@@ -4,7 +4,7 @@
 <div class="container py-5 px-5">
     {{-- <h1 class="text-uppercase dark-purple">home</h1> --}}
     <div class="text-center mt-4 w-85 mx-auto">
-        <form action="" method="POST">
+        <form action="{{route('search.question')}}" method="GET">
             @csrf
             <div class="row mx-auto">
                 <div class="text-start search-bar p-1 col-9">
@@ -13,12 +13,12 @@
                             <button type="submit" class="btn btn-none"><i class="fa-solid fa-magnifying-glass fs-4"></i></button>
                         </div>
                         <div class="col ms-2">
-                            <input type="text" placeholder="search for questions" class="no-border w-100 bg-light-gray h-100 search-input">
+                            <input type="text" name="search_keyword" placeholder="search for questions" class="no-border w-100 bg-light-gray h-100 search-input">
                         </div>
                     </div>
                 </div>
                 <div class="col-3 my-auto">
-                    <select class="form-select category-select">
+                    <select class="form-select category-select" name="search_category">
                         <option disabled selected>Category</option>
                         @foreach ($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
