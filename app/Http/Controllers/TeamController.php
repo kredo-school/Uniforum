@@ -72,7 +72,13 @@ class TeamController extends Controller
     public function viewMember($t_id){
         $detail = $this->team->findOrFail($t_id);
         $report_categories = $this->report_category->get();
+        $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
         $team_members = $this->user_team->where('team_id', $t_id)->orderBy('role', 'ASC')->paginate(10);
+        foreach($team_members as $key => $team_member){
+            if(in_array($team_member->user_id, $deleted_members)){
+                unset($team_members[$key]);
+            }
+        }
 
         return view('user.team.view-member')->with('detail', $detail)->with('report_categories', $report_categories)->with('team_members', $team_members);
 
@@ -121,12 +127,25 @@ class TeamController extends Controller
     }
 
     public function manageMembers(Team $team){
+        $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
         $team_members = $this->user_team->where('team_id', $team->id)->orderBy('role', 'ASC')->get();
+        foreach($team_members as $key => $team_member){
+            if(in_array($team_member->user_id, $deleted_members)){
+                unset($team_members[$key]);
+            }
+        }
         return view('user.team.manage-members')->with('team', $team)->with('team_members', $team_members);
     }
 
     public function inviteMembers(Team $team){
-        return view('user.team.invite-members')->with('team', $team);
+        $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
+        $appliers = $this->apply->where('team_id', $team->id)->get();
+        foreach($appliers as $key => $applier){
+            if(in_array($applier->user_id, $deleted_members)){
+                unset($appliers[$key]);
+            }
+        }
+        return view('user.team.invite-members')->with('team', $team)->with('appliers', $appliers);
     }
 
     public function update(Request $request, Team $team){
@@ -204,11 +223,18 @@ class TeamController extends Controller
     public function inviteSearch(Request $request, Team $team){
         $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->get();
         $team_members = $this->user_team->where('team_id', $team->id)->get();
+        $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
+
         foreach($suggestions as $key => $suggestion){
             foreach($team_members as $team_member){
                 if($suggestion->id == $team_member->user->id){
                     unset($suggestions[$key]);
                 }
+            }
+        }
+        foreach($suggestions as $key => $suggestion){
+            if(in_array($suggestion->id, $deleted_members)){
+                unset($suggestions[$key]);
             }
         }
         return view('user.team.invite-search-result')->with('suggestions', $suggestions)->with('old_keyword', $request->user_keyword)->with('team', $team);

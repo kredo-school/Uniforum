@@ -159,6 +159,9 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::get('/setting', [UserController::class, 'setting'])->name('setting');
 
+    Route::patch('/setting/change-email', [UserController::class, 'changeEmail'])->name('setting.change-email');
+
+    Route::patch('/setting/change-university', [UserController::class, 'changeUniversity'])->name('setting.change-university');
 
 });
 

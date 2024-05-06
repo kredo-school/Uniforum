@@ -102,7 +102,7 @@ class UserController extends Controller
             Auth::logout();
             return redirect()->route('login');
         }else{
-            return redirect()->back()->with('warning','Any of the above is wrong. Please type correct password again.');
+            return redirect()->back()->with('warning_password','Any of the above is wrong. Please type correct password again.');
         }
     }
 
@@ -110,4 +110,36 @@ class UserController extends Controller
         $universities = $this->university->get();
         return view('user.setting.index')->with('universities', $universities);
     }
+
+    public function changeUniversity(Request $request){
+        $request->validate([
+            'new_uni' => 'required',
+        ]);
+
+        $update = $this->user->findOrFail(Auth::user()->id);
+        $update->uni_id = $request->new_uni;
+        $update->save();
+        return redirect()->route('home');
+    }
+
+    public function changeEmail(Request $request){
+        $request->validate([
+            'new_email' => 'required|email|min:1|max:50|unique:users,email',
+            'confirm_email' => 'required|email|min:1|max:50',
+        ]);
+
+        $update = $this->user->findOrFail(Auth::user()->id);
+
+        if($request->new_email == $request->confirm_email){
+            $update->email = $request->new_email;
+            $update->save();
+            Auth::logout();
+            return redirect()->route('login');
+        }else{
+            return redirect()->back()->with('warning_email','Any of the above is wrong. Please type correct email again.');
+        }
+    }
+
+
+
 }
