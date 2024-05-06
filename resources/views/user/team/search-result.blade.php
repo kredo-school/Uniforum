@@ -12,7 +12,7 @@
                             <button type="submit" class="btn btn-none"><i class="fa-solid fa-magnifying-glass fs-4"></i></button>
                         </div>
                         <div class="col text-start">
-                            <input type="text" name="team_keyword" placeholder="search for teams" class="no-border w-100 bg-light-gray h-100 search-input">
+                            <input type="text" placeholder="search for teams" class="no-border w-100 bg-light-gray h-100 search-input" name="team_keyword">
                         </div>
                     </div>
                 </form>
@@ -110,117 +110,32 @@
 
             {{-- showing team area --}}
             <div class="mt-5 p-0">
-
-                {{-- invited --}}
-                <div>
-                    <h2 class="second-title text-start mb-3">Invited</h2>
-                    @forelse ($inviting_teams as $inviting_team)
-                    <div class="row mb-2">
-                        <div class="col-10">
-                            <a href="{{route('team.view', $inviting_team->team->id)}}" class="text-decoration-none">
-                                <div class="team-content px-4">
-                                    <div class="row py-3">
-                                        <div class="col-auto d-flex align-items-center">
-                                            @if ($inviting_team->team->icon)
-                                            <img src="{{$inviting_team->team->icon}}" alt="" class="avatar-sm rounded">
-                                            @else
-                                            <i class="fa-solid fa-square icon-sm text-white"></i>
-                                            @endif
-                                        </div>
-                                        <div class="col d-flex align-items-center">
-                                            <h5 class="text-white text-start m-0">{{$inviting_team->team->name}}</h5>
-                                        </div>
-                                        <div class="col d-flex justify-content-end">
-                                            <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$inviting_team->team->user_team->count()}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col my-auto">
-                            <div class="w-80 mx-auto">
-                                <form action="{{route('team.declineInvite')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="team_id" value="{{$inviting_team->team->id}}">
-                                    <div class="row mb-1">
-                                        <button type="submit" class="d-block cancel py-1"><i class="fa-solid fa-xmark"></i> decline</button>
-                                    </div>
-                                </form>
-                                <form action="{{route('team.acceptInvite')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="team_id" value="{{$inviting_team->team->id}}">
-                                    <div class="row">
-                                        <button type="submit" class="d-block execute py-1"><i class="fa-solid fa-check"></i> accept</button>
-                                    </div>
-                                </form>
+                <h2 class="second-title mb-4">Search Result for : {{$keyword}}</h2>
+                @forelse ($suggested_teams as $suggested_team)
+                <a href="{{route('team.view', $suggested_team->id)}}" class="text-decoration-none">
+                    <div class="team-content px-4 mb-3">
+                        <div class="row py-3">
+                            <div class="col-auto d-flex align-items-center">
+                                @if ($suggested_team->icon)
+                                <img src="{{$suggested_team->icon}}" alt="" class="avatar-sm rounded">
+                                @else
+                                <i class="fa-solid fa-square icon-sm text-white"></i>
+                                @endif
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                <h5 class="text-white text-start m-0">{{$suggested_team->name}}</h5>
+                            </div>
+                            <div class="col d-flex justify-content-end">
+                                <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$suggested_team->user_team->count()}}</span>
                             </div>
                         </div>
                     </div>
-                    @empty
-                    <div class="mb-2 text-center">
-                        <h3 class="mid-gray">No invitation yet</h3>
-                    </div>
-                    @endforelse
+                </a>
+                @empty
+                <div class="py-4 text-center">
+                    <h2 class="mid-gray">No Results Found</h2>
                 </div>
-
-                {{-- my team --}}
-                <div class="mt-4">
-                    <h2 class="second-title text-start mb-3">My Team</h2>
-                    @forelse ($my_teams as $my_team)
-                    <a href="{{route('team.view', $my_team->team->id)}}" class="text-decoration-none">
-                        <div class="team-content px-4 mb-3">
-                            <div class="row py-3">
-                                <div class="col-auto d-flex align-items-center">
-                                    @if ($my_team->team->icon)
-                                    <img src="{{$my_team->team->icon}}" alt="" class="avatar-sm rounded">
-                                    @else
-                                    <i class="fa-solid fa-square icon-sm text-white"></i>
-                                    @endif
-                                </div>
-                                <div class="col d-flex align-items-center">
-                                    <h5 class="text-white text-start m-0">{{$my_team->team->name}}</h5>
-                                </div>
-                                <div class="col d-flex justify-content-end">
-                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$my_team->team->user_team->count()}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    @empty
-                    <div class="mb-2 text-center">
-                        <h3 class="mid-gray">No Team yet</h3>
-                    </div>
-                    @endforelse
-                </div>
-
-                {{-- Recommended --}}
-                <div class="mt-4">
-                    <h2 class="second-title text-start mb-3">Recommended</h2>
-                    @forelse ($recommends as $recommend)
-                    <a href="{{route('team.view', $recommend->id)}}" class="text-decoration-none">
-                        <div class="team-content px-4 mb-3">
-                            <div class="row py-3">
-                                <div class="col-auto d-flex align-items-center">
-                                    @if ($recommend->icon)
-                                    <img src="{{$recommend->icon}}" alt="" class="avatar-sm rounded">
-                                    @else
-                                    <i class="fa-solid fa-square icon-sm text-white"></i>
-                                    @endif
-                                </div>
-                                <div class="col d-flex align-items-center">
-                                    <h5 class="text-white text-start m-0">{{$recommend->name}}</h5>
-                                </div>
-                                <div class="col d-flex justify-content-end">
-                                    <span class="text-white mt-auto"><i class='fa-solid fa-user'></i> {{$recommend->user_team->count()}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    @empty
-
-                    @endforelse
-
-                </div>
+                @endforelse
             </div>
         </div>
     </div>
