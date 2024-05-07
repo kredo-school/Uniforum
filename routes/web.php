@@ -6,6 +6,7 @@ use App\Http\Controllers\AnswerReportController;
 use App\Http\Controllers\ApplyController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CustomerSupportController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -168,6 +169,10 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::get('/search', [HomeController::class, 'searchQuestion'])->name('search.question');
 
+
+
 });
+
+Route::post('/customer-support', [CustomerSupportController::class, 'store'])->name('customer-support');
 
 
