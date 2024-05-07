@@ -66,4 +66,8 @@ class User extends Authenticatable
     public function university(){
         return $this->hasOne(University::class, 'id', 'uni_id');
     }
+
+    public function user_report(){
+        return $this->hasMany(UserReport::class, 'user_id');
+    }
 }
