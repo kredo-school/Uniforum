@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnswerLikeController;
 use App\Http\Controllers\AnswerReportController;
@@ -169,6 +170,11 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::get('/search', [HomeController::class, 'searchQuestion'])->name('search.question');
 
+    Route::get('/super-admin', [UsersController::class, 'index'])->name('super-admin');
+
+    Route::patch('/super-admin/users/activate/{user_id}', [UsersController::class, 'activate'])->name('super-admin.users.activate');
+
+    Route::delete('/super-admin/users/deactivate/{user_id}', [UsersController::class, 'deactivate'])->name('super-admin.users.deactivate');
 
 
 });

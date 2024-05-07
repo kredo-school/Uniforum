@@ -25,52 +25,62 @@
                       </tr>
                     </thead>
                     <tbody class="">
+                        @foreach ($all_users as $user)
                         <tr class="">
-                            <td>1</td>
+                            <td>{{$user->id}}</td>
                             <td class="text-center">
+                                @if($user->avatar)
+                                <img src="{{$user->avatar}}" class="avatar-sm rounded-circle" alt="">
+                                @else
                                 <i class="fa-solid fa-circle-user icon-sm text-secondary icon-sm"></i>
+                                @endif
                             </td>
-                            <td>Yukari</td>
-                            <td>yukari@example.com</td>
-                            <td>2024/4/5</td>
-                            <td>0</td>
+                            <td>{{$user->username}}</td>
+                            <td>{{$user->email}}</td>
+                            <td>{{$user->created_at->format('m/d/Y')}}</td>
+                            <td>{{$user->user_report->count()}}</td>
                             <td>
-                                {{-- <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
-                                Not Active --}}
+                                @if ($user->deleted_at)
+                                <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
+                                Not Active
+                                @else
                                 <i class="fa-solid fa-circle text-success"></i> &nbsp;
                                 Active
+                                @endif
                             </td>
                             <td>
                                 {{-- if the user is deactivated --}}
-                                {{-- <div class="dropdown">
+                                @if ($user->deleted_at)
+                                <div class="dropdown">
                                     <button class="btn btn-sm" data-bs-toggle="dropdown">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#activate-user-">
-                                            <i class="fa-solid fa-user"></i> Activate pen
-                                        </button>
+                                        <a href="" class="dropdown-item dark-purple" data-bs-toggle="modal" data-bs-target="#activate-user-{{$user->id}}">
+                                            <i class="fa-solid fa-user"></i> Activate user
+                                        </a>
                                     </div>
                                 </div>
 
-                                <div class="modal fade" id="activate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="activate-user-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Activate User</h3>
+                                                <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Activate {{$user->username}}</h3>
                                             </div>
                                             <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to activate this user?</p>
+                                                <p class="dark-purple">Are you sure you want to activate this user?</p>
                                             </div>
                                             <div class="modal-footer pb-3 border-0 pt-3">
                                                 <div class="w-100 mx-auto row">
                                                     <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="button" class="cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
                                                     <div class="col text-end">
-                                                        <form action="">
+                                                        <form action="{{route('super-admin.users.activate', $user->id)}}" method="POST">
                                                             @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Activate</button>
+                                                            @method('PATCH')
+                                                            <button type="submit" class="execute w-50 py-1">Activate</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -78,8 +88,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                --}}
-
+                                @else
                                 {{-- if the user is active --}}
                                 <div class="dropdown">
                                     <button class="btn btn-sm" data-bs-toggle="dropdown">
@@ -90,7 +99,7 @@
                                             <i class="fa-solid fa-user-slash"></i> Deactivate user
                                         </button>
                                         <hr class="dropdown-divider">
-                                        <a href="{{route('profile')}}" class="dropdown-item thick-gray">
+                                        <a href="{{route('profile.view', $user->id)}}" class="dropdown-item thick-gray">
                                             <i class="fa-solid fa-newspaper"></i> Detail
                                         </a>
                                         <hr class="dropdown-divider">
@@ -116,8 +125,9 @@
                                                         <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
                                                     <div class="col text-end">
-                                                        <form action="">
+                                                        <form action="{{route('super-admin.users.deactivate', $user->id)}}" method="POST">
                                                             @csrf
+                                                            @method('DELETE')
                                                             <button type="submit" class="delete-team-post-btn w-50 py-1">Deactivate</button>
                                                         </form>
                                                     </div>
@@ -127,420 +137,15 @@
                                     </div>
                                 </div>
 
-
+                                @endif
                             </td>
                         </tr>
-
-                        <tr class="">
-                            <td>2</td>
-                            <td class="text-center">
-                                <i class="fa-solid fa-circle-user icon-sm text-secondary icon-sm"></i>
-                            </td>
-                            <td>Mike</td>
-                            <td>mike@example.com</td>
-                            <td>2024/4/5</td>
-                            <td>0</td>
-                            <td>
-                                {{-- <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
-                                Not Active --}}
-                                <i class="fa-solid fa-circle text-success"></i> &nbsp;
-                                Active
-                            </td>
-                            <td>
-                                {{-- if the user is deactivated --}}
-                                {{-- <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#activate-user-">
-                                            <i class="fa-solid fa-user"></i> Activate pen
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="activate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Activate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to activate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Activate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                 --}}
-
-                                {{-- if the user is active --}}
-                                <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deactivate-user-">
-                                            <i class="fa-solid fa-user-slash"></i> Deactivate user
-                                        </button>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('profile')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-newspaper"></i> Detail
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('super-admin.users.report')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-envelope-circle-check"></i> Report Detail
-                                        </a>
-                                    </div>
-                                </div>
-                                {{-- deactivate user popup --}}
-                                <div class="modal fade" id="deactivate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Deactivate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to deactivate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Deactivate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="">
-                            <td>3</td>
-                            <td class="text-center">
-                                <i class="fa-solid fa-circle-user icon-sm text-secondary icon-sm"></i>
-                            </td>
-                            <td>Ike</td>
-                            <td>ike@example.com</td>
-                            <td>2024/4/5</td>
-                            <td>0</td>
-                            <td>
-                                {{-- <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
-                                Not Active --}}
-                                <i class="fa-solid fa-circle text-success"></i> &nbsp;
-                                Active
-                            </td>
-                            <td>
-                                {{-- if the user is deactivated --}}
-                                {{-- <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#activate-user-">
-                                            <i class="fa-solid fa-user"></i> Activate pen
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="activate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Activate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to activate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Activate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                 --}}
-
-                                {{-- if the user is active --}}
-                                <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deactivate-user-">
-                                            <i class="fa-solid fa-user-slash"></i> Deactivate user
-                                        </button>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('profile')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-newspaper"></i> Detail
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('super-admin.users.report')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-envelope-circle-check"></i> Report Detail
-                                        </a>
-                                    </div>
-                                </div>
-                                {{-- deactivate user popup --}}
-                                <div class="modal fade" id="deactivate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Deactivate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to deactivate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Deactivate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-
-                        <tr class="">
-                            <td>4</td>
-                            <td class="text-center">
-                                <i class="fa-solid fa-circle-user icon-sm text-secondary icon-sm"></i>
-                            </td>
-                            <td>Ann</td>
-                            <td>ann@example.com</td>
-                            <td>2024/4/5</td>
-                            <td>0</td>
-                            <td>
-                                {{-- <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
-                                Not Active --}}
-                                <i class="fa-solid fa-circle text-success"></i> &nbsp;
-                                Active
-                            </td>
-                            <td>
-                                {{-- if the user is deactivated --}}
-                                {{-- <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#activate-user-">
-                                            <i class="fa-solid fa-user"></i> Activate pen
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="activate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Activate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to activate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Activate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                 --}}
-
-                                {{-- if the user is active --}}
-                                <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deactivate-user-">
-                                            <i class="fa-solid fa-user-slash"></i> Deactivate user
-                                        </button>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('profile')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-newspaper"></i> Detail
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('super-admin.users.report')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-envelope-circle-check"></i> Report Detail
-                                        </a>
-                                    </div>
-                                </div>
-                                {{-- deactivate user popup --}}
-                                <div class="modal fade" id="deactivate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Deactivate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to deactivate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Deactivate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="">
-                            <td>5</td>
-                            <td class="text-center">
-                                <i class="fa-solid fa-circle-user icon-sm text-secondary icon-sm"></i>
-                            </td>
-                            <td>Stanly</td>
-                            <td>stanly@example.com</td>
-                            <td>2024/4/5</td>
-                            <td>0</td>
-                            <td>
-                                {{-- <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
-                                Not Active --}}
-                                <i class="fa-solid fa-circle text-success"></i> &nbsp;
-                                Active
-                            </td>
-                            <td>
-                                {{-- if the user is deactivated --}}
-                                {{-- <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#activate-user-">
-                                            <i class="fa-solid fa-user"></i> Activate pen
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="modal fade" id="activate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Activate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to activate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Activate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                 --}}
-                                {{-- if the user is active --}}
-                                <div class="dropdown">
-                                    <button class="btn btn-sm" data-bs-toggle="dropdown">
-                                        <i class="fa-solid fa-ellipsis"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deactivate-user-">
-                                            <i class="fa-solid fa-user-slash"></i> Deactivate user
-                                        </button>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('profile')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-newspaper"></i> Detail
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a href="{{route('super-admin.users.report')}}" class="dropdown-item thick-gray">
-                                            <i class="fa-solid fa-envelope-circle-check"></i> Report Detail
-                                        </a>
-                                    </div>
-                                </div>
-                                {{-- deactivate user popup --}}
-                                <div class="modal fade" id="deactivate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header w-100 mx-auto ">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Deactivate User</h3>
-                                            </div>
-                                            <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to deactivate this user?</p>
-                                            </div>
-                                            <div class="modal-footer pb-3 border-0 pt-3">
-                                                <div class="w-100 mx-auto row">
-                                                    <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
-                                                    </div>
-                                                    <div class="col text-end">
-                                                        <form action="">
-                                                            @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Deactivate</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-
+                        @endforeach
                     </tbody>
                 </table>
+                <div class="w-100 mt-4">
+                    {{ $all_users->links() }}
+                </div>
             </div>
         </div>
     </div>
