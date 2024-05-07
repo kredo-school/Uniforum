@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\QuestionsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnswerLikeController;
@@ -22,17 +23,10 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
 
-Route::get('/result', function () {
-    return view('search-result');
-})->name('result');
 
-Route::get('/super-admin', function () {
-    return view('super-admin.users.index');
-})->name('super-admin');
-
-Route::get('/super-admin/questions', function () {
-    return view('super-admin.questions.index');
-})->name('super-admin.questions');
+// Route::get('/super-admin/questions', function () {
+//     return view('super-admin.questions.index');
+// })->name('super-admin.questions');
 
 Route::get('/super-admin/answers', function () {
     return view('super-admin.answers.index');
@@ -176,6 +170,11 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::delete('/super-admin/users/deactivate/{user_id}', [UsersController::class, 'deactivate'])->name('super-admin.users.deactivate');
 
+    Route::get('/super-admin/questions', [QuestionsController::class, 'index'])->name('super-admin.questions');
+
+    Route::patch('/super-admin/questions/activate/{q_id}', [QuestionsController::class, 'activate'])->name('super-admin.questions.activate');
+
+    Route::delete('/super-admin/questions/deactivate/{q_id}', [QuestionsController::class, 'deactivate'])->name('super-admin.questions.deactivate');
 
 });
 
