@@ -60,32 +60,72 @@
                     </ul>
                 </div>
             </div>
-            <div class="modal fade" id="customer-support-before" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
+            <form action="{{route('customer-support')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal fade" id="customer-support-before" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
                                 <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Customer Support</h3>
                             </div>
                             <div class="modal-body">
-                                <form action="" method="POST">
-                                    @csrf
-                                    <div class="text-center">
-                                        <input id="" type="text" class="create-q-input px-2 mb-2 py-1" required placeholder="Enter your email address">
-                                        <select class="create-q-select px-1 mb-3">
-                                            <option selected>Type of Issue</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <textarea name="" id="" rows="10" class="w-80 big-textarea px-3 py-2 mb-2" placeholder="Please describe your problem as detailed as possible."></textarea>
-                                        <div class="w-80 mx-auto">
-                                            <input type="file" class="form-control">
-                                            <div class="text-end">
-                                                <label for="" class="form-text purple-gray x-small">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <input id="" type="text" class="create-q-input px-2 py-1" placeholder="Enter your email address" name="cs_email">
+                                        @error('cs_email')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
                                             </div>
-                                        </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#customer-support-before').modal('show');
+                                                });
+                                            </script>
+                                        @enderror
                                     </div>
-                                </form>
+                                    <div class="mb-2">
+                                        <input id="" type="text" class="create-q-input px-2 py-1" placeholder="Title" name="cs_title">
+                                        @error('cs_title')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#customer-support-before').modal('show');
+                                                });
+                                            </script>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-2">
+                                        <textarea name="cs_content" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please describe your problem as detailed as possible." name="cs_content"></textarea>
+                                        @error('cs_content')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#customer-support-before').modal('show');
+                                                });
+                                            </script>
+                                        @enderror
+                                    </div>
+                                    <div class="w-80 mx-auto">
+                                        <input type="file" class="form-control" name="cs_image">
+                                        <div class="text-end">
+                                            <label for="" class="form-text purple-gray x-small">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
+                                        </div>
+                                        @error('cs_image')
+                                            <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </div>
+                                            <script type="text/javascript">
+                                                $( document ).ready(function() {
+                                                     $('#customer-support-before').modal('show');
+                                                });
+                                            </script>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer border-0 pb-3">
                                 <div class="w-80 mx-auto row">
@@ -100,6 +140,7 @@
                         </div>
                     </div>
                 </div>
+            </form>
 
         </nav>
         @else
@@ -152,45 +193,76 @@
                 </div>
 
                 {{-- CS After Login --}}
-                <div class="modal fade" id="customer-support-after" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
-                                <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Customer Support</h3>
-                            </div>
-                            <div class="modal-body">
-                                <form action="" method="POST">
-                                    @csrf
+                <form action="{{route('customer-support')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal fade" id="customer-support-after" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header border-0 w-80 mx-auto pb-0 pt-3">
+                                    <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Customer Support</h3>
+                                </div>
+                                <div class="modal-body">
                                     <div class="text-center">
-                                        <select class="create-q-select px-1 mb-3">
-                                            <option selected>Type of Issue</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                        <textarea name="" id="" rows="10" class="w-80 big-textarea px-3 py-2 mb-2" placeholder="Please describe your problem as detailed as possible."></textarea>
+                                        <input id="" type="hidden" class="create-q-input px-2 py-1" name="cs_email" value="{{Auth::user()->email}}">
+                                        <div class="mb-2">
+                                            <input id="" type="text" class="create-q-input px-2 py-1" placeholder="Title" name="cs_title">
+                                            @error('cs_title')
+                                                <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $( document ).ready(function() {
+                                                         $('#customer-support-after').modal('show');
+                                                    });
+                                                </script>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-2">
+                                            <textarea name="cs_content" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please describe your problem as detailed as possible." name="cs_content"></textarea>
+                                            @error('cs_content')
+                                                <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $( document ).ready(function() {
+                                                         $('#customer-support-after').modal('show');
+                                                    });
+                                                </script>
+                                            @enderror
+                                        </div>
                                         <div class="w-80 mx-auto">
-                                            <input type="file" class="form-control">
+                                            <input type="file" class="form-control" name="cs_image">
                                             <div class="text-end">
                                                 <label for="" class="form-text purple-gray x-small">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
                                             </div>
+                                            @error('cs_image')
+                                                <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </div>
+                                                <script type="text/javascript">
+                                                    $( document ).ready(function() {
+                                                         $('#customer-support-after').modal('show');
+                                                    });
+                                                </script>
+                                            @enderror
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer border-0 pb-3">
-                                <div class="w-80 mx-auto row">
-                                    <div class="col text-end">
-                                        <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                    <div class="col">
-                                        <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                                </div>
+                                <div class="modal-footer border-0 pb-3">
+                                    <div class="w-80 mx-auto row">
+                                        <div class="col text-end">
+                                            <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+
 
                 {{-- Ask Question Popup --}}
                 <form action="{{ route('question.store')}}" method="POST" enctype="multipart/form-data" id="post-question-form">
