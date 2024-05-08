@@ -27,21 +27,6 @@ use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
 
 
-// Route::get('/super-admin/questions', function () {
-//     return view('super-admin.questions.index');
-// })->name('super-admin.questions');
-
-Route::get('/super-admin/answers', function () {
-    return view('super-admin.answers.index');
-})->name('super-admin.answers');
-
-Route::get('/super-admin/teams', function () {
-    return view('super-admin.teams.index');
-})->name('super-admin.teams');
-
-Route::get('/super-admin/categories', function () {
-    return view('super-admin.categories.index');
-})->name('super-admin.categories');
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -49,17 +34,12 @@ Route::get('/login', function () {
 
 Route::post('/register/user', [RegisterController::class, 'store'])->name('register-user');
 
-Route::get('/super-admin/questions/report', function () {
-    return view('super-admin.questions.report');
-})->name('super-admin.questions.report');
+
 
 Route::get('/super-admin/teams/report', function () {
     return view('super-admin.teams.report');
 })->name('super-admin.teams.report');
 
-Route::get('/super-admin/users/report', function () {
-    return view('super-admin.users.report');
-})->name('super-admin.users.report');
 
 Route::get('/super-admin/answers/report', function () {
     return view('super-admin.answers.report');
@@ -200,6 +180,8 @@ Route::group(["middleware" => "auth"], function(){
     Route::post('/super-admin/categories/store', [CategoriesController::class, 'store'])->name('super-admin.categories.store');
 
     Route::get('/super-admin/users/report/{user_id}', [UsersController::class, 'report'])->name('super-admin.users.report');
+
+    Route::get('/super-admin/questions/report/{q_id}', [QuestionsController::class, 'report'])->name('super-admin.questions.report');
 
 });
 
