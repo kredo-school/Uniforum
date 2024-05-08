@@ -31,7 +31,7 @@
                                 {{$answer->question->id}}
                             </td>
                             <td class="">{{$answer->user->username}}</td>
-                            <td class="">{{$answer->created_at->format('m/d/Y')}}</td>
+                            <td class="">{{$answer->created_at->format('Y/m/d')}}</td>
                             <td>{{$answer->answer_report->count()}}</td>
                             <td class="">
                                 @if ($answer->deleted_at)
@@ -134,9 +134,9 @@
                             </td>
                         </tr>
                         @empty
-                        <div class="py-4 text-center">
+                        <tr class="py-4 text-center">
                             <h2 class="mid-gray">No Answers</h2>
-                        </div>
+                        </tr>
                         @endforelse
 
                     </tbody>

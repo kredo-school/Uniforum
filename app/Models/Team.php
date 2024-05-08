@@ -47,4 +47,8 @@ class Team extends Model
     public function invited(){
         return $this->invite()->where('user_id', Auth::user()->id)->exists();
     }
+
+    public function team_report(){
+        return $this->hasMany(TeamReport::class, 'team_id');
+    }
 }

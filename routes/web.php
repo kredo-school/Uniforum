@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AnswersController;
 use App\Http\Controllers\Admin\QuestionsController;
+use App\Http\Controllers\Admin\TeamsController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnswerLikeController;
@@ -182,6 +183,12 @@ Route::group(["middleware" => "auth"], function(){
     Route::patch('/super-admin/answers/activate/{a_id}', [AnswersController::class, 'activate'])->name('super-admin.answers.activate');
 
     Route::delete('/super-admin/answers/deactivate/{a_id}', [AnswersController::class, 'deactivate'])->name('super-admin.answers.deactivate');
+
+    Route::get('/super-admin/teams', [TeamsController::class, 'index'])->name('super-admin.teams');
+
+    Route::patch('/super-admin/teams/activate/{team_id}', [TeamsController::class, 'activate'])->name('super-admin.teams.activate');
+
+    Route::delete('/super-admin/teams/deactivate/{team_id}', [TeamsController::class, 'deactivate'])->name('super-admin.teams.deactivate');
 });
 
 Route::post('/customer-support', [CustomerSupportController::class, 'store'])->name('customer-support');

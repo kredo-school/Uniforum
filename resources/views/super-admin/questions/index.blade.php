@@ -33,7 +33,7 @@
                             </td>
                             <td class="">{{$question->category->name}}</td>
                             <td class="">{{$question->user->username}}</td>
-                            <td class="">{{$question->created_at->format('m/d/Y')}}</td>
+                            <td class="">{{$question->created_at->format('Y/m/d')}}</td>
                             <td>{{$question->question_report->count()}}</td>
                             <td class="">
                                 @if ($question->deleted_at)
@@ -136,9 +136,9 @@
                             </td>
                         </tr>
                         @empty
-                        <div class="py-4 text-center">
+                        <tr class="py-4 text-center">
                             <h2 class="mid-gray">No Questions</h2>
-                        </div>
+                        </tr>
                         @endforelse
 
 
