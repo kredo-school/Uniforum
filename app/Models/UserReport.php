@@ -10,4 +10,8 @@ class UserReport extends Model
     use HasFactory;
 
     protected $table = 'user_report';
+
+    public function report_category(){
+        return $this->belongsTo(ReportCategory::class, 'report_category_id');
+    }
 }

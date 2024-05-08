@@ -2,39 +2,29 @@
 
 @section('content')
 <div class="container py-5 px-5">
-    <h1 class="text-uppercase dark-purple">Report for User ID: 1</h1>
+    <h1 class="text-uppercase dark-purple">Report for User ID: {{$user_id}}</h1>
     {{-- if there are some reports --}}
     <div class="mt-5 w-85 mx-auto">
-
+        @forelse ($reports as $report)
         <div class="q-content pt-2 pb-1 px-4 mb-3">
             <div class="category-label w-20 ms-auto text-center mt-1">
-                <p>Violent Expression</p>
+                <p>{{$report->report_category->name}}</p>
             </div>
             <div class="text-start">
-                <h4 class="dark-purple text-start">This user frequently posts violent expression by using a lot of curse words targeting certain group of people.</h4>
+                <h4 class="dark-purple text-start">{{$report->content}}</h4>
             </div>
             <div class="text-end mb-2">
-                <span class="purple-gray">Report user ID: 2</span>
+                <span class="purple-gray">Reporter user ID: {{$report->reporter_id}}</span>
                 <span class="ms-3 purple-gray">2024/3/26 15:05</span>
             </div>
         </div>
-
-        <div class="q-content pt-2 pb-1 px-4 mb-3">
-            <div class="category-label w-20 ms-auto text-center mt-1">
-                <p>Hate Speech</p>
-            </div>
-            <div class="text-start">
-                <h4 class="dark-purple text-start">This user often posts discriminative content towards some groups of people.</h4>
-            </div>
-            <div class="text-end mb-2">
-                <span class="purple-gray">Report user ID: 2</span>
-                <span class="ms-3 purple-gray">2024/3/26 15:05</span>
-            </div>
+        @empty
+        {{-- if there is no reports --}}
+        <div class="py-4 w-85 mx-auto">
+            <h2 class="second-title text-center">There is no reports yet.</h2>
         </div>
+        @endforelse
     </div>
-    {{-- if there is no reports --}}
-    {{-- <div class="mt-5 w-85 mx-auto">
-        <h2 class="second-title text-center">There is no reports yet.</h2>
-    </div> --}}
+
 </div>
 @endsection
