@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AnswersController;
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\QuestionsController;
 use App\Http\Controllers\Admin\TeamsController;
 use App\Http\Controllers\Admin\UsersController;
@@ -189,6 +190,15 @@ Route::group(["middleware" => "auth"], function(){
     Route::patch('/super-admin/teams/activate/{team_id}', [TeamsController::class, 'activate'])->name('super-admin.teams.activate');
 
     Route::delete('/super-admin/teams/deactivate/{team_id}', [TeamsController::class, 'deactivate'])->name('super-admin.teams.deactivate');
+
+    Route::get('/super-admin/categories', [CategoriesController::class, 'index'])->name('super-admin.categories');
+
+    Route::patch('/super-admin/categories/update/{category_id}', [CategoriesController::class, 'update'])->name('super-admin.categories.update');
+
+    Route::delete('/super-admin/categories/delete/{category_id}', [CategoriesController::class, 'delete'])->name('super-admin.categories.delete');
+
+    Route::post('/super-admin/categories/store', [CategoriesController::class, 'store'])->name('super-admin.categories.store');
+
 });
 
 Route::post('/customer-support', [CustomerSupportController::class, 'store'])->name('customer-support');
