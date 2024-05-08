@@ -199,6 +199,8 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::post('/super-admin/categories/store', [CategoriesController::class, 'store'])->name('super-admin.categories.store');
 
+    Route::get('/super-admin/users/report/{user_id}', [UsersController::class, 'report'])->name('super-admin.users.report');
+
 });
 
 Route::post('/customer-support', [CustomerSupportController::class, 'store'])->name('customer-support');

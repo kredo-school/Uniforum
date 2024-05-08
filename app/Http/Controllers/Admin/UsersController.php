@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserReport;
 
 class UsersController extends Controller
 {
     private $user;
+    private $user_report;
 
-    public function __construct(User $user){
+    public function __construct(User $user, UserReport $user_report){
         $this->user = $user;
+        $this->user_report = $user_report;
     }
 
 
@@ -31,6 +34,13 @@ class UsersController extends Controller
         $this->user->destroy($user_id);
 
         return redirect()->back();
+    }
+
+    public function report($user_id){
+
+        $reports = $this->user_report->where('user_id', $user_id)->get();
+
+        return view('super-admin.users.report')->with('reports', $reports)->with('user_id', $user_id);
     }
 
 }
