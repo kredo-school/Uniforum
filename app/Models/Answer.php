@@ -26,4 +26,8 @@ class Answer extends Model
     public function isLiked(){
         return $this->likes()->where('user_id', Auth::user()->id)->exists();
     }
+
+    public function answer_report(){
+        return $this->hasMany(AnswerReport::class, 'a_id');
+    }
 }

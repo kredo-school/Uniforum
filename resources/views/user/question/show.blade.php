@@ -12,8 +12,8 @@
         <div class="row">
             <div class="col-1 text-center">
                 <a href="{{route('profile.view', $detail->user_id)}}">
-                    @if ($detail->avatar)
-                    <img src="{{$detail->avatar}}" alt="" class="rounded-circle icon-sm">
+                    @if ($detail->user->avatar)
+                    <img src="{{$detail->user->avatar}}" alt="" class="rounded-circle avatar-sm">
                     @else
                     <i class="fa-solid fa-circle-user icon-sm text-secondary"></i>
                     @endif
@@ -131,10 +131,10 @@
     {{-- answer area --}}
     @if ($posted_answers->count() > 0)
     <hr class="mt-4 w-85 mx-auto">
-    <div class="mt-5" id="">
+    <div class="mt-5">
         <h2 class="second-title w-75 mx-auto">Answers</h2>
         @foreach ($posted_answers as $answer)
-        <div class="w-75 mx-auto" id="">
+        <div class="w-75 mx-auto" id="answer-{{$answer->id}}">
             <div class="row mt-5">
                 <div class="col-1 text-center">
                     <a href="{{route('profile.view', $answer->user->id)}}">
