@@ -24,50 +24,56 @@
                       </tr>
                     </thead>
                     <tbody class="w-100">
+                        @forelse ($all_answers as $answer)
                         <tr class="">
-                            <td>2</td>
+                            <td>{{$answer->id}}</td>
                             <td class="">
-                                1
+                                {{$answer->question->id}}
                             </td>
-                            <td class="">Yukari</td>
-                            <td class="">2024/4/5</td>
-                            <td>0</td>
+                            <td class="">{{$answer->user->username}}</td>
+                            <td class="">{{$answer->created_at->format('m/d/Y')}}</td>
+                            <td>{{$answer->answer_report->count()}}</td>
                             <td class="">
-                                {{-- <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
-                                Not Active --}}
+                                @if ($answer->deleted_at)
+                                <i class="fa-solid fa-circle text-secondary"></i> &nbsp;
+                                Hidden
+                                @else
                                 <i class="fa-solid fa-circle text-success"></i> &nbsp;
                                 Visible
+                                @endif
                             </td>
                             <td class="">
+                                @if ($answer->deleted_at)
                                 {{-- if the answer is deactivated --}}
-                                {{-- <div class="dropdown">
+                                <div class="dropdown">
                                     <button class="btn btn-sm" data-bs-toggle="dropdown">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#show-question-">
-                                            <i class="fa-solid fa-user"></i> Activate pen
+                                        <button class="dropdown-item dark-purple" data-bs-toggle="modal" data-bs-target="#show-answer-{{$answer->id}}">
+                                            <i class="fa-solid fa-user"></i> Show answer
                                         </button>
                                     </div>
                                 </div>
-                                <div class="modal fade" id="show-question-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="show-answer-{{$answer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header w-100 mx-auto">
-                                                <h3 class="modal-title red" id="exampleModalLongTitle">Show Question</h3>
+                                                <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Show Answer</h3>
                                             </div>
                                             <div class="modal-body text-start">
-                                                <p class="red">Are you sure you want to show this question?</p>
+                                                <p class="dark-purple">Are you sure you want to show this answer?</p>
                                             </div>
                                             <div class="modal-footer pb-3 border-0 pt-3">
                                                 <div class="w-100 mx-auto row">
                                                     <div class="col text-start">
-                                                        <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
+                                                        <button type="button" class="cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
                                                     <div class="col text-end">
-                                                        <form action="">
+                                                        <form action="{{route('super-admin.answers.activate', $answer->id)}}" method="POST">
                                                             @csrf
-                                                            <button type="submit" class="delete-team-post-btn w-50 py-1">Show</button>
+                                                            @method('PATCH')
+                                                            <button type="submit" class="execute w-50 py-1">Show</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -75,19 +81,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                 --}}
-
+                                @else
                                 {{-- if the question is active --}}
                                 <div class="dropdown">
                                     <button class="btn btn-sm" data-bs-toggle="dropdown">
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#hide-question-">
+                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#hide-answer-{{$answer->id}}">
                                             <i class="fa-solid fa-eye-slash"></i> Hide
                                         </button>
                                         <hr class="dropdown-divider">
-                                        <a href="{{route('view', '#answer-')}}" class="dropdown-item thick-gray">
+                                        <a href="{{route("question.show", $answer->question->id)}}#answer-{{$answer->id}}" class="dropdown-item thick-gray">
                                             {{-- put the answer-id in route --}}
                                             <i class="fa-solid fa-newspaper"></i> Detail
                                         </a>
@@ -99,7 +104,7 @@
                                 </div>
 
                                 {{-- hide question popup --}}
-                                <div class="modal fade" id="hide-question-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="hide-answer-{{$answer->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header w-100 mx-auto ">
@@ -114,8 +119,9 @@
                                                         <button type="button" class="delete-team-cancel py-1 w-50" data-bs-dismiss="modal">Cancel</button>
                                                     </div>
                                                     <div class="col text-end">
-                                                        <form action="">
+                                                        <form action="{{route('super-admin.answers.deactivate', $answer->id)}}" method="POST">
                                                             @csrf
+                                                            @method('DELETE')
                                                             <button type="submit" class="delete-team-post-btn w-50 py-1">Hide</button>
                                                         </form>
                                                     </div>
@@ -124,12 +130,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </td>
                         </tr>
-
+                        @empty
+                        <div class="py-4 text-center">
+                            <h2 class="mid-gray">No Answers</h2>
+                        </div>
+                        @endforelse
 
                     </tbody>
                 </table>
+                <div class="w-100 mt-4">
+                    {{ $all_answers->links() }}
+                </div>
             </div>
         </div>
     </div>

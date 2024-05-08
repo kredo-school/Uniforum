@@ -25,7 +25,7 @@
                       </tr>
                     </thead>
                     <tbody class="w-100">
-                        @foreach ($all_questions as $question)
+                        @forelse ($all_questions as $question)
                         <tr class="">
                             <td>{{$question->id}}</td>
                             <td class="">
@@ -95,7 +95,7 @@
                                             <i class="fa-solid fa-eye-slash"></i> Hide
                                         </button>
                                         <hr class="dropdown-divider">
-                                        <a href="" class="dropdown-item thick-gray">
+                                        <a href="{{route("question.show", $question->id)}}" class="dropdown-item thick-gray">
                                             <i class="fa-solid fa-newspaper"></i> Detail
                                         </a>
                                         <hr class="dropdown-divider">
@@ -135,11 +135,18 @@
                                 @endif
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <div class="py-4 text-center">
+                            <h2 class="mid-gray">No Questions</h2>
+                        </div>
+                        @endforelse
 
 
                     </tbody>
                 </table>
+                <div class="w-100 mt-4">
+                    {{ $all_questions->links() }}
+                </div>
             </div>
         </div>
     </div>

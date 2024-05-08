@@ -25,7 +25,7 @@
                       </tr>
                     </thead>
                     <tbody class="">
-                        @foreach ($all_users as $user)
+                        @forelse ($all_users as $user)
                         <tr class="">
                             <td>{{$user->id}}</td>
                             <td class="text-center">
@@ -136,11 +136,14 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 @endif
                             </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <div class="py-4 text-center">
+                            <h2 class="mid-gray">No Users</h2>
+                        </div>
+                        @endforelse
                     </tbody>
                 </table>
                 <div class="w-100 mt-4">

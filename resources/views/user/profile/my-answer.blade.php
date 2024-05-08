@@ -33,7 +33,7 @@
         </div>
         <div class="mt-3">
             @forelse ($my_answers as $my_answer)
-            <a href="{{route("question.show", $my_answer->question->id)}}" class="text-decoration-none">
+            <a href="{{route("question.show", $my_answer->question->id)}}#answer-{{$my_answer->id}}" class="text-decoration-none">
                 <div class="q-content pt-2 px-4 mb-3">
                     <div class="category-label w-20 ms-auto text-center mt-1">
                         <p class="fs-6 m-0">{{$my_answer->question->category->name}}</p>
