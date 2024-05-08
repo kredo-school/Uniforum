@@ -37,7 +37,7 @@
                             </td>
                             <td>{{$user->username}}</td>
                             <td>{{$user->email}}</td>
-                            <td>{{$user->created_at->format('m/d/Y')}}</td>
+                            <td>{{$user->created_at->format('Y/m/d')}}</td>
                             <td>{{$user->user_report->count()}}</td>
                             <td>
                                 @if ($user->deleted_at)
@@ -140,9 +140,9 @@
                             </td>
                         </tr>
                         @empty
-                        <div class="py-4 text-center">
+                        <tr class="py-4 text-center">
                             <h2 class="mid-gray">No Users</h2>
-                        </div>
+                        </tr>
                         @endforelse
                     </tbody>
                 </table>
