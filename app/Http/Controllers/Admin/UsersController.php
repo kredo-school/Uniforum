@@ -6,15 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserReport;
+use App\Models\UserTeam;
+use App\Models\Team;
 
 class UsersController extends Controller
 {
     private $user;
     private $user_report;
+    private $user_team;
+    private $team;
 
-    public function __construct(User $user, UserReport $user_report){
+    public function __construct(User $user, UserReport $user_report, UserTeam $user_team, Team $team){
         $this->user = $user;
         $this->user_report = $user_report;
+        $this->user_team = $user_team;
+        $this->team = $team;
     }
 
 
@@ -30,6 +36,11 @@ class UsersController extends Controller
     }
 
     public function deactivate($user_id){
+
+        if($this->user_team->where('user_id', $user_id)->where('role', 1)->exists()){
+            $owning_teams = $this->user_team->where('user_id', $user_id)->where('role', 1)->pluck('team_id')->toArray();
+            $this->team->whereIn('id', $owning_teams)->delete();
+        }
 
         $this->user->destroy($user_id);
 

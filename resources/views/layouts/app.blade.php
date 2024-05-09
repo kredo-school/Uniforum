@@ -170,18 +170,7 @@
                             <a class="nav-link d-flex align-items-center" href="{{route('profile.view', Auth::user()->id)}}">
                                 <i class="fa-solid fa-circle-user icon-x-sm text-secondary"></i>
                                 <p class="fs-5 m-0 thick-gray ms-2">{{Auth::user()->username}}</p>
-                                {{-- <div class="row">
-                                    <div class="col text-center">
-                                        <i class="fa-solid fa-circle-user fs-4 text-secondary"></i>
-                                    </div>
-                                    <div class="col ms-auto d-flex align-items-center">
-                                        <p class="fs-5 m-0 thick-gray">Yukari</p>
-                                    </div>
-                                </div> --}}
                             </a>
-                        </li>
-                        <li class="nav-item d-flex align-items-center me-2">
-                            <a class="nav-link d-flex align-items-center" href=""><i class="fa-solid fa-bell fs-4"></i></a>
                         </li>
                         <li class="nav-item d-flex align-items-center me-3">
                             <a class="nav-link d-flex align-items-center" href="" data-bs-toggle="modal" data-bs-target="#customer-support-after"><i class="fa-regular fa-circle-question fs-4"></i></a>
