@@ -97,7 +97,7 @@
                                             <i class="fa-solid fa-newspaper"></i> Detail
                                         </a>
                                         <hr class="dropdown-divider">
-                                        <a href="{{route('super-admin.answers.report')}}" class="dropdown-item thick-gray">
+                                        <a href="{{route('super-admin.answers.report', $answer->id)}}" class="dropdown-item thick-gray">
                                             <i class="fa-solid fa-envelope-circle-check"></i> Report Detail
                                         </a>
                                     </div>

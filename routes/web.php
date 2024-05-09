@@ -41,9 +41,6 @@ Route::get('/super-admin/teams/report', function () {
 })->name('super-admin.teams.report');
 
 
-Route::get('/super-admin/answers/report', function () {
-    return view('super-admin.answers.report');
-})->name('super-admin.answers.report');
 
 
 Route::post('/logout/user', [LogoutController::class, 'logout'])->name('logout-user');
@@ -182,6 +179,9 @@ Route::group(["middleware" => "auth"], function(){
     Route::get('/super-admin/users/report/{user_id}', [UsersController::class, 'report'])->name('super-admin.users.report');
 
     Route::get('/super-admin/questions/report/{q_id}', [QuestionsController::class, 'report'])->name('super-admin.questions.report');
+
+    Route::get('/super-admin/answers/report/{a_id}', [AnswersController::class, 'report'])->name('super-admin.answers.report');
+
 
 });
 

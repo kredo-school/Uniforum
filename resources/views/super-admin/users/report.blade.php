@@ -15,7 +15,7 @@
             </div>
             <div class="text-end mb-2">
                 <span class="purple-gray">Reporter user ID: {{$report->reporter_id}}</span>
-                <span class="ms-3 purple-gray">{{$report->created_at->format('m/d/Y')}}</span>
+                <span class="ms-3 purple-gray">{{$report->created_at->format('m/d/Y H:i:s')}}</span>
             </div>
         </div>
         @empty
