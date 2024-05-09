@@ -8,14 +8,13 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Attachment;
 
 class CustomerSupport extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $email;
-    private $title;
-    private $content;
+    public $contact;
 
 
     /**
@@ -23,10 +22,7 @@ class CustomerSupport extends Mailable
      */
     public function __construct($contact)
     {
-        //
-        $this->email = $contact['cs_email'];
-        $this->title = $contact['cs_title'];
-        $this->content = $contact['cs_content'];
+        $this->contact = $contact;
     }
 
     /**
@@ -46,11 +42,6 @@ class CustomerSupport extends Mailable
     {
         return new Content(
             view: 'mail.template',
-            with: [
-                'email' => $this->email,
-                'title' => $this->title,
-                'content' => $this->content
-            ]
         );
     }
 
@@ -59,8 +50,15 @@ class CustomerSupport extends Mailable
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
+
     public function attachments(): array
     {
+        if(!empty($this->contact['cs_image'])){
+            return [
+                Attachment::fromPath($this->contact['cs_image'])
+            ];
+        }
+
         return [];
     }
 }

@@ -60,7 +60,7 @@
                     </ul>
                 </div>
             </div>
-            <form action="{{route('customer-support')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('customer-support')}}" method="POST" enctype="multipart/form-data" id="cs-before-form">
                 @csrf
                 <div class="modal fade" id="customer-support-before" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
                     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -133,7 +133,7 @@
                                         <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
                                     </div>
                                     <div class="col">
-                                        <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                                        <button type="submit" class="create-q-post-btn w-100 py-1" id="cs-before-submit-btn">Post</button>
                                     </div>
                                 </div>
                             </div>
@@ -182,7 +182,7 @@
                 </div>
 
                 {{-- CS After Login --}}
-                <form action="{{route('customer-support')}}" method="POST" enctype="multipart/form-data">
+                <form action="{{route('customer-support')}}" method="POST" enctype="multipart/form-data" id="cs-after-form">
                     @csrf
                     <div class="modal fade" id="customer-support-after" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" data-bs-backdrop="static">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -243,7 +243,7 @@
                                             <button type="button" class="create-q-cancel py-1 w-100" data-bs-dismiss="modal">Close</button>
                                         </div>
                                         <div class="col">
-                                            <button type="submit" class="create-q-post-btn w-100 py-1">Post</button>
+                                            <button type="submit" class="create-q-post-btn w-100 py-1" id="cs-after-submit-btn">Post</button>
                                         </div>
                                     </div>
                                 </div>
@@ -457,11 +457,14 @@
             $('#sidebar-open').removeClass("open-animation");
         }
     }
-</script>
-{{-- @if (count($errors) > 0)
-<script>
-    $('#ask-question-modal').modal('show');
+
+    $("#cs-after-form").submit(function(){
+        $('#cs-after-submit-btn').prop('disabled', true);
+    })
+
+    $("#cs-before-form").submit(function(){
+        $('#cs-before-submit-btn').prop('disabled', true);
+    })
 
 </script>
-@endif --}}
 </html>

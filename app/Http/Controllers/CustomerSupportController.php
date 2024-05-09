@@ -21,7 +21,6 @@ class CustomerSupportController extends Controller
     {
         $contact = $request->all();
         Mail::to('cs.for.uniforum@example.com')->send(new CustomerSupportMail($contact));
-
         return redirect()->back();
     }
 
@@ -46,7 +45,7 @@ class CustomerSupportController extends Controller
         $this->cs->save();
 
         // mailtrap email sending
-        // $this->send($request);
+        $this->send($request);
 
         return redirect()->back();
     }
