@@ -10,4 +10,8 @@ class TeamReport extends Model
     use HasFactory;
 
     protected $table = 'team_report';
+
+    public function report_category(){
+        return $this->belongsTo(ReportCategory::class, 'report_category_id');
+    }
 }

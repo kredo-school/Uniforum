@@ -34,15 +34,6 @@ Route::get('/login', function () {
 
 Route::post('/register/user', [RegisterController::class, 'store'])->name('register-user');
 
-
-
-Route::get('/super-admin/teams/report', function () {
-    return view('super-admin.teams.report');
-})->name('super-admin.teams.report');
-
-
-
-
 Route::post('/logout/user', [LogoutController::class, 'logout'])->name('logout-user');
 
 Route::post('/login/user', [LoginController::class, 'login'])->name('login-user');
@@ -181,6 +172,8 @@ Route::group(["middleware" => "auth"], function(){
     Route::get('/super-admin/questions/report/{q_id}', [QuestionsController::class, 'report'])->name('super-admin.questions.report');
 
     Route::get('/super-admin/answers/report/{a_id}', [AnswersController::class, 'report'])->name('super-admin.answers.report');
+
+    Route::get('/super-admin/teams/report/{team_id}', [TeamsController::class, 'report'])->name('super-admin.teams.report');
 
 
 });
