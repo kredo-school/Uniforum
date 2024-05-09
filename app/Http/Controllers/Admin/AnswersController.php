@@ -5,13 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Answer;
+use App\Models\AnswerReport;
 
 class AnswersController extends Controller
 {
     private $answer;
+    private $answer_report;
 
-    public function __construct(Answer $answer){
+    public function __construct(Answer $answer, AnswerReport $answer_report){
         $this->answer = $answer;
+        $this->answer_report = $answer_report;
     }
 
 
@@ -32,4 +35,12 @@ class AnswersController extends Controller
 
         return redirect()->back();
     }
+
+    public function report($a_id){
+
+        $reports = $this->answer_report->where('a_id', $a_id)->get();
+
+        return view('super-admin.answers.report')->with('reports', $reports)->with('a_id', $a_id);
+    }
+    
 }
