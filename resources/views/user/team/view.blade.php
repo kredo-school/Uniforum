@@ -4,7 +4,7 @@
 <div class="container py-5 px-5">
     @include('user.team.component.view.head')
     {{-- after joined --}}
-    @if ($detail->membered())
+    @if ($detail->membered() || Auth::user()->role_id == 1)
     <div class="mt-5 w-85 mx-auto">
         <div class="row">
             <div class="col text-center">
@@ -17,7 +17,6 @@
                 <a href="{{route('team.view.member', $detail->id)}}" class="text-decoration-none dark-purple fs-5">
                     members
                 </a>
-                {{-- <hr class="menu-hr mt-2"> --}}
             </div>
         </div>
         <div class="mt-2">

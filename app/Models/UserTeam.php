@@ -10,14 +10,14 @@ class UserTeam extends Model
     use HasFactory;
 
     protected $table = 'user_team';
-    protected $fillable = ['user_id', 'team_id'];
+    protected $fillable = ['user_id', 'team_id', 'role'];
     public $timestamps = false;
 
     public function team(){
-        return $this->belongsTo(Team::class);
+        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

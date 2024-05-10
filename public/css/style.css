@@ -435,3 +435,13 @@ td{
     height: 9rem;
     object-fit: cover;
 }
+
+.logo{
+    width: auto;
+    height: 2.2rem;
+}
+
+.card-head-logo{
+    width: auto;
+    height: 4rem;
+}
