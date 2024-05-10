@@ -38,6 +38,7 @@
         @guest
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm vh-10">
             <div class="container">
+                <img src="{{ asset('image/Group 9.png')}}" alt="" class="logo me-2">
                 <a class="navbar-brand fs-3" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -147,6 +148,7 @@
         {{-- navbar after login --}}
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm vh-10">
             <div class="container">
+                <img src="{{ asset('image/Group 9.png')}}" alt="" class="logo me-2">
                 <a class="navbar-brand fs-3" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>

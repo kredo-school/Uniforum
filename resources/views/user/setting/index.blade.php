@@ -282,6 +282,13 @@
                                     });
                                 </script>
                                 @endif
+                                @if(session('warning_owner'))
+                                <script type="text/javascript">
+                                    $( document ).ready(function() {
+                                         $('#ownerErrorModal').modal('show');
+                                    });
+                                </script>
+                                @endif
                             </div>
                         </div>
                         <div class="modal-footer pb-3 border-0 pt-3">
@@ -317,6 +324,27 @@
                                     <button type="submit" class="delete-team-post-btn w-50 py-1">Delete</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="ownerErrorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header w-100 mx-auto ">
+                            <h3 class="modal-title red" id="exampleModalLongTitle">Warning!</h3>
+                        </div>
+                        <div class="modal-body text-start">
+                            <p class="red fs-6">You cannot delete this account since you are being the owner of some teams. Please pass ownership to other admins and try again.</p>
+                            {{-- <p class="mid-gray fs-6 px-1">*You cannot login to this account after you have done this action.</p> --}}
+                            <ul class="mid-gray">
+                                @if (session('warning_owner'))
+                                @foreach(session('warning_owner') as $owning_team)
+                                <li>{{$owning_team->team->name}}</li>
+                                @endforeach
+                                @endif
+                            </ul>
                         </div>
                     </div>
                 </div>

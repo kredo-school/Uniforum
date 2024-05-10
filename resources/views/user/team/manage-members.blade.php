@@ -3,7 +3,7 @@
 @section('content')
 <div class="container py-5 px-5">
     <h1 class="dark-purple">Manage Members</h1>
-    <div class="text-center mt-5 w-85 mx-auto">
+    <div class="text-center mt-5 w-80 mx-auto">
         @foreach ($team_members as $member)
         <div class="row mb-4">
             <a href="{{route('profile.view', $member->user->id)}}" class="text-decoration-none col-auto">

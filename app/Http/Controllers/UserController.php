@@ -108,6 +108,7 @@ class UserController extends Controller
 
     public function setting(){
         $universities = $this->university->get();
+
         return view('user.setting.index')->with('universities', $universities);
     }
 
@@ -148,8 +149,8 @@ class UserController extends Controller
         if(password_verify($request->password, Auth::user()->password)){
 
             if($this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->exists()){
-                $owning_teams = $this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->pluck('team_id')->toArray();
-                $this->team->whereIn('id', $owning_teams)->delete();
+                $owning_teams = $this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->get();
+                return redirect()->back()->with('warning_owner', $owning_teams);
             }
             $this->user->destroy(Auth::user()->id);
             return redirect()->route('login');

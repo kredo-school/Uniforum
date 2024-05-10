@@ -11,6 +11,8 @@ use App\Models\ReportCategory;
 use App\Models\Question;
 use App\Models\Apply;
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class TeamController extends Controller
 {
@@ -284,5 +286,40 @@ class TeamController extends Controller
 
         return view('user.team.search-result')->with('suggested_teams', $suggested_teams)->with('keyword', $request->team_keyword);
     }
+
+    public function viewOwnership(Team $team){
+        $team_admins = $this->user_team->where('team_id', $team->id)->where('role', 2)->get();
+        return view('user.team.give-ownership')->with('team', $team)->with('team_admins', $team_admins);
+    }
+
+    public function giveOwnership(Team $team, Request $request){
+        try{
+            DB::beginTransaction();
+
+            $this->user_team->where('team_id', $team->id)->where('user_id', $request->user_id)->delete();
+            $this->user_team->team_id = $team->id;
+            $this->user_team->user_id = $request->user_id;
+            $this->user_team->role = 1;
+            $this->user_team->save();
+
+            $this->user_team->where('team_id', $team->id)->where('user_id', Auth::user()->id)->delete();
+            $this->user_team->create(
+                [
+                    'team_id' => $team->id,
+                    'user_id' => Auth::user()->id,
+                    'role' => 2,
+                ]
+            );
+
+            DB::commit();
+
+            return redirect()->route('team');
+        }catch(Exception $e){
+            DB::rollBack();
+
+            throw $e;
+        }
+    }
+
 
 }

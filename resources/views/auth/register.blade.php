@@ -13,9 +13,9 @@ $all_uni = University::get();
         <div class="row justify-content-center vh-90 d-flex align-items-center">
             <div class="col-md-8 ">
                 <div class="card my-auto login-card">
-                    <div class="card-header bg-white border-0 py-4">
+                    <div class="card-header bg-white border-0 pt-5 pb-4">
                         <div class="text-center">
-                            <i class="fa-solid fa-circle-user display-2 text-secondary"></i>
+                            <img src="{{ asset('image/Group 9.png')}}" alt="" class="card-head-logo">
                         </div>
                         <h2 class="text-center mt-3">Register</h2>
                     </div>

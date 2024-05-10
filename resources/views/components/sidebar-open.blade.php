@@ -91,6 +91,7 @@
                             </div>
                         </a>
                     </li>
+                    @if (Auth::user()->role_id == 1)
                     {{-- super admin --}}
                     <li class='mb-2'>
                         <a href='{{route('super-admin')}}' class='dark-purple text-decoration-none'>
@@ -106,6 +107,7 @@
                             </div>
                         </a>
                     </li>
+                    @endif
                 </div>
             </ul>
         </nav>

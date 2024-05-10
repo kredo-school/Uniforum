@@ -90,6 +90,8 @@ Route::group(["middleware" => "auth"], function(){
         Route::post('/team/decline-invite', 'declineInvite')->name('team.declineInvite');
         Route::delete('/team/delete/{team}', 'delete')->name('team.delete');
         Route::get('/team/search', 'searchTeam')->name('team.search');
+        Route::get('/team/give-ownership/view/{team}', 'viewOwnership')->name('team.give-ownership.view');
+        Route::patch('/team/give-ownership/give/{team}', 'giveOwnership')->name('team.give-ownership.give');
     });
 
     Route::post('/team/report/store/{t_id}', [TeamReportController::class, 'store'])->name('team.report.store');
@@ -174,8 +176,6 @@ Route::group(["middleware" => "auth"], function(){
     Route::get('/super-admin/answers/report/{a_id}', [AnswersController::class, 'report'])->name('super-admin.answers.report');
 
     Route::get('/super-admin/teams/report/{team_id}', [TeamsController::class, 'report'])->name('super-admin.teams.report');
-
-
 });
 
 Route::post('/customer-support', [CustomerSupportController::class, 'store'])->name('customer-support');

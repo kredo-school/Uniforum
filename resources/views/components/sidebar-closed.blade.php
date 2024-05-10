@@ -20,9 +20,11 @@
                 <a href='' class='text-white' data-toggle="tooltip" data-placement="right" title="Logout" data-bs-toggle="modal" data-bs-target="#logout"><i class='fa-solid fa-arrow-right-from-bracket fs-2'></i></a>
             </li>
             {{-- super admin --}}
+            @if (Auth::user()->role_id == 1)
             <li class='mb-3 py-2 {{ request()->is('super-admin*') ? 'active' : '' }}'>
                 <a href='{{route('super-admin')}}' class='text-white' data-toggle="tooltip" data-placement="right" title="Logout"><i class="fa-solid fa-user-gear fs-2"></i></a>
             </li>
+            @endif
         </ul>
     </nav>
 </div>

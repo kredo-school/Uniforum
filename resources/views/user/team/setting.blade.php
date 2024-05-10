@@ -42,6 +42,17 @@
         {{-- if owner --}}
         <div class="row">
             <div class="row text-start">
+                <h4 class="thick-gray">Give Ownership</h4>
+            </div>
+            <div class="row w-25 ms-auto mt-3">
+                <a href="{{route('team.give-ownership.view', $team)}}" class="text-decoration-none">
+                    <p class="m-0 text-center execute py-1">Give</p>
+                </a>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="row text-start">
                 <h4 class="red">Delete Team</h4>
             </div>
             <div class="row w-25 ms-auto mt-3">
