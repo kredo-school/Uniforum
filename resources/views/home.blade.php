@@ -29,7 +29,7 @@
         </form>
     </div>
     <div class="mt-5 w-85 mx-auto text-center">
-        @foreach ($home_questions as $question)
+        @forelse ($home_questions as $question)
         <a href="{{route('question.show', $question->id)}}" class="text-decoration-none">
             <div class="q-content pt-2 pb-1 px-4 mb-3">
                 <div class="category-label w-20 ms-auto text-center mt-1">
@@ -45,7 +45,12 @@
                 </div>
             </div>
         </a>
-        @endforeach
+        @empty
+        <div class="py-5 text-center">
+            <h2 class="mid-gray">No questions yet</h2>
+            <a href="" class="dark-purple" data-bs-toggle="modal" data-bs-target="#ask-question-modal">Be the first questioner!</a>
+        </div>
+        @endforelse
         <div class="w-100 mt-4">
             {{ $home_questions->links() }}
         </div>
