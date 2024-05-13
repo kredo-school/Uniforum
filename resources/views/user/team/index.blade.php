@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     @empty
-                    <div class="mb-2 text-center">
+                    <div class="py-2 text-center">
                         <h3 class="mid-gray">No invitation yet</h3>
                     </div>
                     @endforelse
@@ -187,7 +187,7 @@
                         </div>
                     </a>
                     @empty
-                    <div class="mb-2 text-center">
+                    <div class="py-2 text-center">
                         <h3 class="mid-gray">No Team yet</h3>
                     </div>
                     @endforelse
@@ -217,7 +217,9 @@
                         </div>
                     </a>
                     @empty
-
+                    <div class="py-2 text-center">
+                        <h3 class="mid-gray">No Recommendation yet</h3>
+                    </div>
                     @endforelse
 
                 </div>
