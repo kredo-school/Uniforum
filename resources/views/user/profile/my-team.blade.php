@@ -48,7 +48,7 @@
             </a>
             @empty
             <div class="pt-5 text-center">
-                <h3 class="mid-gray">No Teams yet</h3>
+                <h3 class="mid-gray">No teams yet</h3>
             </div>
             @endforelse
             <div class="w-100 mt-4">
