@@ -1,62 +1,65 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
-
-                        <input type="hidden" name="token" value="{{ $token }}">
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+@section('login-register-content')
+<div class="bg-light-purple vh-90">
+    <div class="container w-50 vh-90">
+        <div class="row justify-content-center vh-90 d-flex align-items-center">
+            <div class="col-md-8 ">
+                <div class="card my-auto login-card">
+                    <div class="card-header bg-white border-0 pt-5 pb-4">
+                        <div class="text-center">
+                            <img src="{{ asset('image/Group 9.png')}}" alt="" class="card-head-logo">
                         </div>
+                        <h2 class="text-center mt-3">Reset Password</h2>
+                    </div>
+                    <div class="card-body bg-white">
+                        <form method="POST" action="{{ route('password.update') }}">
+                            @csrf
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                            <input type="hidden" name="token" value="{{ $token }}">
 
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                            <div class="row mb-3 mt-3">
+                                <div class="text-center">
+                                    <input id="email" type="email" class="login-input @error('email') is-invalid @enderror py-1 px-2" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" placeholder="Enter your email">
 
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                    @error('email')
+                                    <div class="w-70 mx-auto">
+                                        <span class="uni-invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    </div>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
+                            <div class="row mb-3">
 
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <div class="text-center">
+                                    <input id="password" type="password" class="login-input @error('password') is-invalid @enderror py-1 px-2" name="password" required autocomplete="new-password" placeholder="Enter new password" autofocus>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                            <div class="row mb-5">
+
+                                <div class="text-center">
+                                    <input id="password-confirm" type="password" class="login-input py-1 px-2" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password">
+                                    @error('password')
+                                    <div class="w-70 mx-auto">
+                                        <span class="uni-invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="row mb-0 w-70 mx-auto">
+                                <button type="submit" class="login-btn py-1">
                                     {{ __('Reset Password') }}
                                 </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <div class="card-footer bg-white border-0"></div>
                 </div>
             </div>
         </div>
