@@ -9,8 +9,10 @@ use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnswerLikeController;
 use App\Http\Controllers\AnswerReportController;
 use App\Http\Controllers\ApplyController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CustomerSupportController;
 use App\Http\Controllers\LogoutController;
 use Illuminate\Support\Facades\Route;
@@ -37,7 +39,6 @@ Route::post('/register/user', [RegisterController::class, 'store'])->name('regis
 Route::post('/logout/user', [LogoutController::class, 'logout'])->name('logout-user');
 
 Route::post('/login/user', [LoginController::class, 'login'])->name('login-user');
-
 
 
 Auth::routes();
