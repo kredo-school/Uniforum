@@ -139,7 +139,7 @@
                 <div class="col-1 text-center">
                     <a href="{{route('profile.view', $answer->user->id)}}">
                         @if($answer->user->avatar)
-                        <img src="{{$answer->user->avatar}}" alt="" class="rounded-circle icon-sm">
+                        <img src="{{$answer->user->avatar}}" alt="" class="rounded-circle avatar-sm">
                         @else
                         <i class="fa-solid fa-circle-user icon-sm text-secondary"></i>
                         @endif
