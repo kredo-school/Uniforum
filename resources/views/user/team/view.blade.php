@@ -36,24 +36,64 @@
                                 <input type="hidden" name="team_id" value="{{$detail->id}}">
                                 <div class="text-center">
                                     <div class="mb-2">
-                                        <input name="q_t_title" type="text" class="create-q-input px-2 py-1" required placeholder="Title">
+                                        <input name="q_t_title" type="text" class="create-q-input px-2 py-1" placeholder="Title" value="{{ old('q_t_title') }}">
+                                        @error('q_t_title')
+                                        <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $( document ).ready(function() {
+                                                 $('#createTeamQuestionModal').modal('show');
+                                            });
+                                        </script>
+                                        @enderror
                                     </div>
                                     <div class="mb-2">
                                         <select class="create-q-select px-1" name="q_t_category">
-                                            <option selected>Category</option>
+                                            <option selected disabled>Category</option>
                                             @foreach ($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
                                         </select>
+                                        @error('q_t_category')
+                                        <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $( document ).ready(function() {
+                                                 $('#createTeamQuestionModal').modal('show');
+                                            });
+                                        </script>
+                                        @enderror
                                     </div>
                                     <div class="mb-2">
-                                        <textarea name="q_t_content" id="" rows="5" class="w-80 big-textarea px-2 py-2 mb-2" placeholder=" Write your question in here!"></textarea>
+                                        <textarea name="q_t_content" id="" rows="5" class="w-80 big-textarea px-2 py-2" placeholder=" Write your question in here!">{{ old('q_t_content') }}</textarea>
+                                        @error('q_t_content')
+                                        <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $( document ).ready(function() {
+                                                 $('#createTeamQuestionModal').modal('show');
+                                            });
+                                        </script>
+                                        @enderror
                                     </div>
                                     <div class="w-80 mx-auto">
                                         <input type="file" class="form-control" name="q_t_image">
                                         <div class="text-end">
                                             <label for="" class="form-text purple-gray x-small">Accepted file types: jpg, jpeg, png, gif, Max file size 1048kb.</label>
                                         </div>
+                                        @error('q_t_image')
+                                        <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </div>
+                                        <script type="text/javascript">
+                                            $( document ).ready(function() {
+                                                 $('#createTeamQuestionModal').modal('show');
+                                            });
+                                        </script>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
