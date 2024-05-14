@@ -68,6 +68,11 @@ class QuestionController extends Controller
             'q_t_content' => 'required|string|min:1|max:1000',
             'q_t_category' => 'required',
             'q_t_image' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
+        ],
+        [
+            'q_t_title.required' => 'Title is required.',
+            'q_t_content.required' => 'Content is required.',
+            'q_t_category.required' => 'Category is required.',
         ]);
 
 
