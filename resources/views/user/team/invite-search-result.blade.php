@@ -11,12 +11,16 @@
             <h2 class="second-title text-start mb-4">Search Result of: {{$old_keyword}}</h2>
             @forelse ($suggestions as $suggestion)
             <div class="row mb-4">
-                <a href="" class="text-decoration-none col-auto">
+                <a href="{{route('profile.view', $suggestion->id)}}" class="text-decoration-none col-auto">
                     <div class="text-start">
+                        @if ($suggestion->avatar)
+                        <img src="{{$suggestion->avatar}}" alt="" class="avatar-sm rounded-circle">
+                        @else
                         <i class="fa-solid fa-circle-user icon-sm text-secondary"></i>
+                        @endif
                     </div>
                 </a>
-                <a href="" class="text-decoration-none col my-auto">
+                <a href="{{route('profile.view', $suggestion->id)}}" class="text-decoration-none col my-auto">
                     <div class="text-start ms-auto">
                         <p class="fs-5 m-0 thick-gray">{{$suggestion->username}}</p>
                     </div>
