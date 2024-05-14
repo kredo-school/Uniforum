@@ -27,8 +27,7 @@ use App\Http\Controllers\TeamReportController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
-
-
+use App\Http\Middleware\Admin;
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -138,45 +137,29 @@ Route::group(["middleware" => "auth"], function(){
 
     Route::get('/search', [HomeController::class, 'searchQuestion'])->name('search.question');
 
-    Route::get('/super-admin', [UsersController::class, 'index'])->name('super-admin');
+    Route::middleware([Admin::class])->group(function () {
+        Route::get('/super-admin', [UsersController::class, 'index'])->name('super-admin');
+        Route::patch('/super-admin/users/activate/{user_id}', [UsersController::class, 'activate'])->name('super-admin.users.activate');
+        Route::delete('/super-admin/users/deactivate/{user_id}', [UsersController::class, 'deactivate'])->name('super-admin.users.deactivate');
+        Route::get('/super-admin/questions', [QuestionsController::class, 'index'])->name('super-admin.questions');
+        Route::patch('/super-admin/questions/activate/{q_id}', [QuestionsController::class, 'activate'])->name('super-admin.questions.activate');
+        Route::delete('/super-admin/questions/deactivate/{q_id}', [QuestionsController::class, 'deactivate'])->name('super-admin.questions.deactivate');
+        Route::get('/super-admin/answers', [AnswersController::class, 'index'])->name('super-admin.answers');
+        Route::patch('/super-admin/answers/activate/{a_id}', [AnswersController::class, 'activate'])->name('super-admin.answers.activate');
+        Route::delete('/super-admin/answers/deactivate/{a_id}', [AnswersController::class, 'deactivate'])->name('super-admin.answers.deactivate');
+        Route::get('/super-admin/teams', [TeamsController::class, 'index'])->name('super-admin.teams');
+        Route::patch('/super-admin/teams/activate/{team_id}', [TeamsController::class, 'activate'])->name('super-admin.teams.activate');
+        Route::delete('/super-admin/teams/deactivate/{team_id}', [TeamsController::class, 'deactivate'])->name('super-admin.teams.deactivate');
+        Route::get('/super-admin/categories', [CategoriesController::class, 'index'])->name('super-admin.categories');
+        Route::patch('/super-admin/categories/update/{category_id}', [CategoriesController::class, 'update'])->name('super-admin.categories.update');
+        Route::delete('/super-admin/categories/delete/{category_id}', [CategoriesController::class, 'delete'])->name('super-admin.categories.delete');
+        Route::post('/super-admin/categories/store', [CategoriesController::class, 'store'])->name('super-admin.categories.store');
+        Route::get('/super-admin/users/report/{user_id}', [UsersController::class, 'report'])->name('super-admin.users.report');
+        Route::get('/super-admin/questions/report/{q_id}', [QuestionsController::class, 'report'])->name('super-admin.questions.report');
+        Route::get('/super-admin/answers/report/{a_id}', [AnswersController::class, 'report'])->name('super-admin.answers.report');
+        Route::get('/super-admin/teams/report/{team_id}', [TeamsController::class, 'report'])->name('super-admin.teams.report');
+    });
 
-    Route::patch('/super-admin/users/activate/{user_id}', [UsersController::class, 'activate'])->name('super-admin.users.activate');
-
-    Route::delete('/super-admin/users/deactivate/{user_id}', [UsersController::class, 'deactivate'])->name('super-admin.users.deactivate');
-
-    Route::get('/super-admin/questions', [QuestionsController::class, 'index'])->name('super-admin.questions');
-
-    Route::patch('/super-admin/questions/activate/{q_id}', [QuestionsController::class, 'activate'])->name('super-admin.questions.activate');
-
-    Route::delete('/super-admin/questions/deactivate/{q_id}', [QuestionsController::class, 'deactivate'])->name('super-admin.questions.deactivate');
-
-    Route::get('/super-admin/answers', [AnswersController::class, 'index'])->name('super-admin.answers');
-
-    Route::patch('/super-admin/answers/activate/{a_id}', [AnswersController::class, 'activate'])->name('super-admin.answers.activate');
-
-    Route::delete('/super-admin/answers/deactivate/{a_id}', [AnswersController::class, 'deactivate'])->name('super-admin.answers.deactivate');
-
-    Route::get('/super-admin/teams', [TeamsController::class, 'index'])->name('super-admin.teams');
-
-    Route::patch('/super-admin/teams/activate/{team_id}', [TeamsController::class, 'activate'])->name('super-admin.teams.activate');
-
-    Route::delete('/super-admin/teams/deactivate/{team_id}', [TeamsController::class, 'deactivate'])->name('super-admin.teams.deactivate');
-
-    Route::get('/super-admin/categories', [CategoriesController::class, 'index'])->name('super-admin.categories');
-
-    Route::patch('/super-admin/categories/update/{category_id}', [CategoriesController::class, 'update'])->name('super-admin.categories.update');
-
-    Route::delete('/super-admin/categories/delete/{category_id}', [CategoriesController::class, 'delete'])->name('super-admin.categories.delete');
-
-    Route::post('/super-admin/categories/store', [CategoriesController::class, 'store'])->name('super-admin.categories.store');
-
-    Route::get('/super-admin/users/report/{user_id}', [UsersController::class, 'report'])->name('super-admin.users.report');
-
-    Route::get('/super-admin/questions/report/{q_id}', [QuestionsController::class, 'report'])->name('super-admin.questions.report');
-
-    Route::get('/super-admin/answers/report/{a_id}', [AnswersController::class, 'report'])->name('super-admin.answers.report');
-
-    Route::get('/super-admin/teams/report/{team_id}', [TeamsController::class, 'report'])->name('super-admin.teams.report');
 });
 
 Route::post('/customer-support', [CustomerSupportController::class, 'store'])->name('customer-support');
