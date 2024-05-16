@@ -31,6 +31,12 @@ class CustomerSupportController extends Controller
             'cs_title' => 'required|string|min:1|max:100',
             'cs_content' => 'required|string|min:1|max:1000',
             'cs_image' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
+        ],
+        [
+            'cs_email.required' => 'Please write your email.',
+            'cs_title.required' => 'Please write the title.',
+            'cs_content.required' => 'Please write your inquiry.',
+
         ]);
 
 

@@ -72,6 +72,9 @@ class UserController extends Controller
                 'update_username' => 'required|string|min:1|max:50',
                 'update_avatar' => 'image|mimes:jpeg,png,jpg,gif|max:1048',
                 'update_introduction' => 'max:100'
+            ],
+            [
+                'update_username.required' => 'Please write the username.',
             ]);
 
             $update = $this->user->findOrFail(Auth::user()->id);
@@ -92,6 +95,11 @@ class UserController extends Controller
             'old_password' => 'required|string|min:1|max:50',
             'new_password' => 'required|string|min:1|max:50',
             'confirm_password' => 'required|string|min:1|max:50',
+        ],
+        [
+            'old_password.required' => 'Please enter your old password.',
+            'new_password.required' => 'Please enter your new password.',
+            'confirm_password.required' => 'Please confirm the new password.',
         ]);
 
         $update = $this->user->findOrFail(Auth::user()->id);
@@ -115,6 +123,9 @@ class UserController extends Controller
     public function changeUniversity(Request $request){
         $request->validate([
             'new_uni' => 'required',
+        ],
+        [
+            'new_uni.required' => 'Please select your new university.',
         ]);
 
         $update = $this->user->findOrFail(Auth::user()->id);
@@ -127,6 +138,10 @@ class UserController extends Controller
         $request->validate([
             'new_email' => 'required|email|min:1|max:50|unique:users,email',
             'confirm_email' => 'required|email|min:1|max:50',
+        ],
+        [
+            'new_email.required' => 'Please enter your new email.',
+            'confirm_email.required' => 'Please confirm your new email.',
         ]);
 
         $update = $this->user->findOrFail(Auth::user()->id);
@@ -144,6 +159,9 @@ class UserController extends Controller
     public function deleteAccount(Request $request){
         $request->validate([
             'password' => 'required',
+        ],
+        [
+            'password.required' => 'Please enter your password.',
         ]);
 
         if(password_verify($request->password, Auth::user()->password)){

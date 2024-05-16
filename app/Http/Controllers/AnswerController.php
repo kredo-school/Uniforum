@@ -19,6 +19,9 @@ class AnswerController extends Controller
         $request->validate([
             'post_answer_content' => 'required|string|min:1|max:1000',
             'post_answer_image' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
+        ],
+        [
+            'post_answer_content.required' => 'Please write your answer.'
         ]);
 
         $this->answer->q_id = $q_id;
