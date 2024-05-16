@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AnswersController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\QuestionsController;
 use App\Http\Controllers\Admin\TeamsController;
+use App\Http\Controllers\Admin\UniversitiesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\AnswerLikeController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\QuestionLikeController;
 use App\Http\Controllers\QuestionReportController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\TeamReportController;
+use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\UserTeamController;
@@ -158,6 +160,10 @@ Route::group(["middleware" => "auth"], function(){
         Route::get('/super-admin/questions/report/{q_id}', [QuestionsController::class, 'report'])->name('super-admin.questions.report');
         Route::get('/super-admin/answers/report/{a_id}', [AnswersController::class, 'report'])->name('super-admin.answers.report');
         Route::get('/super-admin/teams/report/{team_id}', [TeamsController::class, 'report'])->name('super-admin.teams.report');
+        Route::get('/super-admin/universities', [UniversitiesController::class, 'index'])->name('super-admin.universities');
+        Route::patch('/super-admin/universities/update/{university_id}', [UniversitiesController::class, 'update'])->name('super-admin.universities.update');
+        Route::delete('/super-admin/universities/delete/{university_id}', [UniversitiesController::class, 'delete'])->name('super-admin.universities.delete');
+        Route::post('/super-admin/universities/store', [UniversitiesController::class, 'store'])->name('super-admin.universities.store');
     });
 
 });

@@ -14,4 +14,7 @@
     <a href="{{route('super-admin.categories')}}" class="list-group-item {{ request()->is('super-admin/categories') ? 'active' : '' }}" aria-current="true">
         <i class="fa-solid fa-tags"></i> Categories
     </a>
+    <a href="{{route('super-admin.universities')}}" class="list-group-item {{ request()->is('super-admin/universities') ? 'active' : '' }}" aria-current="true">
+        <i class="fa-solid fa-building-columns"></i> Universities
+    </a>
 </ul>
