@@ -240,7 +240,7 @@
                                 </div>
 
                                 <div class="">
-                                    <textarea name="a_report_content" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this question as detailed as possible."></textarea>
+                                    <textarea name="a_report_content" id="" rows="10" class="w-80 big-textarea px-3 py-2" placeholder="Please write the reason of reporting this answer as detailed as possible."></textarea>
                                     @error('a_report_content')
                                     @if ($answer->id == old('target_id'))
                                     <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">

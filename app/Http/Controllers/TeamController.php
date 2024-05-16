@@ -93,6 +93,11 @@ class TeamController extends Controller
             'team_description' => 'required|string|min:1|max:1000',
             'team_type' => 'required',
             'team_icon' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
+        ],
+        [
+            'team_name.required' => 'Please write the name.',
+            'team_description.required' => 'Please write the descrition.',
+            'team_type.required' => 'Please select the team type.',
         ]);
 
         $this->team->name = $request->team_name;
@@ -157,6 +162,11 @@ class TeamController extends Controller
                 'update_team_icon' => 'image|mimes:jpeg,png,jpg,gif|max:1048',
                 'update_team_description' => 'required|string|min:1|max:50',
                 'update_team_type' => 'required'
+            ],
+            [
+                'update_team_name.required' => 'Please write the name.',
+                'update_team_description.required' => 'Please write the descrition.',
+                'update_team_type.required' => 'Please select the team type.',
             ]);
 
             $update = $team;

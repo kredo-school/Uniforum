@@ -17,6 +17,9 @@ class PostscriptController extends Controller
     {
         $request->validate([
             'ps_content' => 'required|string|min:1|max:1000',
+        ],
+        [
+            'ps_content.required' => 'Please write your postscript.'
         ]);
 
         $this->postscript->q_id = $q_id;

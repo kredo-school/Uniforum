@@ -37,6 +37,13 @@ class QuestionController extends Controller
             'content' => 'required|string|min:1|max:1000',
             'category' => 'required',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
+        ],
+        [
+            'team.required' => 'Please select where you want your question to be posted.',
+            'title.required' => 'Please write the title.',
+            'content.required' => 'Please write the content.',
+            'category.required' => 'Please select the category.',
+
         ]);
 
         if($request->team != '0'){
@@ -70,9 +77,9 @@ class QuestionController extends Controller
             'q_t_image' => 'image|mimes:jpeg,png,jpg,gif|max:1048'
         ],
         [
-            'q_t_title.required' => 'Title is required.',
-            'q_t_content.required' => 'Content is required.',
-            'q_t_category.required' => 'Category is required.',
+            'q_t_title.required' => 'Please write the title.',
+            'q_t_content.required' => 'Please write the content.',
+            'q_t_category.required' => 'Please select the category.',
         ]);
 
 

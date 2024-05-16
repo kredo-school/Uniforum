@@ -21,7 +21,7 @@ class TeamReportController extends Controller
         ],
         [
             't_report_category.required' => 'Please select the category.',
-            't_report_content.required' => 'Please write the reason why you would like to report this question.',
+            't_report_content.required' => 'Please write the reason why you would like to report this team.',
         ]
     );
 
