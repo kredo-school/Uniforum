@@ -36,9 +36,13 @@ class CategoriesController extends Controller
     }
 
     public function store(Request $request){
+        $request->validate([
+            'name' => 'required',
+        ]);
+        
         $this->category->name = $request->name;
         $this->category->save();
-        
+
         return redirect()->back();
     }
 }
