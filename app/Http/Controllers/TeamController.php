@@ -49,7 +49,7 @@ class TeamController extends Controller
             }
         }
 
-        $recommends = $this->team->withCount('user_team')->where('uni_id', Auth::user()->uni_id)->orderBy('user_team_count', 'desc')->limit(5)->get();
+        $recommends = $this->team->withCount('user_team')->orderBy('user_team_count', 'desc')->limit(5)->get();
 
         foreach($recommends as $key => $reco){
             foreach($my_teams as $my_team){
@@ -106,7 +106,7 @@ class TeamController extends Controller
             $this->team->icon = 'data:image/' . $request->team_icon->extension() . ';base64,' . base64_encode(file_get_contents($request->team_icon));
         }
         $this->team->type = $request->team_type;
-        $this->team->uni_id = Auth::user()->uni_id;
+        // $this->team->uni_id = Auth::user()->uni_id;
 
         $this->team->save();
 
@@ -233,7 +233,7 @@ class TeamController extends Controller
     }
 
     public function inviteSearch(Request $request, Team $team){
-        $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->where('uni_id', Auth::user()->uni_id)->get();
+        $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->get();
         $team_members = $this->user_team->where('team_id', $team->id)->get();
         $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
 
@@ -292,8 +292,9 @@ class TeamController extends Controller
         $request->validate([
             'team_keyword' => 'required'
         ]);
-        $suggested_teams = $this->team->where('name', 'LIKE', '%'.$request->team_keyword.'%')->where('uni_id', Auth::user()->uni_id)->get();
 
+        $suggested_teams = $this->team->where('name', 'LIKE', '%'.$request->team_keyword.'%')->get();
+        
         return view('user.team.search-result')->with('suggested_teams', $suggested_teams)->with('keyword', $request->team_keyword);
     }
 

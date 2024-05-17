@@ -21,6 +21,9 @@ body{
 .bg-thick-gray{
     background-color: #606060 !important;
 }
+.blue-purple{
+    color: #B7BAE7;
+}
 .light-gray{
     color: #EEEEEE;
 }
@@ -444,4 +447,15 @@ td{
 .card-head-logo{
     width: auto;
     height: 4rem;
+}
+
+.uni-label{
+    color: #8E85C6;
+    background-color: #DEDFF3;
+    border-radius: 1em;
+
+}
+
+.xlarge-font{
+    font-size: 7rem;
 }
