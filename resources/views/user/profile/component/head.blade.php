@@ -18,6 +18,11 @@
                 </div>
             </div>
         </div>
+        <div class="col-auto my-auto uni-label">
+            <div class="uni-label text-center w-100">
+                <p class="dark-purple m-0 fs-5">{{$detail->university->name}}</p>
+            </div>
+        </div>
         <div class="col-auto text-end  my-auto">
             {{-- if owner --}}
             @if (Auth::user()->id == $detail->id)

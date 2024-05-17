@@ -5,6 +5,38 @@
     @include('user.profile.component.head')
     {{-- question, answer, team --}}
     <div class="w-85 mx-auto mt-5">
+        @if (Auth::user()->id != $detail->id)
+        <div class="pt-5">
+            <div class="row">
+                <div class="col text-center">
+                    <h1 class="xlarge-font purple-gray">
+                        {{$detail->question->count()}}
+                    </h1>
+                </div>
+                <div class="col text-center">
+                    <h1 class="xlarge-font purple-gray">
+                        {{$detail->answer->count()}}
+                    </h1>
+                </div>
+                <div class="col text-center">
+                    <h1 class="xlarge-font purple-gray">
+                        {{$detail->user_team->count()}}
+                    </h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="mid-gray">questions</h2>
+                </div>
+                <div class="col text-center">
+                    <h2 class="mid-gray">answers</h2>
+                </div>
+                <div class="col text-center">
+                    <h2 class="mid-gray">teams</h2>
+                </div>
+            </div>
+        </div>
+        @else
         <div class="row">
             <div class="col text-center">
                 <a href="{{route('profile.view', $detail->id)}}" class="text-decoration-none dark-purple fs-5">
@@ -56,8 +88,8 @@
             <div class="w-100 mt-4">
                 {{ $my_questions->links() }}
             </div>
-
         </div>
+        @endif
     </div>
 
 </div>
