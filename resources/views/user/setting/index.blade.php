@@ -336,7 +336,7 @@
                             <h3 class="modal-title red" id="exampleModalLongTitle">Warning!</h3>
                         </div>
                         <div class="modal-body text-start">
-                            <p class="red fs-6">You cannot delete this account since you are being the owner of some teams. Please pass ownership to other admins and try again.</p>
+                            <p class="red fs-6">You cannot delete this account since you are being the owner of some teams. Please pass ownership to other admins or delete the team.</p>
                             {{-- <p class="mid-gray fs-6 px-1">*You cannot login to this account after you have done this action.</p> --}}
                             <ul class="mid-gray">
                                 @if (session('warning_owner'))
