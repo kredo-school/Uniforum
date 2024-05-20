@@ -22,7 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('teams', function (Blueprint $table) {
-            
+            // $table->unsignedBigInteger('uni_id');
+            // $table->foreign('uni_id')->references('id')->on('universities')->onDelete('cascade');
         });
     }
 };

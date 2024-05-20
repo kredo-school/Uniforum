@@ -439,6 +439,12 @@ td{
     object-fit: cover;
 }
 
+.avatar-x-sm{
+    width: 1.6rem;
+    height: 1.6rem;
+    object-fit: cover;
+}
+
 .logo{
     width: auto;
     height: 2.2rem;

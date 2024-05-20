@@ -233,25 +233,27 @@ class TeamController extends Controller
     }
 
     public function inviteSearch(Request $request, Team $team){
-        $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->get();
-        $team_members = $this->user_team->where('team_id', $team->id)->get();
-        $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
+        if($team->isTeamAdmin() || $team->isTeamOwner()){
+            $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->get();
+            $team_members = $this->user_team->where('team_id', $team->id)->get();
+            $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
 
-        foreach($team_members as $key => $team_member){
-            if(in_array($team_member->user_id, $deleted_members)){
-                unset($team_members[$key]);
-            }
-        }
-
-        foreach($suggestions as $key => $suggestion){
-            foreach($team_members as $team_member){
-                if($suggestion->id == $team_member->user->id){
-                    unset($suggestions[$key]);
+            foreach($team_members as $key => $team_member){
+                if(in_array($team_member->user_id, $deleted_members)){
+                    unset($team_members[$key]);
                 }
             }
-        }
 
-        return view('user.team.invite-search-result')->with('suggestions', $suggestions)->with('old_keyword', $request->user_keyword)->with('team', $team);
+            foreach($suggestions as $key => $suggestion){
+                foreach($team_members as $team_member){
+                    if($suggestion->id == $team_member->user->id){
+                        unset($suggestions[$key]);
+                    }
+                }
+            }
+            return view('user.team.invite-search-result')->with('suggestions', $suggestions)->with('old_keyword', $request->user_keyword)->with('team', $team);
+        }
+        return redirect()->back();
     }
 
     public function invite(Request $request, Team $team){
@@ -294,42 +296,52 @@ class TeamController extends Controller
         ]);
 
         $suggested_teams = $this->team->where('name', 'LIKE', '%'.$request->team_keyword.'%')->get();
-        
+
         return view('user.team.search-result')->with('suggested_teams', $suggested_teams)->with('keyword', $request->team_keyword);
     }
 
     public function viewOwnership(Team $team){
-        $team_admins = $this->user_team->where('team_id', $team->id)->where('role', 2)->get();
-        return view('user.team.give-ownership')->with('team', $team)->with('team_admins', $team_admins);
+        if($team->isTeamOwner()){
+            $team_admins = $this->user_team->where('team_id', $team->id)->where('role', 2)->get();
+            return view('user.team.give-ownership')->with('team', $team)->with('team_admins', $team_admins);
+        }else{
+            return redirect()->back();
+        }
     }
 
     public function giveOwnership(Team $team, Request $request){
-        try{
-            DB::beginTransaction();
+        if($team->isTeamOwner()){
+            try{
+                DB::beginTransaction();
 
-            $this->user_team->where('team_id', $team->id)->where('user_id', $request->user_id)->delete();
-            $this->user_team->team_id = $team->id;
-            $this->user_team->user_id = $request->user_id;
-            $this->user_team->role = 1;
-            $this->user_team->save();
+                $this->user_team->where('team_id', $team->id)->where('user_id', $request->user_id)->delete();
+                $this->user_team->team_id = $team->id;
+                $this->user_team->user_id = $request->user_id;
+                $this->user_team->role = 1;
+                $this->user_team->save();
 
-            $this->user_team->where('team_id', $team->id)->where('user_id', Auth::user()->id)->delete();
-            $this->user_team->create(
-                [
-                    'team_id' => $team->id,
-                    'user_id' => Auth::user()->id,
-                    'role' => 2,
-                ]
-            );
+                $this->user_team->where('team_id', $team->id)->where('user_id', Auth::user()->id)->delete();
+                $this->user_team->create(
+                    [
+                        'team_id' => $team->id,
+                        'user_id' => Auth::user()->id,
+                        'role' => 2,
+                    ]
+                );
 
-            DB::commit();
+                DB::commit();
 
-            return redirect()->route('team');
-        }catch(Exception $e){
-            DB::rollBack();
+                return redirect()->route('team');
+            }catch(Exception $e){
+                DB::rollBack();
 
-            throw $e;
+                throw $e;
+            }
+        }else{
+            return redirect()->back();
         }
+
+
     }
 
 

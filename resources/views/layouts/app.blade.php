@@ -170,7 +170,11 @@
                         </li>
                         <li class="nav-item d-flex align-items-center me-2">
                             <a class="nav-link d-flex align-items-center" href="{{route('profile.view', Auth::user()->id)}}">
+                                @if (Auth::user()->avatar)
+                                <img src="{{Auth::user()->avatar}}" alt="" class="avatar-x-sm rounded-circle">
+                                @else
                                 <i class="fa-solid fa-circle-user icon-x-sm text-secondary"></i>
+                                @endif
                                 <p class="fs-5 m-0 thick-gray ms-2">{{Auth::user()->username}}</p>
                             </a>
                         </li>

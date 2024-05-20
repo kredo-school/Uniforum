@@ -13,7 +13,7 @@ class QuestionReportController extends Controller
     public function __construct(QuestionReport $q_report){
         $this->q_report = $q_report;
     }
-    
+
     public function store(Request $request, $q_id)
     {
         $request->validate([
