@@ -10,6 +10,14 @@
         </div>
         {{-- user icon and name --}}
         <div class="row">
+            @if ($detail->user->deleted_at)
+            <div class="col-1 text-center">
+                <i class="fa-regular fa-circle-user icon-sm red"></i>
+            </div>
+            <div class="col ms-auto d-flex align-items-center">
+                <p class="fs-4 m-0 red">Deactivated User</p>
+            </div>
+            @else
             <div class="col-1 text-center">
                 <a href="{{route('profile.view', $detail->user_id)}}">
                     @if ($detail->user->avatar)
@@ -24,6 +32,8 @@
                     <p class="fs-4 m-0 thick-gray">{{$detail->user->username}}</p>
                 </a>
             </div>
+            @endif
+
             @if ($detail->user_id != Auth::user()->id)
             <div class="col text-end my-auto">
                 <button class="btn btn-none purple-gray" type="button" data-bs-toggle="modal" data-bs-target="#report-question-modal"><i class="fa-regular fa-flag"></i> Report this post</button>
@@ -136,6 +146,14 @@
         @foreach ($posted_answers as $answer)
         <div class="w-75 mx-auto" id="answer-{{$answer->id}}">
             <div class="row mt-5">
+                @if ($answer->user->deleted_at)
+                <div class="col-1 text-center">
+                    <i class="fa-regular fa-circle-user icon-sm red"></i>
+                </div>
+                <div class="col ms-auto d-flex align-items-center">
+                    <p class="fs-4 m-0 red">Deactivated User</p>
+                </div>
+                @else
                 <div class="col-1 text-center">
                     <a href="{{route('profile.view', $answer->user->id)}}">
                         @if($answer->user->avatar)
@@ -150,6 +168,8 @@
                         <p class="fs-4 m-0 thick-gray">{{$answer->user->username}}</p>
                     </a>
                 </div>
+                @endif
+
                 @if ($answer->user_id != Auth::user()->id)
                 <div class="col text-end my-auto">
                     <button class="btn btn-none purple-gray reportAnswerBtn" type="button" data-bs-toggle="modal" data-bs-target="#report-answer-{{$answer->id}}"><i class="fa-regular fa-flag"></i> Report this post</button>

@@ -168,7 +168,17 @@ class UserController extends Controller
 
             if($this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->exists()){
                 $owning_teams = $this->user_team->where('user_id', Auth::user()->id)->where('role', 1)->get();
-                return redirect()->back()->with('warning_owner', $owning_teams);
+                $deleted_teams = $this->team->onlyTrashed()->pluck('id')->toArray();
+                foreach($owning_teams as $key => $owning){
+                    if(in_array($owning->team_id, $deleted_teams)){
+                        unset($owning_teams[$key]);
+                    }
+                }
+                // dd(count($owning_teams));
+
+                if(count($owning_teams) > 0){
+                    return redirect()->back()->with('warning_owner', $owning_teams);
+                }
             }
             $this->user->destroy(Auth::user()->id);
             return redirect()->route('login');

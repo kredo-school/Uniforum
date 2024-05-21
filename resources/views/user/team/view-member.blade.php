@@ -20,6 +20,27 @@
         </div>
         <div class="mt-3">
             @foreach ($team_members as $member)
+            @if ($member->user->deleted_at)
+            <div class="row mb-4">
+                <div class="col-1 text-center">
+                    <i class="fa-regular fa-circle-user icon-sm red"></i>
+                </div>
+                <div class="col ms-auto d-flex align-items-center">
+                    <p class="fs-5 m-0 red">Deactivated User</p>
+                </div>
+                <div class="col text-end">
+                    <p class="fs-5 dark-purple">
+                        @if ($member->role == 1)
+                        Owner
+                        @elseif ($member->role == 2)
+                        Admin
+                        @else
+                        Member
+                        @endif
+                    </p>
+                </div>
+            </div>
+            @else
             <a href="{{route('profile.view', $member->user->id)}}" class="text-decoration-none">
                 <div class="row mb-4">
                     <div class="col-1 text-center">
@@ -45,6 +66,7 @@
                     </div>
                 </div>
             </a>
+            @endif
             @endforeach
             <div class="w-100 mt-4">
                 {{ $team_members->links() }}

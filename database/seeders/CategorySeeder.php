@@ -31,6 +31,9 @@ class CategorySeeder extends Seeder
             ],
             [
               'name' => 'career',
+            ],
+            [
+              'name' => 'others',
             ]
         ]);
     }

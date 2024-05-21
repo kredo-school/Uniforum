@@ -33,6 +33,19 @@
         </div>
         <div class="mt-3">
             @forelse ($my_answers as $my_answer)
+            @if ($my_answer->question->deleted_at)
+            <div class="deleted-content pt-2 px-4 mb-3">
+                <div class="deleted-label w-20 ms-auto text-center mt-1">
+                    <p class="fs-6 m-0">Deleted</p>
+                </div>
+                <div class="text-start my-1">
+                    <h5 class="red text-start"><i class="fa-solid fa-ban"></i> This question has been deleted</h5>
+                </div>
+                <div class="text-end pb-1">
+                    <span class="ms-3 light-red">{{$my_answer->question->deleted_at}}</span>
+                </div>
+            </div>
+            @else
             <a href="{{route("question.show", $my_answer->question->id)}}#answer-{{$my_answer->id}}" class="text-decoration-none">
                 <div class="q-content pt-2 px-4 mb-3">
                     <div class="category-label w-20 ms-auto text-center mt-1">
@@ -48,6 +61,7 @@
                     </div>
                 </div>
             </a>
+            @endif
             @empty
             <div class="pt-5 text-center">
                 <h3 class="mid-gray">No answers yet</h3>

@@ -37,10 +37,10 @@ class UsersController extends Controller
 
     public function deactivate($user_id){
 
-        if($this->user_team->where('user_id', $user_id)->where('role', 1)->exists()){
-            $owning_teams = $this->user_team->where('user_id', $user_id)->where('role', 1)->pluck('team_id')->toArray();
-            $this->team->whereIn('id', $owning_teams)->delete();
-        }
+        // if($this->user_team->where('user_id', $user_id)->where('role', 1)->exists()){
+        //     $owning_teams = $this->user_team->where('user_id', $user_id)->where('role', 1)->pluck('team_id')->toArray();
+        //     $this->team->whereIn('id', $owning_teams)->delete();
+        // }
 
         $this->user->destroy($user_id);
 
