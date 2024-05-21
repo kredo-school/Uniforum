@@ -73,9 +73,12 @@
             </div>
         </div>
 
+        {{-- if you are admin, no buttons --}}
+        @if (Auth::user()->role_id != 2)
+        @else
         {{-- before join --}}
         {{-- if you are invited by this team --}}
-        @if ($detail->invited())
+        @if($detail->invited())
         <div class="mt-4">
             <div class="row">
                 <form action="{{route('team.acceptInvite')}}" class="text-center" method="POST">
@@ -105,7 +108,7 @@
                 <form action="{{route('team.join')}}" class="text-center" method="POST">
                     @csrf
                     <input type="hidden" name="team_id" value="{{$detail->id}}">
-                    <button type="submit" class="execute py-1 w-25 mx-auto">join</button>
+                    <button type="submit" class="execute py-1 w-25 mx-auto">Join</button>
                 </form>
                 @endif
             </div>
@@ -127,6 +130,7 @@
                 <button type="button" class="btn btn-none purple-gray" data-bs-toggle="modal" data-bs-target="#report-team-{{$detail->id}}"><i class="fa-regular fa-flag"></i> Report this team</button>
             </div>
         </div>
+        @endif
         @endif
 
         {{-- report team popup --}}

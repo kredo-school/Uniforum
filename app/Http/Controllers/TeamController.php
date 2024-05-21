@@ -222,7 +222,7 @@ class TeamController extends Controller
 
     public function inviteSearch(Request $request, Team $team){
         if($team->isTeamAdmin() || $team->isTeamOwner()){
-            $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->get();
+            $suggestions = $this->user->where('username', 'LIKE', '%'.$request->user_keyword.'%')->where('role_id', 2)->get();
             $team_members = $this->user_team->where('team_id', $team->id)->get();
             $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
 
