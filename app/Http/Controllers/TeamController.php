@@ -74,13 +74,7 @@ class TeamController extends Controller
     public function viewMember($t_id){
         $detail = $this->team->findOrFail($t_id);
         $report_categories = $this->report_category->get();
-        // $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
         $team_members = $this->user_team->where('team_id', $t_id)->orderBy('role', 'ASC')->paginate(10);
-        // foreach($team_members as $key => $team_member){
-        //     if(in_array($team_member->user_id, $deleted_members)){
-        //         unset($team_members[$key]);
-        //     }
-        // }
 
         return view('user.team.view-member')->with('detail', $detail)->with('report_categories', $report_categories)->with('team_members', $team_members);
 
@@ -106,7 +100,6 @@ class TeamController extends Controller
             $this->team->icon = 'data:image/' . $request->team_icon->extension() . ';base64,' . base64_encode(file_get_contents($request->team_icon));
         }
         $this->team->type = $request->team_type;
-        // $this->team->uni_id = Auth::user()->uni_id;
 
         $this->team->save();
 
@@ -134,13 +127,8 @@ class TeamController extends Controller
     }
 
     public function manageMembers(Team $team){
-        // $deleted_members = $this->user->onlyTrashed()->pluck('id')->toArray();
         $team_members = $this->user_team->where('team_id', $team->id)->orderBy('role', 'ASC')->get();
-        // foreach($team_members as $key => $team_member){
-        //     if(in_array($team_member->user_id, $deleted_members)){
-        //         unset($team_members[$key]);
-        //     }
-        // }
+
         return view('user.team.manage-members')->with('team', $team)->with('team_members', $team_members);
     }
 
