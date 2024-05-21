@@ -465,3 +465,21 @@ td{
 .xlarge-font{
     font-size: 7rem;
 }
+
+.deleted-content{
+    background-color: transparent;
+    border: solid;
+    border-color: #ecb2b2;
+    border-radius: 1.2em;
+}
+
+.deleted-label
+{
+    background-color: #EA8080;
+    color: #FFFFFF;
+    border-radius: 1em;
+}
+
+.light-red{
+    color: #ecb2b2;
+}

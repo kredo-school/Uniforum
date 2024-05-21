@@ -12,11 +12,11 @@ class Answer extends Model
     use HasFactory, SoftDeletes;
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function question(){
-        return $this->belongsTo(Question::class, 'q_id');
+        return $this->belongsTo(Question::class, 'q_id')->withTrashed();
     }
 
     public function likes(){

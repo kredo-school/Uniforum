@@ -95,7 +95,7 @@
                                         <i class="fa-solid fa-ellipsis"></i>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deactivate-user-">
+                                        <button class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deactivate-user-{{$user->id}}">
                                             <i class="fa-solid fa-user-slash"></i> Deactivate user
                                         </button>
                                         <hr class="dropdown-divider">
@@ -110,7 +110,7 @@
                                 </div>
 
                                 {{-- deactivate user popup --}}
-                                <div class="modal fade" id="deactivate-user-" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal fade" id="deactivate-user-{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header w-100 mx-auto ">

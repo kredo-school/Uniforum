@@ -12,7 +12,7 @@ class Question extends Model
     use HasFactory, SoftDeletes;
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function category(){
@@ -38,4 +38,5 @@ class Question extends Model
     public function question_report(){
         return $this->hasMany(QuestionReport::class, 'q_id');
     }
+
 }

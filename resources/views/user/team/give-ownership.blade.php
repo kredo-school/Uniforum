@@ -5,6 +5,27 @@
     <h1 class="dark-purple">Give Ownership</h1>
     <div class="text-center mt-5 w-80 mx-auto">
         @forelse ($team_admins as $admin)
+        @if ($admin->user->deleted_at)
+        <div class="row mb-4">
+            <div class="text-decoration-none col-auto">
+                <div class="text-start">
+                    <i class="fa-regular fa-circle-user icon-sm red"></i>
+                </div>
+            </div>
+            <div class="text-decoration-none col my-auto">
+                <div class="text-start ms-auto">
+                    <p class="fs-5 m-0 red">Deactivated User</p>
+                </div>
+            </div>
+            <div class="col-auto text-end my-auto">
+                <p class="fs-5 m-0 dark-purple">
+                    Admin
+                </p>
+            </div>
+            <div class="col-3 my-auto">
+            </div>
+        </div>
+        @else
         <div class="row mb-4">
             <a href="{{route('profile.view', $admin->user->id)}}" class="text-decoration-none col-auto">
                 <div class="text-start">
@@ -61,6 +82,7 @@
                 </div>
             </form>
         </div>
+        @endif
         @empty
         <div class="py-4 text-center">
             <h3 class="mid-gray">No Admins yet</h3>
