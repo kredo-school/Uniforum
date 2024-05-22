@@ -134,7 +134,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header w-100 mx-auto ">
-                        <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Change Password</h3>
+                        <h3 class="modal-title dark-purple" id="exampleModalLongTitle">Change Email</h3>
                     </div>
                     <form action="{{route('setting.change-email')}}" method="POST">
                         @csrf
