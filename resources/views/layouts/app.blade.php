@@ -271,7 +271,7 @@
                             <div class="modal-body">
                                 <div class="text-center">
                                     <div class="mb-2">
-                                        <select class="create-q-select px-1" name="team">
+                                        {{-- <select class="create-q-select px-1" name="team">
                                             <option disabled selected>To where</option>
                                             <option value="0">general</option>
 
@@ -280,7 +280,9 @@
                                             <option value="{{$team->team->id}}">{{$team->team->name}}</option>
                                             @endif
                                             @endforeach
-                                        </select>
+                                        </select> --}}
+                                        
+                                        <input type="hidden" name="team" value="0">
 
                                         @error('team')
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">
