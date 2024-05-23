@@ -27,10 +27,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // $deleted_teams = Team::onlyTrashed()->pluck('id')->toArray();
-        // $categories = Category::get();
-        // View::share('categories', $categories);
-        // View::share('deleted_teams', $deleted_teams);
+        $deleted_teams = Team::onlyTrashed()->pluck('id')->toArray();
+        $categories = Category::get();
+        View::share('categories', $categories);
+        View::share('deleted_teams', $deleted_teams);
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
