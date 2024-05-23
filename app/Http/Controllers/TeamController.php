@@ -11,6 +11,7 @@ use App\Models\ReportCategory;
 use App\Models\Question;
 use App\Models\Apply;
 use App\Models\User;
+use App\Models\Category;
 use Exception;
 use Illuminate\Support\Facades\DB;
 
@@ -23,8 +24,9 @@ class TeamController extends Controller
     private $question;
     private $apply;
     private $user;
+    private $category;
 
-    public function __construct(Team $team, UserTeam $user_team, Invite $invite, ReportCategory $report_category, Question $question, Apply $apply, User $user){
+    public function __construct(Team $team, UserTeam $user_team, Invite $invite, ReportCategory $report_category, Question $question, Apply $apply, User $user, Category $category){
         $this->team = $team;
         $this->user_team = $user_team;
         $this->invite = $invite;
@@ -32,6 +34,7 @@ class TeamController extends Controller
         $this->question = $question;
         $this->apply = $apply;
         $this->user = $user;
+        $this->category = $category;
     }
 
     public function index(){
@@ -66,8 +69,9 @@ class TeamController extends Controller
         $detail = $this->team->findOrFail($t_id);
         $report_categories = $this->report_category->get();
         $team_questions = $this->question->where('team', $t_id)->latest()->paginate(5);
+        $categories = $this->category->get();
 
-        return view('user.team.view')->with('detail', $detail)->with('report_categories', $report_categories)->with('team_questions', $team_questions);
+        return view('user.team.view')->with('detail', $detail)->with('report_categories', $report_categories)->with('team_questions', $team_questions)->with('categories', $categories);
 
     }
 

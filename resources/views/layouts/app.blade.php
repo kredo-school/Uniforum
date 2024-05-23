@@ -281,7 +281,7 @@
                                             @endif
                                             @endforeach
                                         </select> --}}
-                                        
+
                                         <input type="hidden" name="team" value="0">
 
                                         @error('team')
@@ -312,12 +312,13 @@
                                     </div>
 
                                     <div class="mb-2">
-                                        <select class="create-q-select px-1" name="category">
+                                        {{-- <select class="create-q-select px-1" name="category">
                                             <option selected disabled>Category</option>
                                             @foreach ($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
+                                        <input type="hidden" name="category" value="1">
 
                                         @error('category')
                                             <div class="w-80 mx-auto uni-invalid-feedback text-start" role="alert">

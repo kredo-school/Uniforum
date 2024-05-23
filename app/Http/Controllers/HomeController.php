@@ -32,14 +32,14 @@ class HomeController extends Controller
     public function index()
     {
         $home_questions = $this->question->with('likes')->where('uni_id', Auth::user()->uni_id)->where('team', null)->latest()->paginate(10);
-
+        $categories = $this->category->get();
         foreach($home_questions as $key => $home_question){
             if($home_question->question_report->count() >= QuestionReport::SHADOW_BAN_COUNT){
                 unset($home_questions[$key]);
             }
         }
 
-        return view('home')->with('home_questions', $home_questions);
+        return view('home')->with('home_questions', $home_questions)->with('categories', $categories);
     }
 
     public function searchQuestion(Request $request){
