@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\UserTeam;
 use Illuminate\Pagination\Paginator;
 use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
+use \Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
         // $categories = Category::get();
         // View::share('categories', $categories);
         // View::share('deleted_teams', $deleted_teams);
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
         Paginator::useBootstrap();
     }
+
+
 }
