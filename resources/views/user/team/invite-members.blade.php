@@ -8,6 +8,7 @@
         @include('user.team.component.invite.head')
 
         <div class="">
+            @if ($team->type == 2)
             <h2 class="second-title text-start mb-4">Enroll Request</h2>
             @forelse ($appliers as $applier)
             <div class="row mb-4">
@@ -50,6 +51,7 @@
                 <h3 class="mid-gray">No applier yet</h3>
             </div>
             @endforelse
+            @endif
         </div>
     </div>
 </div>
