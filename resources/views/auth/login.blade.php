@@ -49,13 +49,13 @@
                                         <i class="fa-solid fa-arrow-right"></i> Create new account
                                     </a>
                                 </div>
-                                @if (Route::has('password.request'))
+                                {{-- @if (Route::has('password.request'))
                                 <div>
                                     <a class="btn btn-link sub-purple-gray" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 </div>
-                                @endif
+                                @endif --}}
                             </div>
                         </form>
                     </div>
